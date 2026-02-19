@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CardChessD — 下载</title>
+  <meta name="description" content="CardChessD 客户端下载 — 支持 Android / Windows，自动识别系统" />
+  <meta name="theme-color" content="#0b0f12" />
+  <link rel="stylesheet" href="css/cardchessd.css" />
+</head>
+<body>
+
+  <div class="orb" aria-hidden="true">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0" stop-color="#7c5cff" stop-opacity="0.9"/>
+          <stop offset="1" stop-color="#00d4ff"  stop-opacity="0.6"/>
+        </linearGradient>
+      </defs>
+      <circle cx="300" cy="300" r="280" fill="url(#g)"/>
+    </svg>
+  </div>
+
+  <!-- ── Main ── -->
+  <main class="card" role="main">
+    <header>
+      <a class="logo" href="index.html" aria-label="返回主页">B</a>
+      <div>
+        <h1>CardChessD</h1>
+        <div class="tag">客户端下载</div>
+      </div>
+      <a class="back-btn" href="index.html">← 返回</a>
+    </header>
+
+    <section class="os-section" aria-label="系统检测与下载">
+      <div id="os-badge" class="os-badge" aria-live="polite"></div>
+      <div>
+        <h2 class="app-name">CardChessD</h2>
+        <p class="app-desc" id="app-desc">策略卡牌游戏 · 本地客户端版本</p>
+      </div>
+      <div id="dl-area"></div>
+    </section>
+
+    <section class="alt-section" id="alt-section" aria-label="其他可用版本"></section>
+
+    <footer>
+      <div class="small">© 2026 brez.top</div>
+      <div class="small" id="ver-label"></div>
+    </footer>
+  </main>
+
+  <script src="js/cardchessd.js"></script>
+</body>
+</html>

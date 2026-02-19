@@ -1,0 +1,11 @@
+example.com {
+
+    handle_path /download/* {
+        root * /var/www
+        header {
+            Cache-Control "public, max-age=86400"
+        }
+        file_server
+    }
+
+}
