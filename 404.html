@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 - 页面未找到 | brez.top</title>
+  <meta name="description" content="抱歉，您访问的页面不存在" />
+  <meta name="theme-color" content="#0b0f12" />
+  <style>
+    :root{
+      --bg:#0b0f12; --card:#0f1720; --text:#e6eef8; --muted:#9aa6b8; 
+      --accent:#2d5bef; --error:#ef4444; --glass:rgba(255,255,255,0.03);
+      --radius:12px; --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f8fb; --card:#ffffff; --text:#091421; --muted:#596575; --accent:#2d5bef; --glass:rgba(2,6,23,0.02); }
+      meta[name="theme-color"]{ content:#f6f8fb }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:radial-gradient(800px 400px at 10% 10%,rgba(45,91,239,0.08),transparent),var(--bg);
+      color:var(--text); -webkit-font-smoothing:antialiased;
+      display:flex;flex-direction:column;min-height:100vh;
+    }
+    .nav-top{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:16px 24px;display:flex;justify-content:center;
+      background:linear-gradient(180deg,rgba(11,15,18,0.9),transparent);
+      backdrop-filter:blur(8px);
+    }
+    .home-btn{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 18px;border-radius:12px;
+      background:var(--glass);border:1px solid rgba(255,255,255,0.03);
+      color:var(--text);text-decoration:none;font-size:0.9rem;
+      transition:transform .2s ease,background .2s ease,box-shadow .2s ease;
+    }
+    .home-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.4)}
+    .home-btn:active{transform:translateY(0)}
+    .home-btn svg{width:18px;height:18px}
+    
+    main{
+      flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:80px 24px 40px;max-width:900px;margin:0 auto;width:100%;
+    }
+    .error-code{
+      font-size:clamp(80px,15vw,140px);
+      font-weight:800;line-height:1;
+      background:linear-gradient(135deg,var(--accent),#00d4ff);
+      -webkit-background-clip:text;background-clip:text;
+      -webkit-text-fill-color:transparent;
+      margin:0 0 16px;letter-spacing:-4px;
+    }
+    .error-title{
+      font-size:clamp(24px,4vw,32px);margin:0 0 12px;font-weight:600;
+    }
+    .error-desc{
+      color:var(--muted);font-size:clamp(16px,2.5vw,18px);
+      margin:0 0 24px;line-height:1.6;text-align:center;
+    }
+    .error-url{
+      background:var(--card);border:1px solid rgba(255,255,255,0.04);
+      border-radius:12px;padding:16px 20px;margin:0 0 40px;
+      font-family:var(--mono);font-size:14px;color:var(--muted);
+      word-break:break-all;max-width:100%;text-align:center;
+      box-shadow:inset 0 2px 8px rgba(2,6,23,0.3);
+    }
+    .error-url-label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;opacity:0.7}
+    .error-url-text{color:var(--error);font-weight:500}
+    
+    .recommendations{
+      width:100%;margin-bottom:40px;
+    }
+    .rec-title{
+      font-size:16px;color:var(--muted);margin:0 0 16px;text-align:center;
+    }
+    .rec-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;
+    }
+    .rec-card{
+      display:flex;flex-direction:column;gap:6px;
+      padding:18px 20px;border-radius:12px;
+      background:var(--glass);border:1px solid rgba(255,255,255,0.02);
+      text-decoration:none;color:var(--text);
+      transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+    }
+    .rec-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 12px 32px rgba(2,6,23,0.5);background:rgba(255,255,255,0.03)}
+    .rec-card:active{transform:translateY(-2px) scale(1)}
+    .rec-card-title{font-weight:600;font-size:15px}
+    .rec-card-url{font-family:var(--mono);font-size:12px;color:var(--accent);opacity:0.9}
+    .rec-card-desc{font-size:13px;color:var(--muted);line-height:1.4;margin-top:4px}
+    
+    .fallback-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 28px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#1a4bd6);
+      color:#fff;text-decoration:none;font-weight:600;font-size:16px;
+      border:none;cursor:pointer;
+      transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+      box-shadow:0 8px 24px rgba(45,91,239,0.35);
+    }
+    .fallback-btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(45,91,239,0.45);filter:brightness(1.05)}
+    .fallback-btn:active{transform:translateY(-1px)}
+    .fallback-btn svg{width:20px;height:20px}
+    
+    .contact-section{
+      width:100%;max-width:500px;margin-top:20px;
+    }
+    .contact-title{
+      font-size:14px;color:var(--muted);margin:0 0 14px;text-align:center;
+    }
+    .contact-links{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    }
+    .contact-link{
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      padding:14px 10px;border-radius:10px;
+      background:var(--glass);border:1px solid rgba(255,255,255,0.02);
+      text-decoration:none;color:var(--muted);
+      transition:all .2s ease;
+    }
+    .contact-link:hover{background:rgba(255,255,255,0.04);color:var(--text);transform:translateY(-2px)}
+    .contact-link svg{width:24px;height:24px}
+    .contact-label{font-size:11px;text-align:center}
+    
+    @media (max-width:768px){
+      .nav-top{padding:12px 16px}
+      main{padding:70px 16px 30px}
+      .contact-links{grid-template-columns:repeat(4,1fr)}
+      .rec-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:480px){
+      .contact-links{grid-template-columns:repeat(4,1fr);gap:6px}
+      .contact-link{padding:10px 6px}
+      .contact-link svg{width:20px;height:20px}
+      .contact-label{font-size:10px}
+    }
+    
+    .fade-in{animation:fadeIn .5s ease-out both}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <nav class="nav-top">
+    <a href="/" class="home-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>首页</span>
+    </a>
+  </nav>
+
+  <main class="fade-in">
+    <h1 class="error-code">404</h1>
+    <h2 class="error-title">页面未找到</h2>
+    <p class="error-desc">抱歉，您访问的页面不存在或已被移除</p>
+    
+    <div class="error-url" id="errorUrl">
+      <span class="error-url-label">尝试访问的地址</span>
+      <span class="error-url-text" id="errorUrlText">--</span>
+    </div>
+    
+    <section class="recommendations" id="recommendations">
+      <h3 class="rec-title">您可能想找</h3>
+      <div class="rec-grid" id="recGrid"></div>
+    </section>
+    
+    <div id="fallback" style="display:none;text-align:center;margin-bottom:30px">
+      <a href="/" class="fallback-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        返回主页
+      </a>
+    </div>
+    
+    <section class="contact-section">
+      <h3 class="contact-title">发现错误？联系我们</h3>
+      <div class="contact-links">
+        <a href="mailto:contact@brez.top" class="contact-link" aria-label="电子邮件">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/>
+          </svg>
+          <span class="contact-label">邮件</span>
+        </a>
+        <a href="https://space.bilibili.com" target="_blank" rel="noopener" class="contact-link" aria-label="B 站">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8V6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/><rect x="2" y="8" width="20" height="12" rx="2"/>
+            <circle cx="8" cy="14" r="1.5"/><circle cx="16" cy="14" r="1.5"/>
+          </svg>
+          <span class="contact-label">B 站</span>
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+          <span class="contact-label">GitHub</span>
+        </a>
+        <a href="https://qzone.qq.com" target="_blank" rel="noopener" class="contact-link" aria-label="QQ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1.5"/><circle cx="15" cy="9" r="1.5"/>
+          </svg>
+          <span class="contact-label">QQ</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      // 获取当前 URL 并显示
+      const currentUrl = window.location.href;
+      const urlText = document.getElementById('errorUrlText');
+      if(urlText){
+        urlText.textContent = currentUrl;
+      }
+      
+      // 推荐页面配置
+      const pages = [
+        { title: '首页', url: '/', desc: 'brez.top 主页面' },
+        { title: '关于', url: '/about', desc: '关于 brez.top 和项目介绍' },
+        { title: '联系方式', url: '/contact', desc: '获取联系方式和反馈渠道' },
+        { title: '项目展示', url: '/projects', desc: '个人项目作品集' }
+      ];
+      
+      // 智能匹配逻辑
+      function findRecommendations(path){
+        const pathLower = path.toLowerCase();
+        const matches = pages.filter(p => {
+          const urlLower = p.url.toLowerCase();
+          const titleLower = p.title.toLowerCase();
+          // 关键词匹配
+          if(pathLower.includes(urlLower.replace(/\//g,'')) || urlLower.includes(pathLower)) return true;
+          if(pathLower.includes(titleLower) || titleLower.includes(pathLower)) return true;
+          // 部分路径匹配
+          const pathParts = pathLower.split('/').filter(Boolean);
+          const urlParts = urlLower.split('/').filter(Boolean);
+          if(pathParts.some(part => urlParts.some(up => up.includes(part)))) return true;
+          return false;
+        });
+        return matches.slice(0, 4);
+      }
+      
+      const recGrid = document.getElementById('recGrid');
+      const fallback = document.getElementById('fallback');
+      
+      if(recGrid){
+        const path = window.location.pathname;
+        const recommendations = findRecommendations(path);
+        
+        if(recommendations.length > 0){
+          recommendations.forEach(page => {
+            const card = document.createElement('a');
+            card.className = 'rec-card';
+            card.href = page.url;
+            card.innerHTML = `
+              <span class="rec-card-title">${page.title}</span>
+              <span class="rec-card-url">${page.url}</span>
+              <span class="rec-card-desc">${page.desc}</span>
+            `;
+            recGrid.appendChild(card);
+          });
+        }else{
+          recGrid.style.display = 'none';
+          if(fallback) fallback.style.display = 'block';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

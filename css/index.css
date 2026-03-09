@@ -82,6 +82,14 @@ a.card-link:hover .desc, a.card-link:focus-within .desc{
 
 .chev{margin-left:auto; color:rgba(255,255,255,0.45); font-weight:700}
 
+.share-btn{
+  -webkit-appearance:none; appearance:none; background:transparent; border:1px solid rgba(255,255,255,0.03);
+  color:var(--muted); padding:8px 10px; border-radius:10px; font-size:.85rem; display:inline-flex;
+  gap:8px; align-items:center; cursor:pointer; transition: transform .14s ease, background .14s ease, color .14s ease;
+}
+.share-btn:hover{ background: rgba(255,255,255,0.02); color:var(--text) }
+.share-btn:active{ transform: scale(.95) }
+
 .fs-btn{
   -webkit-appearance:none; appearance:none; background:transparent; border:1px solid rgba(255,255,255,0.03);
   color:var(--muted); padding:8px 10px; border-radius:10px; font-size:.85rem; display:inline-flex;
@@ -89,6 +97,17 @@ a.card-link:hover .desc, a.card-link:focus-within .desc{
 }
 .fs-btn:hover{ background: rgba(255,255,255,0.02); color:var(--text) }
 .fs-btn[aria-pressed="true"]{ box-shadow: 0 8px 26px rgba(2,6,23,0.45); border-color: rgba(124,92,255,0.18); color:var(--accent) }
+
+/* Toast notification */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--card);border:1px solid rgba(255,255,255,0.04);
+  padding:12px 20px;border-radius:10px;color:var(--text);
+  font-size:14px;box-shadow:0 8px 24px rgba(2,6,23,0.5);
+  opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;
+  z-index:1000;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
 
 footer{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:18px}
 .small{color:var(--muted); font-size:.85rem}

@@ -4,8 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>brez.top — 主页</title>
-  <meta name="description" content="brez.top — 个人主页与导航（简约、深色适配、无框架）" />
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="brez.top — 个人主页与导航，探索简历、游戏、博客等项目" />
+  <meta name="keywords" content="brez.top, 个人主页，导航，简历，博客，游戏" />
+  <meta name="author" content="brez" />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0b0f12" />
+  
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="brez.top — 主页" />
+  <meta property="og:description" content="brez.top — 个人主页与导航" />
+  <meta property="og:url" content="https://brez.top" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="brez.top — 主页" />
+  <meta name="twitter:description" content="brez.top — 个人主页与导航" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>B</text></svg>" />
+  
+  <!-- Sitemap -->
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  
   <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
@@ -29,7 +50,12 @@
         <div class="tag"> 微风中的快乐 </div>
       </div>
       <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
-        <div class="meta">快速导航</div>
+        <button id="share-btn" class="share-btn" aria-label="分享当前页面" title="复制链接">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </button>
         <button id="fs-toggle" class="fs-btn" aria-pressed="false" title="切换全屏">全屏</button>
       </div>
     </header>
@@ -65,20 +91,6 @@
         </li>
 
         <li>
-          <a class="card-link" href="cardchessd.html" aria-label="cardchessd - 客户端下载">
-            <div class="ic" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
-            <div>
-              <div class="title">CardChessD</div>
-              <div class="sub">游戏下载 / 客户端</div>
-              <div class="desc">自动识别系统 · 支持 Android / Windows，即刻下载</div>
-            </div>
-            <div class="chev">→</div>
-          </a>
-        </li>
-
-        <li>
           <a class="card-link" href="https://blog.brez.top" target="_blank" rel="noopener noreferrer" aria-label="blog - 博客">
             <div class="ic" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>
@@ -101,6 +113,20 @@
               <div class="title">Login</div>
               <div class="sub">账号相关</div>
               <div class="desc">登录 / 注册 / 密码管理（待补充）</div>
+            </div>
+            <div class="chev">→</div>
+          </a>
+        </li>
+        
+        <li>
+          <a class="card-link" href="https://download.brez.top" target="_blank" rel="noopener noreferrer" aria-label="download - 下载中心">
+            <div class="ic" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div>
+              <div class="title">Download</div>
+              <div class="sub">下载中心</div>
+              <div class="desc">资源下载 — 跳转到 download.brez.top</div>
             </div>
             <div class="chev">→</div>
           </a>

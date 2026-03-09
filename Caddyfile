@@ -1,11 +1,15 @@
-example.com {
+brez.top {
 
-    handle_path /download/* {
-        root * /var/www
-        header {
-            Cache-Control "public, max-age=86400"
-        }
+    handle_errors {
+        root * /var/www/breztop_web
+        rewrite * /404.html
         file_server
     }
 
+    root * /var/www/breztop_web
+    file_server
+
+    header {
+        Cache-Control "public, max-age=3600"
+    }
 }
