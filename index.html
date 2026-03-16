@@ -28,6 +28,10 @@
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   
   <link rel="stylesheet" href="css/index.css" />
+
+  <!-- Analytics -->
+  <script data-goatcounter="https://stats.brez.top/count" async src="//stats.brez.top/count.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
@@ -98,7 +102,7 @@
             </div>
             <div>
               <div class="title">Blog</div>
-              <div class="sub">博客</div>
+              <div class="sub">博客 <span id="blog-stats" class="count-tag">...</span></div>
               <div class="desc">技术与生活随笔，按时间与标签组织（待补充）</div>
             </div>
             <div class="chev">→</div>
@@ -138,6 +142,15 @@
 
     <footer>
       <div class="small">© 2026 brez.top</div>
+      <div class="small">
+        <span id="busuanzi_container_site_pv" style="display:none">
+          总访问量: <span id="busuanzi_value_site_pv"></span> 次
+        </span>
+        <span class="sep" aria-hidden="true">|</span>
+        <span id="busuanzi_container_page_pv" style="display:none">
+          本页阅读量: <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+      </div>
     </footer>
   </main>
   <script src="js/index.js"></script>

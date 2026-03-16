@@ -1,4 +1,37 @@
 (function(){
+  // Fetch stats from GoatCounter
+  async function fetchStats(path, elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    
+    // 如果你有 API Token，填在这里。如果没有且统计是公开的，API 可能不需要 Token。
+    const API_TOKEN = ""; 
+    const SITE_URL = "https://stats.brez.top";
+    
+    try {
+      // 这里的 path 是在 GoatCounter 中记录的路径，可能是 'blog.brez.top' 或 '/blog'
+      const response = await fetch(`${SITE_URL}/api/v0/stats/hits/${encodeURIComponent(path)}`, {
+        headers: API_TOKEN ? { 'Authorization': `Bearer ${API_TOKEN}` } : {}
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        el.textContent = data.total || 0;
+      } else {
+        // 降级方案：如果 API 不可用且是公开统计，尝试通过公共 JSON 获取
+        const publicRes = await fetch(`${SITE_URL}/counter/${encodeURIComponent(path)}.json`);
+        const publicData = await publicRes.json();
+        el.textContent = publicData.count || '...';
+      }
+    } catch (err) {
+      console.warn('Stats fetch error:', err);
+      el.textContent = '...';
+    }
+  }
+
+  // 初始化获取
+  fetchStats('blog.brez.top', 'blog-stats');
+
   // Fullscreen toggle
   const btn = document.getElementById('fs-toggle');
   if(btn){
