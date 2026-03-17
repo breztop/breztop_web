@@ -141,6 +141,17 @@
     .fade-in{animation:fadeIn .5s ease-out both}
     @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   </style>
+
+  <!-- Analytics -->
+  <script>
+    window.goatcounter = {
+        path: function() {
+            return '/' + location.host + location.pathname;
+        },
+        title: document.title,
+    };
+  </script>
+  <script data-goatcounter="https://stats.brez.top/count" async src="//stats.brez.top/count.js"></script>
 </head>
 <body>
   <nav class="nav-top">
