@@ -17,10 +17,9 @@
   }
 
   // 初始化获取
-  fetchStats('blog.brez.top', 'blog-stats');
+  fetchStats('/zh', 'blog-stats');
   fetchStats('/' + location.host + location.pathname, 'page-stats');
-  fetchStats('TOTAL', 'total-stats'); // 假设 TOTAL 是预设的汇总路径，如果不是可能需要手动统计或使用 GoatCounter API 汇总
-
+  fetchStats('TOTAL', 'total-stats');
 
   // Fullscreen toggle
   const btn = document.getElementById('fs-toggle');
