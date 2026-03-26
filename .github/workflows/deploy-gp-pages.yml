@@ -1,0 +1,50 @@
+name: Deploy to gp-pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install minifier tools
+        run: |
+          npm install -g terser clean-css-cli
+
+      - name: Build dist folder
+        run: |
+          mkdir -p dist
+          # 1) 压缩 JS
+          if [ -f js/index.js ]; then
+            terser js/index.js --compress --mangle --output dist/index.js
+          else
+            echo "warning: js/index.js not found" >&2
+          fi
+
+          # 2) 压缩 CSS
+          if [ -f css/index.css ]; then
+            cleancss -o dist/index.css css/index.css
+          else
+            echo "warning: css/index.css not found" >&2
+          fi
+
+      - name: Deploy to gp-pages branch
+        uses: peaceiris/actions-gh-pages@v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gp-pages
+          keep_files: false
