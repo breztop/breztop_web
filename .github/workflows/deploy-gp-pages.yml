@@ -1,4 +1,4 @@
-name: Deploy to gp-pages
+name: Deploy to gh-pages
 
 on:
   push:
@@ -18,31 +18,43 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install minifier tools
-        run: |
-          npm install -g terser clean-css-cli
+        run: npm install -g terser clean-css-cli html-minifier-terser
 
       - name: Build dist folder
         run: |
           mkdir -p dist
-          # 1) 压缩 JS
+
+          # 1) Minify JS
           if [ -f js/index.js ]; then
             terser js/index.js --compress --mangle --output dist/index.js
           else
             echo "warning: js/index.js not found" >&2
           fi
 
-          # 2) 压缩 CSS
+          # 2) Minify CSS
           if [ -f css/index.css ]; then
             cleancss -o dist/index.css css/index.css
           else
             echo "warning: css/index.css not found" >&2
           fi
 
-      - name: Deploy to gp-pages branch
-        uses: peaceiris/actions-gh-pages@v3
+          # 3) Minify HTML
+          if [ -f index.html ]; then
+            html-minifier-terser \
+              --collapse-whitespace \
+              --remove-comments \
+              --minify-css true \
+              --minify-js true \
+              index.html -o dist/index.html
+          else
+            echo "warning: index.html not found" >&2
+          fi
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
