@@ -27,18 +27,18 @@ jobs:
 
       - name: Build dist folder
         run: |
-          mkdir -p dist
+          mkdir -p dist/js dist/css
 
           # 1) Minify JS
           if [ -f js/index.js ]; then
-            terser js/index.js --compress --mangle --output dist/index.js
+            terser js/index.js --compress --mangle --output dist/js/index.js
           else
             echo "warning: js/index.js not found" >&2
           fi
 
           # 2) Minify CSS
           if [ -f css/index.css ]; then
-            cleancss -o dist/index.css css/index.css
+            cleancss -o dist/css/index.css css/index.css
           else
             echo "warning: css/index.css not found" >&2
           fi
@@ -53,7 +53,7 @@ jobs:
               index.html -o dist/index.html
           else
             echo "warning: index.html not found" >&2
-          fi
+          fi      
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
