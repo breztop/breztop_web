@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024" fill="none">
+  <title>breinput — a unified input layer</title>
+  <desc>Keyboard, pointer and touch events connect to injection, monitoring, recording and playback through a unified event model.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#c5b7d5"/></pattern>
+  </defs>
+  <rect width="1536" height="1024" rx="32" fill="#eee7f5"/>
+  <rect width="1536" height="1024" rx="32" fill="url(#grid)"/>
+  <g font-family="Consolas, monospace">
+    <text x="88" y="115" font-size="22" letter-spacing="4" fill="#6440be">C++23 / INPUT LIBRARY</text>
+    <text x="82" y="245" font-size="112" font-weight="700" letter-spacing="-7" fill="#302940">breinput<tspan fill="#805ac3">_</tspan></text>
+    <rect x="1195" y="78" width="253" height="52" rx="26" fill="#302940"/>
+    <text x="1322" y="111" text-anchor="middle" font-size="18" fill="#eee7f5">PRESS → RELEASE</text>
+    <g stroke="#ac99c8" stroke-width="3">
+      <path d="M358 473V580H768M768 473V620M1178 473V580H768V620"/>
+      <path d="M768 712V755M768 755H236V794M768 755H590V794M768 755H944V794M768 755H1298V794"/>
+    </g>
+    <g fill="#c9badc"><rect x="228" y="326" width="260" height="163" rx="24"/><rect x="638" y="326" width="260" height="163" rx="24"/><rect x="1048" y="326" width="260" height="163" rx="24"/></g>
+    <g fill="#fffdf9" stroke="#b3a2ca" stroke-width="2"><rect x="228" y="310" width="260" height="163" rx="24"/><rect x="638" y="310" width="260" height="163" rx="24"/><rect x="1048" y="310" width="260" height="163" rx="24"/></g>
+    <text x="358" y="398" text-anchor="middle" font-size="64" font-weight="700" fill="#6440be">A</text>
+    <path d="M744 345L800 382L773 389L762 416Z" fill="#6440be"/>
+    <g stroke="#6440be" stroke-width="5"><circle cx="1178" cy="372" r="13"/><path d="M1142 385a40 40 0 1 1 72 0M1120 397a64 64 0 1 1 116 0" stroke-linecap="round"/></g>
+    <g text-anchor="middle" font-size="18" letter-spacing="2" fill="#625c71"><text x="358" y="442">KEYBOARD</text><text x="768" y="442">POINTER</text><text x="1178" y="442">TOUCH</text></g>
+    <rect x="473" y="620" width="590" height="92" rx="16" fill="#6440be"/>
+    <text x="768" y="677" text-anchor="middle" font-size="28" letter-spacing="3" fill="#fffdf9">UNIFIED EVENT MODEL</text>
+    <g fill="#302940"><rect x="86" y="794" width="300" height="85" rx="14"/><rect x="440" y="794" width="300" height="85" rx="14"/><rect x="794" y="794" width="300" height="85" rx="14"/><rect x="1148" y="794" width="300" height="85" rx="14"/></g>
+    <g text-anchor="middle" font-size="25" fill="#eee7f5"><text x="236" y="846">Injector</text><text x="590" y="846">Monitor</text><text x="944" y="846">Recorder</text><text x="1298" y="846">Playback</text></g>
+    <text x="88" y="963" font-size="19" letter-spacing="2" fill="#625c71">WINDOWS / macOS / X11 / WAYLAND</text>
+    <text x="1448" y="963" text-anchor="end" font-size="19" fill="#6440be">INPUT LAB — 13</text>
+  </g>
+</svg>

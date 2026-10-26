@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="这不是一个只会吐出一行文字的唇语模型 Demo，而是一条把无声视频变成可消费媒体的本地流水线：系统仅分析连续嘴部画面，识别英语文本、分段生成字幕、并行合成自然语音，再让视频、字幕与 TTS 始终服从同一条时间轴。124 秒视频约 30 秒完成 GPU 识别，速度快到足以一边推理、一边播放。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f6ee">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Lipreading Studio · DEV / WORKS</title>
+  <link rel="canonical" href="https://brez.top/project-show/projects/lipreading-studio/">
+  <link rel="icon" href="../../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles/base.css">
+  <link rel="stylesheet" href="../../styles/lipreading-studio.css">
+  <link rel="stylesheet" href="../../styles/native.css">
+  <script src="../../main.js" defer></script>
+</head>
+<body data-page="lipreading-studio" id="top">
+  <a class="skip-link" href="#main-content" data-view-app="">跳到主要内容</a>
+  <div class="park-return-row shell">
+    <a class="park-return" href="../../../" aria-label="返回 brez.top 微风游乐园">← 微风游乐园</a>
+    <span aria-hidden="true">PROJECT / 作品集</span>
+  </div>
+  <header class="site-header shell" data-view-app="">
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <nav aria-label="主导航" data-view-app="">
+      <a href="../../" data-view-app="" data-nav="home">首页</a>
+      <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
+      <a href="../../#about" data-view-app="" data-nav="about">关于我</a>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1" data-view-app="">
+    <article class="studio-page" data-view-project-detail-view="" data-view-lipreading-studio-page="">
+      <header class="studio-bar" data-view-lipreading-studio-page="">
+        <a href="../" data-view-lipreading-studio-page="">← 全部作品</a>
+        <div class="transport" aria-label="编辑界面示意" data-view-lipreading-studio-page="">
+          <i data-view-lipreading-studio-page="">◀</i>
+          <b data-view-lipreading-studio-page="">▶</b>
+          <i data-view-lipreading-studio-page="">▶</i>
+          <time data-view-lipreading-studio-page="">00:00:00:00</time>
+        </div>
+        <span data-view-lipreading-studio-page="">LOCAL STUDIO / 2026</span>
+      </header>
+      <section class="hero" data-view-lipreading-studio-page="">
+        <div class="hero-copy" data-view-lipreading-studio-page="">
+          <p data-view-lipreading-studio-page="">SILENT VIDEO TO SYNCHRONIZED SPEECH</p>
+          <h1 data-view-lipreading-studio-page="">LIPREADING<br data-view-lipreading-studio-page=""><i data-view-lipreading-studio-page="">STUDIO</i></h1>
+          <div class="project-byline" data-view-lipreading-studio-page="" data-view-project-byline="">
+            <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>视觉语音算法 / GPU 推理优化 / 媒体时间轴与播放系统</p>
+            <ul aria-label="核心特点" data-view-project-byline="">
+              <li data-view-project-byline="">Visual Speech</li>
+              <li data-view-project-byline="">Conformer</li>
+              <li data-view-project-byline="">CTC / Attention</li>
+            </ul>
+          </div>
+          <h2 data-view-lipreading-studio-page="">纯视觉识别、分段流式推理与字幕 / TTS 统一时间轴</h2>
+          <div class="hero-meta" data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">08 / LIP / CONFORMER / SUBTITLE / TTS TIMELINE</span>
+            <span data-view-lipreading-studio-page="">8-STAGE STACK</span>
+          </div>
+        </div>
+        <figure class="video-monitor" data-view-lipreading-studio-page="">
+          <img class="project-image" src="../../images/projects/lipreading-cover-1280.webp" srcset="../../images/projects/lipreading-cover-640.webp 640w, ../../images/projects/lipreading-cover-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 80vw" alt="Lipreading Studio 本地唇语识别系统，展示嘴部定位、视觉语音模型、分段字幕、TTS 波形和统一视频时间轴" width="1280" height="853" loading="eager" fetchpriority="high" decoding="async" data-view-lipreading-studio-page="" data-view-project-image="">
+          <div class="safe-frame" aria-hidden="true" data-view-lipreading-studio-page="">
+            <i data-view-lipreading-studio-page=""></i>
+            <i data-view-lipreading-studio-page=""></i>
+            <i data-view-lipreading-studio-page=""></i>
+            <i data-view-lipreading-studio-page=""></i>
+          </div>
+          <figcaption data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">工作流概念示意</span><b data-view-lipreading-studio-page="">PURE VISUAL</b><time data-view-lipreading-studio-page="">00:00:24:18</time></figcaption>
+          <p data-view-lipreading-studio-page="">“这不是一个只会吐出一行文字的唇语模型 Demo，而是一条把无声视频变成可消费媒体的本地流水线”</p>
+        </figure>
+      </section>
+      <section class="master-timeline" data-view-lipreading-studio-page="">
+        <div class="ruler" data-view-lipreading-studio-page="">
+          <span data-view-lipreading-studio-page="">00:00</span>
+          <span data-view-lipreading-studio-page="">00:15</span>
+          <span data-view-lipreading-studio-page="">00:30</span>
+          <span data-view-lipreading-studio-page="">00:45</span>
+          <span data-view-lipreading-studio-page="">00:60</span>
+          <span data-view-lipreading-studio-page="">00:75</span>
+          <span data-view-lipreading-studio-page="">00:90</span>
+          <span data-view-lipreading-studio-page="">00:105</span>
+          <span data-view-lipreading-studio-page="">00:120</span>
+        </div>
+        <div class="playhead" aria-hidden="true" data-view-lipreading-studio-page=""></div>
+        <div class="track video-track" data-view-lipreading-studio-page="">
+          <strong data-view-lipreading-studio-page="">V1<br data-view-lipreading-studio-page=""><small data-view-lipreading-studio-page="">VIDEO</small></strong>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+          <i data-view-lipreading-studio-page=""></i>
+        </div>
+        <div class="track subtitle-track" data-view-lipreading-studio-page="">
+          <strong data-view-lipreading-studio-page="">S1<br data-view-lipreading-studio-page=""><small data-view-lipreading-studio-page="">SUBTITLE</small></strong>
+          <span class="clip-0" data-view-lipreading-studio-page="">纯视觉英语识别：不读取原视频声音，只分析连续嘴部画面</span>
+          <span class="clip-1" data-view-lipreading-studio-page="">视觉前端 + Conformer + CTC/Attention 混合解码，形成完整视觉语音模型链路</span>
+          <span class="clip-2" data-view-lipreading-studio-page="">YuNet 关键点驱动的嘴部定位、对齐、裁剪与时序平滑，自动产出模型连续帧</span>
+          <span class="clip-3" data-view-lipreading-studio-page="">CUDA GPU 推理：124 秒视频约 30 秒完成识别，快于视频自然播放速度</span>
+          <span class="clip-4" data-view-lipreading-studio-page="">5 秒级分段流式处理，片段一完成就立即输出字幕并准备 TTS</span>
+        </div>
+        <div class="track audio-track" data-view-lipreading-studio-page="">
+          <strong data-view-lipreading-studio-page="">A1<br data-view-lipreading-studio-page=""><small data-view-lipreading-studio-page="">TTS</small></strong>
+          <div data-view-lipreading-studio-page="">
+            <i style="height:26%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:51%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:36%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:78%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:64%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:42%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:85%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:58%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:28%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:66%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:91%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:47%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:73%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:34%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:59%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:80%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:44%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:68%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:24%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:54%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:87%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:39%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:71%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:49%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:63%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:31%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:76%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:56%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:89%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:43%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:67%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:37%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:82%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:52%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:72%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:29%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:61%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:92%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:45%;" data-view-lipreading-studio-page=""></i>
+            <i style="height:69%;" data-view-lipreading-studio-page=""></i>
+          </div>
+        </div>
+      </section>
+      <div class="case-content" data-view-lipreading-studio-page="">
+        <section class="project-brief" data-view-lipreading-studio-page="">
+          <aside data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">DIRECTOR / ROLE</span><p data-view-lipreading-studio-page="">视觉语音算法 / GPU 推理优化 / 媒体时间轴与播放系统</p><span data-view-lipreading-studio-page="">PRODUCTION STACK</span><p data-view-lipreading-studio-page="">Python / PyTorch / CUDA / Conformer / YuNet / CTC / Attention / Piper TTS / FFmpeg</p></aside>
+          <div data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">PROJECT SYNOPSIS</span>
+            <p data-view-lipreading-studio-page="">这不是一个只会吐出一行文字的唇语模型 Demo，而是一条把无声视频变成可消费媒体的本地流水线：系统仅分析连续嘴部画面，识别英语文本、分段生成字幕、并行合成自然语音，再让视频、字幕与 TTS 始终服从同一条时间轴。124 秒视频约 30 秒完成 GPU 识别，速度快到足以一边推理、一边播放。</p>
+          </div>
+        </section>
+        <section class="sync-dialogue" data-view-lipreading-studio-page="">
+          <article data-view-lipreading-studio-page="">
+            <time data-view-lipreading-studio-page="">00:00:00,000 → 00:00:05,000</time>
+            <span data-view-lipreading-studio-page="">CHALLENGE / SOURCE</span>
+            <h2 data-view-lipreading-studio-page="">模型看见嘴型，<br data-view-lipreading-studio-page="">媒体需要时间。</h2>
+            <p data-view-lipreading-studio-page="">纯视觉语音识别的难题远不止看清嘴型：人脸尺度、姿态、帧率和嘴部抖动都会影响模型输入；即使文本识别正确，字幕、TTS 和视频若各自计时，也会在流式处理与加速推理下发生漂移。项目需要让模型、分段、语音合成与播放器像一个系统一样工作，而不是把四个脚本串在一起。</p>
+          </article>
+          <article data-view-lipreading-studio-page="">
+            <time data-view-lipreading-studio-page="">00:00:05,001 → 00:00:10,000</time>
+            <span data-view-lipreading-studio-page="">SOLUTION / CONFORMED</span>
+            <h2 data-view-lipreading-studio-page="">一条时间轴，<br data-view-lipreading-studio-page="">统一全部输出。</h2>
+            <p data-view-lipreading-studio-page="">以 YuNet 的人脸与关键点完成嘴部定位、对齐、裁剪和平滑，向视觉前端、Conformer 与 CTC/Attention 混合解码器稳定提供连续帧。视频按固定窗口分段后，首段一完成就生成统一的 start_s + end_s + text + audio 记录；字幕渲染、Piper TTS 与播放调度只读取这份记录，并以视频帧作为唯一播放时钟，彻底切断推理速度对同步结果的影响。</p>
+          </article>
+        </section>
+        <section class="deliverables" data-view-lipreading-studio-page="">
+          <header data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">EDIT DECISIONS / 01</span>
+            <h2 data-view-lipreading-studio-page="">每个输出，都是时间轴上的一次决定。</h2>
+          </header>
+          <div class="decision-list" data-view-lipreading-studio-page="">
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:00:00</time>
+              <span class="yellow" data-view-lipreading-studio-page="">SYNC</span>
+              <p data-view-lipreading-studio-page="">纯视觉英语识别：不读取原视频声音，只分析连续嘴部画面</p>
+              <i data-view-lipreading-studio-page="">01</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:05:00</time>
+              <span class="violet" data-view-lipreading-studio-page="">RENDER</span>
+              <p data-view-lipreading-studio-page="">视觉前端 + Conformer + CTC/Attention 混合解码，形成完整视觉语音模型链路</p>
+              <i data-view-lipreading-studio-page="">02</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:10:00</time>
+              <span class="yellow" data-view-lipreading-studio-page="">SYNC</span>
+              <p data-view-lipreading-studio-page="">YuNet 关键点驱动的嘴部定位、对齐、裁剪与时序平滑，自动产出模型连续帧</p>
+              <i data-view-lipreading-studio-page="">03</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:15:00</time>
+              <span class="violet" data-view-lipreading-studio-page="">RENDER</span>
+              <p data-view-lipreading-studio-page="">CUDA GPU 推理：124 秒视频约 30 秒完成识别，快于视频自然播放速度</p>
+              <i data-view-lipreading-studio-page="">04</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:20:00</time>
+              <span class="yellow" data-view-lipreading-studio-page="">SYNC</span>
+              <p data-view-lipreading-studio-page="">5 秒级分段流式处理，片段一完成就立即输出字幕并准备 TTS</p>
+              <i data-view-lipreading-studio-page="">05</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:25:00</time>
+              <span class="violet" data-view-lipreading-studio-page="">RENDER</span>
+              <p data-view-lipreading-studio-page="">识别、Piper 合成与视频播放并行；首片段就绪后即可边处理边播放</p>
+              <i data-view-lipreading-studio-page="">06</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:30:00</time>
+              <span class="yellow" data-view-lipreading-studio-page="">SYNC</span>
+              <p data-view-lipreading-studio-page="">字幕、语音和视频共用 start_s + end_s + text + audio 时间轴，避免独立计时漂移</p>
+              <i data-view-lipreading-studio-page="">07</i>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">00:35:00</time>
+              <span class="violet" data-view-lipreading-studio-page="">RENDER</span>
+              <p data-view-lipreading-studio-page="">输出分段 JSON、SRT、同 FPS 字幕视频、时间轴 WAV 与带 TTS 音轨的 MP4</p>
+              <i data-view-lipreading-studio-page="">08</i>
+            </article>
+          </div>
+        </section>
+        <section class="studio-rack" data-view-lipreading-studio-page="">
+          <header data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">SIGNAL ROUTING / 02</span>
+            <h2 data-view-lipreading-studio-page="">六条轨道，一次成片。</h2>
+          </header>
+          <div class="rack" data-view-lipreading-studio-page="">
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 1</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:40%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">VISION</small>
+                <h3 data-view-lipreading-studio-page="">Visual Preprocess</h3>
+                <p data-view-lipreading-studio-page="">YuNet 人脸与关键点检测，完成嘴部稳定定位、对齐、裁剪与连续帧构建</p>
+              </div>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 2</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:48%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">VISION</small>
+                <h3 data-view-lipreading-studio-page="">Visual Speech Model</h3>
+                <p data-view-lipreading-studio-page="">视觉前端、Conformer 编码器与 CTC/Attention 混合解码的本地推理路径</p>
+              </div>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 3</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:56%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">INFERENCE</small>
+                <h3 data-view-lipreading-studio-page="">Segment Scheduler</h3>
+                <p data-view-lipreading-studio-page="">按 --segment-seconds 切分视频；片段完成即交给字幕与 TTS，不等待全片</p>
+              </div>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 4</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:64%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">INFERENCE</small>
+                <h3 data-view-lipreading-studio-page="">GPU Runtime</h3>
+                <p data-view-lipreading-studio-page="">CUDA 推理与任务并行，保证识别吞吐可追上甚至超过视频播放节奏</p>
+              </div>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 5</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:72%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">MEDIA</small>
+                <h3 data-view-lipreading-studio-page="">Unified Timeline</h3>
+                <p data-view-lipreading-studio-page="">start_s、end_s、text、audio 是所有输出的唯一事实来源</p>
+              </div>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <div class="channel" data-view-lipreading-studio-page="">
+                <span data-view-lipreading-studio-page="">CH 6</span>
+                <i data-view-lipreading-studio-page=""></i>
+                <i data-view-lipreading-studio-page=""></i>
+                <b style="height:80%;" data-view-lipreading-studio-page=""></b>
+              </div>
+              <div data-view-lipreading-studio-page="">
+                <small data-view-lipreading-studio-page="">MEDIA</small>
+                <h3 data-view-lipreading-studio-page="">Media Export</h3>
+                <p data-view-lipreading-studio-page="">分段 JSON、SRT、同 FPS 字幕视频、时间轴 WAV 与 TTS 音轨 MP4</p>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="production-cues" data-view-lipreading-studio-page="">
+          <p class="roadmap-note" data-view-lipreading-studio-page="">后续演进 · 以下为路线图，具体阶段以项目说明为准。</p>
+          <header data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">PRODUCTION CUES / 03</span>
+            <h2 data-view-lipreading-studio-page="">从离线识别到边处理边播放</h2>
+          </header>
+          <div data-view-lipreading-studio-page="">
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">MARKER 01</time>
+              <span data-view-lipreading-studio-page="">MVP</span>
+              <h3 data-view-lipreading-studio-page="">先让无声视频稳定地产生可用文本</h3>
+              <ul data-view-lipreading-studio-page="">
+                <li data-view-lipreading-studio-page="">嘴部预处理与连续帧生成</li>
+                <li data-view-lipreading-studio-page="">视觉语音模型本地推理</li>
+                <li data-view-lipreading-studio-page="">分段 JSON 与 SRT 输出</li>
+                <li data-view-lipreading-studio-page="">CUDA 加速与离线结果导出</li>
+              </ul>
+            </article>
+            <article data-view-lipreading-studio-page="">
+              <time data-view-lipreading-studio-page="">MARKER 02</time>
+              <span data-view-lipreading-studio-page="">V1</span>
+              <h3 data-view-lipreading-studio-page="">从离线识别，走向可实时消费的媒体系统</h3>
+              <ul data-view-lipreading-studio-page="">
+                <li data-view-lipreading-studio-page="">分段流式识别与首段优先</li>
+                <li data-view-lipreading-studio-page="">Piper TTS 并行合成</li>
+                <li data-view-lipreading-studio-page="">以视频帧为时钟的同步播放</li>
+                <li data-view-lipreading-studio-page="">字幕视频、时间轴 WAV 与成片 MP4 输出</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section class="sync-rules" data-view-lipreading-studio-page="">
+          <header data-view-lipreading-studio-page="">
+            <span data-view-lipreading-studio-page="">SYNC RULES / 04</span>
+            <h2 data-view-lipreading-studio-page="">播放时钟只有一个。</h2>
+          </header>
+          <ol data-view-lipreading-studio-page="">
+            <li data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">RULE 01</span><p data-view-lipreading-studio-page="">纯视觉边界保持明确：识别不读取原始音轨，结果只来自连续嘴部画面。</p></li>
+            <li data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">RULE 02</span><p data-view-lipreading-studio-page="">自然语速优先：语音提前结束就静音等待，超出片段才裁剪，不靠粗暴变速硬塞时间窗。</p></li>
+            <li data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">RULE 03</span><p data-view-lipreading-studio-page="">时间轴只有一个真相：字幕、TTS、视频都从同一组片段时间戳读取位置。</p></li>
+            <li data-view-lipreading-studio-page=""><span data-view-lipreading-studio-page="">RULE 04</span><p data-view-lipreading-studio-page="">视频帧才是播放时钟：GPU 可以跑得更快，但语音绝不会因此提前开口。</p></li>
+          </ol>
+        </section>
+      </div>
+    </article>
+    <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
+      <section class="related" data-view-project-navigation="">
+        <h2 data-view-project-navigation="">沿着这个想法，继续看看</h2>
+        <div data-view-project-navigation="">
+          <a href="../face-scan/" data-view-project-navigation="">Face Scan <span aria-hidden="true" data-view-project-navigation="">↗</span></a>
+        </div>
+      </section>
+      <nav class="project-pagination" aria-label="项目翻页" data-view-project-navigation="">
+        <a href="../miracast-bridge/" class="previous" data-view-project-navigation=""><small data-view-project-navigation="">← 上一个项目</small><strong data-view-project-navigation="">Miracast Connect Service</strong></a>
+        <a href="../" class="all-projects" data-view-project-navigation="">全部作品 <span aria-hidden="true" data-view-project-navigation="">▦</span></a>
+        <a href="../tribal-war/" class="next" data-view-project-navigation=""><small data-view-project-navigation="">下一个项目 →</small><strong data-view-project-navigation="">部落战 · 3D</strong></a>
+      </nav>
+    </div>
+  </main>
+  <footer class="site-footer shell" data-view-app="">
+    <span data-view-app="">© 2026 DEV / WORKS</span>
+    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <a href="#top" data-back-top="">回到顶部 ↑</a>
+  </footer>
+</body>
+</html>

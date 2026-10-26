@@ -2,6 +2,7 @@ import { readFile, readdir, lstat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { publicFiles } from './public-files.mjs';
+import { portfolioProjectIds } from './portfolio-files.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const directory = process.argv[2] ? path.resolve(process.argv[2]) : root;
@@ -12,7 +13,8 @@ for (const file of publicFiles) {
   const target = path.join(directory, file);
   try {
     if (!(await lstat(target)).isFile()) throw new Error('Not a regular file');
-    const text = await readFile(target, 'utf8');
+    // Raster assets are checked for presence, without interpreting binary bytes as personal data.
+    const text = /\.(?:html|css|js|svg|xml|json)$/.test(file) ? await readFile(target, 'utf8') : '';
     content.set(file, text);
     // Report the path only: a failing scan must never echo private values to CI logs.
     if (/(?<![\d.])(?:\+?86[ -]?)?1[3-9]\d{9}(?![\d.])/.test(text)) {
@@ -46,12 +48,32 @@ if (/\b(?:fetch|XMLHttpRequest|WebSocket|localStorage|sessionStorage)\b|\bdocume
 if (!(content.get('index.html') || '').includes('href="./personal-match-site/"')) {
   problems.push('Home page is missing the personal-page entrance');
 }
+if (!(content.get('index.html') || '').includes('href="./project-show/"')) {
+  problems.push('Home page is missing its separate Project entrance');
+}
+for (const id of portfolioProjectIds) {
+  if (!content.has(`project-show/projects/${id}/index.html`) || !content.has(`project-show/styles/${id}.css`)) {
+    problems.push(`Portfolio is missing the independent ${id} page or stylesheet`);
+  }
+}
+for (const [file, text] of content) {
+  if (!file.startsWith('project-show/')) continue;
+  if (/<RouterLink\b|\bv-(?:for|if|model)=|data-v-[a-f\d]{8}|__VUE__|\b(?:createApp|createRouter|defineAsyncComponent)\s*\(/.test(text)) {
+    problems.push(`${file}: leftover framework code in the native portfolio`);
+  }
+  if (/\.(?:html|js|css|svg)$/.test(file) && /(?:[A-Z]:[\\/](?:Users|1_Code)|file:\/\/)/i.test(text)) {
+    problems.push(`${file}: local workstation path must not be published`);
+  }
+}
 
 // Resolve every local HTML reference, including anchors, against the files being published.
 for (const [file, text] of content) {
   if (!file.endsWith('.html')) continue;
-  for (const match of text.matchAll(/\b(?:href|src)=["']([^"']*)["']/g)) {
-    const reference = match[1];
+  const references = [...text.matchAll(/\b(?:href|src)=["']([^"']*)["']/g)].map(match => match[1]);
+  for (const match of text.matchAll(/\bsrcset=["']([^"']*)["']/g)) {
+    references.push(...match[1].split(',').map(candidate => candidate.trim().split(/\s+/)[0]));
+  }
+  for (const reference of references) {
     if (!reference || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(reference)) continue;
     const [urlPath, fragment] = reference.split('#');
     let resolved = urlPath.startsWith('/') ? urlPath.slice(1) : path.posix.join(path.posix.dirname(file), urlPath || path.posix.basename(file));

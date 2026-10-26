@@ -1,6 +1,6 @@
 # brez.top 微风游乐园
 
-主站和 `personal-match-site/` 使用原生 HTML、CSS 和 JavaScript。构建脚本仅做文件校验和白名单复制，无需安装项目依赖。
+主站、`personal-match-site/` 和 `project-show/` 均使用原生 HTML、CSS 和 JavaScript。构建脚本仅做文件校验和白名单复制，无需安装项目依赖。
 
 ## 构建与预览
 
@@ -12,6 +12,8 @@ python -m http.server 4173 --bind 127.0.0.1 --directory dist
 ```
 
 打开 `http://127.0.0.1:4173/`，从园区导览中的「交友」或碰碰车招牌进入子页。子页资源和返回链接使用相对路径，也支持 GitHub Pages 的项目路径。
+
+作品集从独立的 **Project / 风车塔** 进入 `project-show/`；Resume 继续指向原简历站。原 Vue 作品站的首页、作品库和 16 个独立详情页已经转成可直接浏览的 HTML，各自的 CSS 设计完整保留，搜索与分类改为原生 JavaScript。原 `project_show` 工程保留，原生站不依赖该目录或其 node_modules。开发说明见 `project-show/README.md`，新增文件时同步更新 `scripts/portfolio-files.mjs` 发布白名单。
 
 `scripts/public-files.mjs` 是发布文件白名单。构建只复制这些文件到 `dist/`，校验缺失资源、个人电话特征、常见密钥特征及子页的隐私约束。它是基础检查，不能替代对新增内容的人工审查。
 

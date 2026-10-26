@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="将房间创建、玩家会合、会话维护与连接协商从单一游戏玩法中抽离出来，形成可被元素人及后续多人项目复用的联机基础服务。项目只需接入标准房间与信令接口，就能把重点留给自身的玩法规则与状态裁决。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f6ee">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>通用多人游戏联机服务 · DEV / WORKS</title>
+  <link rel="canonical" href="https://brez.top/project-show/projects/p2p-server/">
+  <link rel="icon" href="../../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles/base.css">
+  <link rel="stylesheet" href="../../styles/p2p-server.css">
+  <link rel="stylesheet" href="../../styles/native.css">
+  <script src="../../main.js" defer></script>
+</head>
+<body data-page="p2p-server" id="top">
+  <a class="skip-link" href="#main-content" data-view-app="">跳到主要内容</a>
+  <div class="park-return-row shell">
+    <a class="park-return" href="../../../" aria-label="返回 brez.top 微风游乐园">← 微风游乐园</a>
+    <span aria-hidden="true">PROJECT / 作品集</span>
+  </div>
+  <header class="site-header shell" data-view-app="">
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <nav aria-label="主导航" data-view-app="">
+      <a href="../../" data-view-app="" data-nav="home">首页</a>
+      <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
+      <a href="../../#about" data-view-app="" data-nav="about">关于我</a>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1" data-view-app="">
+    <article class="session-page" data-view-project-detail-view="" data-view-matchmaking-server-page="">
+      <header class="session-bar" data-view-matchmaking-server-page="">
+        <a href="../" class="back" data-view-matchmaking-server-page="">← 全部作品</a>
+        <div class="environment" data-view-matchmaking-server-page="">
+          <i data-view-matchmaking-server-page=""></i>
+          SESSION SERVICE
+          <span data-view-matchmaking-server-page="">ONLINE</span>
+        </div>
+        <span class="build" data-view-matchmaking-server-page="">BUILD 2025.01B</span>
+      </header>
+      <div class="case-content" data-view-matchmaking-server-page="">
+        <section class="hero" data-view-matchmaking-server-page="">
+          <div class="hero-copy" data-view-matchmaking-server-page="">
+            <p class="prompt" data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">operator@portfolio</span>:~/services/p2p-server$ inspect --live</p>
+            <p class="kicker" data-view-matchmaking-server-page="">MATCHMAKING &amp; SIGNALING</p>
+            <h1 data-view-matchmaking-server-page="">通用多人游戏联机服务</h1>
+            <div class="project-byline" data-view-matchmaking-server-page="" data-view-project-byline="">
+              <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>服务端开发 / 通用接口设计 / 多项目联机基础设施</p>
+              <ul aria-label="核心特点" data-view-project-byline="">
+                <li data-view-project-byline="">通用服务</li>
+                <li data-view-project-byline="">房间服务</li>
+                <li data-view-project-byline="">P2P 信令</li>
+              </ul>
+            </div>
+            <p class="summary" data-view-matchmaking-server-page="">将房间创建、玩家会合、会话维护与连接协商从单一游戏玩法中抽离出来，形成可被元素人及后续多人项目复用的联机基础服务。项目只需接入标准房间与信令接口，就能把重点留给自身的玩法规则与状态裁决。</p>
+            <div class="actions" data-view-matchmaking-server-page="">
+              <a href="#session-flow" data-view-matchmaking-server-page="">查看会话流程 ↓</a>
+              <span data-view-matchmaking-server-page="">STATUS / REUSABLE</span>
+            </div>
+          </div>
+          <figure class="monitor" data-view-matchmaking-server-page="">
+            <div class="monitor-head" data-view-matchmaking-server-page="">
+              <span data-view-matchmaking-server-page="">orchestrator.trace</span>
+              <span data-view-matchmaking-server-page="">● ● ●</span>
+            </div>
+            <img class="project-image" src="../../images/projects/p2p-cover-1280.webp" srcset="../../images/projects/p2p-cover-640.webp 640w, ../../images/projects/p2p-cover-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 80vw" alt="通用多人游戏服务中负责房间、会话与连接编排的服务端概念画面" width="1280" height="853" loading="eager" fetchpriority="high" decoding="async" data-view-matchmaking-server-page="" data-view-project-image="">
+            <figcaption data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i> room_01 / accepting peers</span><strong data-view-matchmaking-server-page="">链路示意</strong></figcaption>
+          </figure>
+        </section>
+        <section class="service-facts" aria-label="项目元信息" data-view-matchmaking-server-page="">
+          <div data-view-matchmaking-server-page="">
+            <span data-view-matchmaking-server-page="">RESPONSIBILITY</span>
+            <strong data-view-matchmaking-server-page="">服务端开发 / 通用接口设计 / 多项目联机基础设施</strong>
+          </div>
+          <div data-view-matchmaking-server-page="">
+            <span data-view-matchmaking-server-page="">TRANSPORT / STACK</span>
+            <strong data-view-matchmaking-server-page="">WebSocket  ·  房间服务  ·  会话管理  ·  P2P 信令  ·  通用游戏服务</strong>
+          </div>
+          <div data-view-matchmaking-server-page="">
+            <span data-view-matchmaking-server-page="">SERVICE CONTRACT</span>
+            <strong data-view-matchmaking-server-page="">Room → Session → Signal → Cleanup</strong>
+          </div>
+        </section>
+        <section id="session-flow" class="flow-section" data-view-matchmaking-server-page="">
+          <header data-view-matchmaking-server-page="">
+            <span data-view-matchmaking-server-page="">会话流程示意</span>
+            <h2 data-view-matchmaking-server-page="">一局连接，五次状态交接</h2>
+          </header>
+          <ol class="flow" data-view-matchmaking-server-page="">
+            <li data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">01</span><div data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i><strong data-view-matchmaking-server-page="">面向多项目的房间创建、加入与销毁</strong></div><code data-view-matchmaking-server-page="">confirmed</code></li>
+            <li data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">02</span><div data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i><strong data-view-matchmaking-server-page="">客户端会合与 P2P 信令转发</strong></div><code data-view-matchmaking-server-page="">confirmed</code></li>
+            <li data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">03</span><div data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i><strong data-view-matchmaking-server-page="">玩家会话、在线状态与连接生命周期管理</strong></div><code data-view-matchmaking-server-page="">confirmed</code></li>
+            <li data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">04</span><div data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i><strong data-view-matchmaking-server-page="">标准化接口，玩法规则与项目状态保持解耦</strong></div><code data-view-matchmaking-server-page="">confirmed</code></li>
+            <li data-view-matchmaking-server-page=""><span data-view-matchmaking-server-page="">05</span><div data-view-matchmaking-server-page=""><i data-view-matchmaking-server-page=""></i><strong data-view-matchmaking-server-page="">超时、断线、重复连接与异常资源回收</strong></div><code data-view-matchmaking-server-page="">closed</code></li>
+          </ol>
+        </section>
+        <section class="diagnosis" data-view-matchmaking-server-page="">
+          <article class="incident" data-view-matchmaking-server-page="">
+            <span class="label" data-view-matchmaking-server-page="">INCIDENT / 001</span>
+            <h2 data-view-matchmaking-server-page="">通用服务不应该知道游戏规则。</h2>
+            <p data-view-matchmaking-server-page="">通用联机服务不能假设某一种角色、回合或关卡规则：它需要在玩家进入、离开、重复连接和房间失效时稳定维护会话，同时保持足够小的项目耦合面，让不同游戏各自拥有玩法权威。</p>
+            <div class="log-lines" aria-hidden="true" data-view-matchmaking-server-page="">
+              <span data-view-matchmaking-server-page="">WARN duplicate_peer / identity exists</span>
+              <span data-view-matchmaking-server-page="">INFO heartbeat_timeout / reclaim pending</span>
+              <span data-view-matchmaking-server-page="">TRACE gameplay_state / ignored by service</span>
+            </div>
+          </article>
+          <article class="resolution" data-view-matchmaking-server-page="">
+            <span class="label" data-view-matchmaking-server-page="">RESOLUTION / PASSED</span>
+            <h2 data-view-matchmaking-server-page="">把会合与玩法彻底拆开。</h2>
+            <p data-view-matchmaking-server-page="">以房间、玩家会话与连接协商为最小通用领域模型，明确创建、加入、信令转发、超时与清理流程；为关键消息提供身份与状态校验，并把具体玩法状态留在项目侧，使服务可作为多个多人项目的连接底座持续复用。</p>
+            <div class="contract" data-view-matchmaking-server-page="">
+              <span data-view-matchmaking-server-page="">ROOM</span>
+              <b data-view-matchmaking-server-page="">→</b>
+              <span data-view-matchmaking-server-page="">PEER</span>
+              <b data-view-matchmaking-server-page="">→</b>
+              <span data-view-matchmaking-server-page="">SIGNAL</span>
+              <b data-view-matchmaking-server-page="">→</b>
+              <span data-view-matchmaking-server-page="">P2P</span>
+            </div>
+          </article>
+        </section>
+      </div>
+    </article>
+    <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
+      <nav class="project-pagination" aria-label="项目翻页" data-view-project-navigation="">
+        <a href="../p2p/" class="previous" data-view-project-navigation=""><small data-view-project-navigation="">← 上一个项目</small><strong data-view-project-navigation="">元素人</strong></a>
+        <a href="../" class="all-projects" data-view-project-navigation="">全部作品 <span aria-hidden="true" data-view-project-navigation="">▦</span></a>
+        <a href="../elemental-3d/" class="next" data-view-project-navigation=""><small data-view-project-navigation="">下一个项目 →</small><strong data-view-project-navigation="">元素人：3D 协作系统</strong></a>
+      </nav>
+    </div>
+  </main>
+  <footer class="site-footer shell" data-view-app="">
+    <span data-view-app="">© 2026 DEV / WORKS</span>
+    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <a href="#top" data-back-top="">回到顶部 ↑</a>
+  </footer>
+</body>
+</html>

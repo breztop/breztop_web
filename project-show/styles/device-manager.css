@@ -1,0 +1,528 @@
+.device-page[data-view-device-manager-page] {
+  min-height: 100vh;
+  background: #17191d;
+  color: #e9edf2;
+  font-family: Inter,"Segoe UI",sans-serif;
+  padding: 22px;
+}
+.os-bar[data-view-device-manager-page] {
+  height: 48px;
+  max-width: 1500px;
+  margin: auto;
+  background: #292c32;
+  border: 1px solid #3c4048;
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 12px;
+}
+.back[data-view-device-manager-page] {
+  color: #aeb5c0;
+  text-decoration: none;
+}
+.back[data-view-device-manager-page]:hover {
+  color: #fff;
+}
+.window-title[data-view-device-manager-page] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+}
+.app-icon[data-view-device-manager-page] {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  background: linear-gradient(135deg,#8f7cff,#5b4ac8);
+  border-radius: 6px;
+  font-size: 9px;
+}
+.window-actions[data-view-device-manager-page] {
+  justify-self: end;
+  display: flex;
+}
+.window-actions i[data-view-device-manager-page] {
+  width: 42px;
+  height: 20px;
+  border-left: 1px solid #3b3e45;
+}
+.app-window[data-view-device-manager-page] {
+  max-width: 1500px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 230px minmax(0,1fr);
+  background: #202329;
+  border: 1px solid #3c4048;
+  box-shadow: 0 24px 70px #06070a99;
+}
+.sidebar[data-view-device-manager-page] {
+  background: #191b20;
+  border-right: 1px solid #373a42;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 92px);
+}
+.brand[data-view-device-manager-page] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 28px;
+}
+.brand>span[data-view-device-manager-page] {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: #7564eb;
+  border-radius: 9px;
+  font-weight: 800;
+}
+.brand strong[data-view-device-manager-page] {
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: .13em;
+}
+.sidebar nav[data-view-device-manager-page] {
+  display: grid;
+  gap: 3px;
+}
+.sidebar a[data-view-device-manager-page] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  color: #999faa;
+  text-decoration: none;
+  font-size: 12px;
+  border-radius: 6px;
+}
+.sidebar a[data-view-device-manager-page]:hover,.sidebar a.active[data-view-device-manager-page] {
+  background: #2a2d35;
+  color: #fff;
+}
+.sidebar a.active[data-view-device-manager-page] {
+  box-shadow: inset 2px 0 #9485ff;
+}
+.sidebar a i[data-view-device-manager-page] {
+  font-style: normal;
+  font-family: monospace;
+  color: #7e8490;
+  font-size: 10px;
+  width: 20px;
+}
+.connection[data-view-device-manager-page] {
+  margin-top: auto;
+  border-top: 1px solid #353840;
+  padding: 20px 10px 0;
+  font: 10px/1.6 monospace;
+  color: #aab0ba;
+}
+.connection span[data-view-device-manager-page] {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: #68d899;
+  box-shadow: 0 0 10px #68d899;
+}
+.connection small[data-view-device-manager-page] {
+  color: #666d78;
+}
+.case-content[data-view-device-manager-page] {
+  min-width: 0;
+  padding: 42px 46px 0;
+}
+.dashboard-head[data-view-device-manager-page] {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+.dashboard-head p[data-view-device-manager-page],.section-label[data-view-device-manager-page] {
+  font: 10px/1.2 monospace;
+  letter-spacing: .14em;
+  color: #8b92a0;
+}
+.dashboard-head h1[data-view-device-manager-page] {
+  font-size: clamp(42px,6vw,82px);
+  letter-spacing: -.055em;
+  line-height: 1.1;
+  margin: 14px 0 14px;
+}
+.dashboard-head h2[data-view-device-manager-page] {
+  margin: 0;
+  color: #aeb4bf;
+  font-weight: 400;
+  font-size: 16px;
+}
+.stack[data-view-device-manager-page] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 24px;
+}
+.stack span[data-view-device-manager-page] {
+  font: 10px monospace;
+  color: #c8c4ff;
+  background: #302d47;
+  border: 1px solid #494469;
+  padding: 7px 10px;
+  border-radius: 4px;
+}
+.health-score[data-view-device-manager-page] {
+  min-width: 150px;
+  border: 1px solid #39413f;
+  background: #222a28;
+  padding: 16px;
+}
+.health-score span[data-view-device-manager-page],.health-score i[data-view-device-manager-page] {
+  display: block;
+  font: 9px monospace;
+  color: #7e8a86;
+}
+.health-score strong[data-view-device-manager-page] {
+  display: block;
+  color: #78e6aa;
+  font-size: 24px;
+  margin: 9px 0;
+}
+.health-score i[data-view-device-manager-page] {
+  font-style: normal;
+}
+.overview-grid[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: minmax(0,1.55fr) minmax(230px,.45fr);
+  gap: 14px;
+}
+.device-preview[data-view-device-manager-page],.meta-panel[data-view-device-manager-page] {
+  margin: 0;
+  border: 1px solid #3a3e46;
+  background: #181a1f;
+}
+.preview-toolbar[data-view-device-manager-page] {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #393d45;
+  padding: 10px 14px;
+  font: 9px monospace;
+  color: #8b92a0;
+}
+.preview-toolbar span[data-view-device-manager-page]:last-child {
+  color: #73d9a1;
+}
+.device-preview img[data-view-device-manager-page] {
+  display: block;
+  width: 100%;
+  height: clamp(260px,36vw,540px);
+  object-fit: contain;
+  background: radial-gradient(circle at 50% 30%,#30343e,#121419 65%);
+}
+.device-preview figcaption[data-view-device-manager-page] {
+  padding: 18px 20px;
+  color: #b6bcc6;
+  font-size: 13px;
+  line-height: 1.7;
+  border-top: 1px solid #32363d;
+}
+.meta-panel[data-view-device-manager-page] {
+  display: grid;
+}
+.meta-panel>div[data-view-device-manager-page] {
+  padding: 20px;
+  border-bottom: 1px solid #32363d;
+}
+.meta-panel>div[data-view-device-manager-page]:last-child {
+  border: 0;
+}
+.meta-panel span[data-view-device-manager-page] {
+  font: 9px monospace;
+  color: #737b87;
+}
+.meta-panel p[data-view-device-manager-page] {
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 10px 0 0;
+}
+.meter b[data-view-device-manager-page] {
+  display: block;
+  height: 5px;
+  background: #343840;
+  margin: 18px 0 8px;
+}
+.meter b i[data-view-device-manager-page] {
+  display: block;
+  width: 86%;
+  height: 100%;
+  background: #7d6ff0;
+}
+.meter small[data-view-device-manager-page] {
+  color: #777f89;
+}
+.diagnosis[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 14px 0 40px;
+}
+.diagnosis article[data-view-device-manager-page] {
+  border: 1px solid #3a3e46;
+  background: #22252b;
+  padding: 22px;
+}
+.diagnosis header[data-view-device-manager-page] {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.diagnosis header>span[data-view-device-manager-page] {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 800;
+}
+.issue header>span[data-view-device-manager-page] {
+  background: #4a352d;
+  color: #ffb292;
+}
+.resolved header>span[data-view-device-manager-page] {
+  background: #244338;
+  color: #74e1ab;
+}
+.diagnosis small[data-view-device-manager-page] {
+  font: 9px monospace;
+  color: #7e8692;
+}
+.diagnosis h2[data-view-device-manager-page] {
+  font-size: 17px;
+  margin: 4px 0;
+}
+.diagnosis p[data-view-device-manager-page] {
+  color: #aab1bc;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 20px 0 0;
+}
+.module-console[data-view-device-manager-page],.implementation[data-view-device-manager-page],.policies[data-view-device-manager-page],.updates[data-view-device-manager-page] {
+  border: 1px solid #3b3f47;
+  background: #1a1c21;
+}
+.section-label[data-view-device-manager-page] {
+  padding: 12px 15px;
+  border-bottom: 1px solid #353941;
+  display: flex;
+  justify-content: space-between;
+}
+.module-list[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.module-list article[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 12px;
+  padding: 18px;
+  border-bottom: 1px solid #31343b;
+}
+.module-list article[data-view-device-manager-page]:nth-child(odd) {
+  border-right: 1px solid #31343b;
+}
+.module-list article>span[data-view-device-manager-page] {
+  font: 10px monospace;
+  color: #6d7480;
+}
+.module-list strong[data-view-device-manager-page] {
+  font-size: 13px;
+}
+.module-list p[data-view-device-manager-page] {
+  font-size: 11px;
+  color: #818895;
+  margin: 6px 0 0;
+}
+.module-list i[data-view-device-manager-page],.updates article i[data-view-device-manager-page] {
+  font: 9px monospace;
+  color: #6ed89e;
+  font-style: normal;
+}
+.report-grid[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 14px;
+  margin: 14px 0;
+}
+.implementation ul[data-view-device-manager-page],.policies ol[data-view-device-manager-page] {
+  list-style: none;
+  padding: 8px 20px 18px;
+  margin: 0;
+}
+.implementation li[data-view-device-manager-page] {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid #30333a;
+  padding: 13px 0;
+  color: #bbc1cb;
+  font-size: 12px;
+}
+.implementation li span[data-view-device-manager-page] {
+  color: #71dda5;
+}
+.policies li[data-view-device-manager-page] {
+  font-size: 11px;
+  color: #9da4af;
+  line-height: 1.6;
+  padding: 12px 0;
+  border-bottom: 1px solid #30333a;
+}
+.policies b[data-view-device-manager-page] {
+  color: #978aff;
+  margin-right: 10px;
+}
+.updates article[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 75px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid #31343b;
+}
+.updates article>span[data-view-device-manager-page] {
+  font: 11px monospace;
+  color: #a899ff;
+}
+.updates strong[data-view-device-manager-page] {
+  font-size: 13px;
+}
+.updates p[data-view-device-manager-page] {
+  font-size: 11px;
+  color: #818895;
+  margin: 5px 0 0;
+}
+.pager[data-view-device-manager-page] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 45px -46px 0;
+  background: #3b3f47;
+}
+.pager a[data-view-device-manager-page] {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 28px 46px;
+  background: #202329;
+  color: #fff;
+  text-decoration: none;
+}
+.pager a[data-view-device-manager-page]:last-child {
+  text-align: right;
+}
+.pager a span[data-view-device-manager-page] {
+  font: 9px monospace;
+  color: #7f8792;
+}
+.pager a strong[data-view-device-manager-page] {
+  font-size: 15px;
+}
+.pager a[data-view-device-manager-page]:hover {
+  background: #272a31;
+}
+@media(max-width:900px) {
+  .device-page[data-view-device-manager-page] {
+    padding: 0;
+  }
+  .os-bar[data-view-device-manager-page] {
+    border-radius: 0;
+    grid-template-columns: 1fr auto;
+  }
+  .window-title[data-view-device-manager-page] {
+    display: none;
+  }
+  .app-window[data-view-device-manager-page] {
+    display: block;
+    border-left: 0;
+    border-right: 0;
+  }
+  .sidebar[data-view-device-manager-page] {
+    display: none;
+  }
+  .case-content[data-view-device-manager-page] {
+    padding: 28px 16px 0;
+  }
+  .dashboard-head[data-view-device-manager-page] {
+    display: block;
+  }
+  .health-score[data-view-device-manager-page] {
+    margin-top: 24px;
+  }
+  .overview-grid[data-view-device-manager-page],.diagnosis[data-view-device-manager-page],.report-grid[data-view-device-manager-page] {
+    grid-template-columns: 1fr;
+  }
+  .device-preview img[data-view-device-manager-page] {
+    height: 240px;
+  }
+  .module-list[data-view-device-manager-page] {
+    grid-template-columns: 1fr;
+  }
+  .module-list article[data-view-device-manager-page]:nth-child(odd) {
+    border-right: 0;
+  }
+  .updates article[data-view-device-manager-page] {
+    grid-template-columns: 55px 1fr;
+  }
+  .updates article i[data-view-device-manager-page] {
+    display: none;
+  }
+  .pager[data-view-device-manager-page] {
+    margin: 34px -16px 0;
+  }
+  .pager a[data-view-device-manager-page] {
+    padding: 22px 16px;
+  }
+  .pager a strong[data-view-device-manager-page] {
+    font-size: 12px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  [data-view-device-manager-page],[data-view-device-manager-page]::before,[data-view-device-manager-page]::after {
+    scroll-behavior: auto!important;
+    transition: none!important;
+    animation: none!important;
+  }
+}
+/* Reading rhythm shared within this case, independent of site styles. */
+.case-content[data-view-device-manager-page] {
+  min-width: 0;
+}
+.case-content section[data-view-device-manager-page] {
+  min-width: 0;
+}
+h1[data-view-device-manager-page],h2[data-view-device-manager-page],h3[data-view-device-manager-page] {
+  overflow-wrap: anywhere;
+}
+h2[data-view-device-manager-page] {
+  line-height: 1.2;
+}
+.roadmap-note[data-view-device-manager-page] {
+  font: 12px/1.8 "Microsoft YaHei",sans-serif;
+  letter-spacing: normal;
+  opacity: .8;
+  margin: 0 0 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid currentColor;
+}
+@media(max-width:900px) {
+  h1[data-view-device-manager-page] {
+    letter-spacing: -.045em;
+  }
+  .case-content[data-view-device-manager-page] {
+    max-width: 100%;
+  }
+}

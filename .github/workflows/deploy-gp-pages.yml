@@ -28,18 +28,20 @@ jobs:
       - name: Build dist folder
         run: |
           node scripts/build-site.mjs
-          terser dist/js/index.js --compress --mangle --output dist/js/index.js
-          terser dist/personal-match-site/main.js --compress --mangle --output dist/personal-match-site/main.js
-          cleancss -o dist/css/index.css dist/css/index.css
-          cleancss -o dist/personal-match-site/styles.css dist/personal-match-site/styles.css
-          for page in dist/index.html dist/404.html dist/personal-match-site/index.html; do
+          while IFS= read -r -d '' script; do
+            terser "$script" --compress --mangle --output "$script"
+          done < <(find dist -type f -name '*.js' -print0)
+          while IFS= read -r -d '' stylesheet; do
+            cleancss -o "$stylesheet" "$stylesheet"
+          done < <(find dist -type f -name '*.css' -print0)
+          while IFS= read -r -d '' page; do
             html-minifier-terser \
               --collapse-whitespace \
               --remove-comments \
               --minify-css true \
               --minify-js true \
               "$page" -o "$page"
-          done
+          done < <(find dist -type f -name '*.html' -print0)
           node scripts/check-site.mjs dist
 
       - name: Deploy to gh-pages branch

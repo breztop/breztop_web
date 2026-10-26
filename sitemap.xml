@@ -54,4 +54,22 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url><loc>https://brez.top/project-show/</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://brez.top/project-show/projects/</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://brez.top/project-show/projects/p2p/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/p2p-server/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/elemental-3d/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/tower/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/cards/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/device-manager/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/screenshot/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/face-scan/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/miracast-bridge/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/lipreading-studio/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/tribal-war/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/tribal-war-2d/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/branching-narrative/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/conutline/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/breconn/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://brez.top/project-show/projects/breinput/</loc><lastmod>2026-10-26</lastmod></url>
 </urlset>

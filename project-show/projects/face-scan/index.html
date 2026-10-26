@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="不是把摄像头喂给一个黑盒云服务，而是把检测、特征提取、轨迹去重、相似度检索和可视化收进同一条本地 Pipeline：给它一张照片，它就能在图片、视频、桌面摄像头和浏览器画面里认真帮你找人。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f6ee">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Face Scan · DEV / WORKS</title>
+  <link rel="canonical" href="https://brez.top/project-show/projects/face-scan/">
+  <link rel="icon" href="../../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles/base.css">
+  <link rel="stylesheet" href="../../styles/face-scan.css">
+  <link rel="stylesheet" href="../../styles/native.css">
+  <script src="../../main.js" defer></script>
+</head>
+<body data-page="face-scan" id="top">
+  <a class="skip-link" href="#main-content" data-view-app="">跳到主要内容</a>
+  <div class="park-return-row shell">
+    <a class="park-return" href="../../../" aria-label="返回 brez.top 微风游乐园">← 微风游乐园</a>
+    <span aria-hidden="true">PROJECT / 作品集</span>
+  </div>
+  <header class="site-header shell" data-view-app="">
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <nav aria-label="主导航" data-view-app="">
+      <a href="../../" data-view-app="" data-nav="home">首页</a>
+      <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
+      <a href="../../#about" data-view-app="" data-nav="about">关于我</a>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1" data-view-app="">
+    <article class="scan-page" data-view-project-detail-view="" data-view-face-scan-page="">
+      <header class="lab-header" data-view-face-scan-page="">
+        <a href="../" data-view-face-scan-page="">← 全部作品</a>
+        <span data-view-face-scan-page="">LOCAL SESSION / 2026</span>
+        <i data-view-face-scan-page=""><b data-view-face-scan-page=""></b> 视觉检索流程</i>
+      </header>
+      <section class="scan-hero" data-view-face-scan-page="">
+        <aside class="telemetry left-data" aria-hidden="true" data-view-face-scan-page=""><span data-view-face-scan-page="">SUBJECT_ID</span><strong data-view-face-scan-page="">FS-06-001</strong><span data-view-face-scan-page="">DETECTOR</span><strong data-view-face-scan-page="">YUNET / ACTIVE</strong><span data-view-face-scan-page="">EMBEDDING</span><strong data-view-face-scan-page="">SFACE / INT8</strong><div class="vector" data-view-face-scan-page="">0.24<br data-view-face-scan-page="">0.87<br data-view-face-scan-page="">0.13<br data-view-face-scan-page="">0.76<br data-view-face-scan-page="">0.42<br data-view-face-scan-page="">0.91</div></aside>
+        <figure class="scan-viewport" data-view-face-scan-page="">
+          <img class="project-image" src="../../images/projects/face-scan-cover-1280.webp" srcset="../../images/projects/face-scan-cover-640.webp 640w, ../../images/projects/face-scan-cover-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 80vw" alt="Face Scan 本地人脸检索控制台，展示视频画面人脸框、特征向量、候选匹配与本地人脸库" width="1280" height="853" loading="eager" fetchpriority="high" decoding="async" data-view-face-scan-page="" data-view-project-image="">
+          <div class="scanner" aria-hidden="true" data-view-face-scan-page=""></div>
+          <i class="corner tl" data-view-face-scan-page=""></i>
+          <i class="corner tr" data-view-face-scan-page=""></i>
+          <i class="corner bl" data-view-face-scan-page=""></i>
+          <i class="corner br" data-view-face-scan-page=""></i>
+          <figcaption data-view-face-scan-page=""><span data-view-face-scan-page="">界面概念示意</span><strong data-view-face-scan-page="">MATCH CANDIDATE</strong><i data-view-face-scan-page="">示意</i></figcaption>
+        </figure>
+        <aside class="telemetry right-data" aria-hidden="true" data-view-face-scan-page=""><div class="dial" data-view-face-scan-page=""><span data-view-face-scan-page="">—</span><small data-view-face-scan-page="">界面示意</small></div><p data-view-face-scan-page="">TRACK ID<br data-view-face-scan-page="">QUALITY<br data-view-face-scan-page="">FRAME RATE<br data-view-face-scan-page="">LATENCY</p><div class="landmarks" aria-hidden="true" data-view-face-scan-page=""><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i><i data-view-face-scan-page=""></i></div></aside>
+        <div class="hero-title" data-view-face-scan-page="">
+          <p data-view-face-scan-page="">LOCAL VISION INTELLIGENCE / DETECT / EMBED / TRACK / RETRIEVE</p>
+          <h1 data-view-face-scan-page="">Face Scan</h1>
+          <div class="project-byline" data-view-face-scan-page="" data-view-project-byline="">
+            <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>产品设计 / 视觉算法工程 / 本地 Web 控制台</p>
+            <ul aria-label="核心特点" data-view-project-byline="">
+              <li data-view-project-byline="">OpenCV</li>
+              <li data-view-project-byline="">YuNet / SFace</li>
+              <li data-view-project-byline="">SQLite</li>
+            </ul>
+          </div>
+          <h2 data-view-face-scan-page="">把一张目标照片，变成可追踪的本地检索能力</h2>
+        </div>
+      </section>
+      <div class="case-content" data-view-face-scan-page="">
+        <section class="abstract" data-view-face-scan-page="">
+          <span data-view-face-scan-page="">ABSTRACT / 00</span>
+          <p data-view-face-scan-page="">不是把摄像头喂给一个黑盒云服务，而是把检测、特征提取、轨迹去重、相似度检索和可视化收进同一条本地 Pipeline：给它一张照片，它就能在图片、视频、桌面摄像头和浏览器画面里认真帮你找人。</p>
+          <div data-view-face-scan-page="">
+            <small data-view-face-scan-page="">RESPONSIBILITY</small>
+            <strong data-view-face-scan-page="">产品设计 / 视觉算法工程 / 本地 Web 控制台</strong>
+          </div>
+          <div data-view-face-scan-page="">
+            <small data-view-face-scan-page="">RUNTIME</small>
+            <strong data-view-face-scan-page="">Python · OpenCV · YuNet · SFace INT8 · SQLite · MJPEG / HTTP API</strong>
+          </div>
+        </section>
+        <section class="case-samples" data-view-face-scan-page="">
+          <article class="rejected" data-view-face-scan-page="">
+            <header data-view-face-scan-page="">
+              <span data-view-face-scan-page="">INPUT / UNCONTROLLED</span>
+              <i data-view-face-scan-page="">REJECTED</i>
+            </header>
+            <div class="sample-graphic" data-view-face-scan-page="">
+              <b data-view-face-scan-page=""></b>
+              <b data-view-face-scan-page=""></b>
+              <b data-view-face-scan-page=""></b>
+            </div>
+            <h2 data-view-face-scan-page="">真实现场不会配合模型。</h2>
+            <p data-view-face-scan-page="">人脸识别最容易被演示视频里的完美光线骗过：真实输入里有模糊、侧脸、遮挡、重复帧和设备性能差异。项目需要同时做到结果可解释、实时流畅、不过度重复计算，并让阈值和隐私边界始终留在使用者手里。</p>
+          </article>
+          <article class="accepted" data-view-face-scan-page="">
+            <header data-view-face-scan-page="">
+              <span data-view-face-scan-page="">PIPELINE / EXPLAINED</span>
+              <i data-view-face-scan-page="">ACCEPTED</i>
+            </header>
+            <div class="embedding-bars" aria-hidden="true" data-view-face-scan-page="">
+              <i style="height:41%;" data-view-face-scan-page=""></i>
+              <i style="height:64%;" data-view-face-scan-page=""></i>
+              <i style="height:87%;" data-view-face-scan-page=""></i>
+              <i style="height:38%;" data-view-face-scan-page=""></i>
+              <i style="height:61%;" data-view-face-scan-page=""></i>
+              <i style="height:84%;" data-view-face-scan-page=""></i>
+              <i style="height:35%;" data-view-face-scan-page=""></i>
+              <i style="height:58%;" data-view-face-scan-page=""></i>
+              <i style="height:81%;" data-view-face-scan-page=""></i>
+              <i style="height:32%;" data-view-face-scan-page=""></i>
+              <i style="height:55%;" data-view-face-scan-page=""></i>
+              <i style="height:78%;" data-view-face-scan-page=""></i>
+              <i style="height:29%;" data-view-face-scan-page=""></i>
+              <i style="height:52%;" data-view-face-scan-page=""></i>
+              <i style="height:75%;" data-view-face-scan-page=""></i>
+              <i style="height:26%;" data-view-face-scan-page=""></i>
+              <i style="height:49%;" data-view-face-scan-page=""></i>
+              <i style="height:72%;" data-view-face-scan-page=""></i>
+              <i style="height:23%;" data-view-face-scan-page=""></i>
+              <i style="height:46%;" data-view-face-scan-page=""></i>
+              <i style="height:69%;" data-view-face-scan-page=""></i>
+              <i style="height:20%;" data-view-face-scan-page=""></i>
+              <i style="height:43%;" data-view-face-scan-page=""></i>
+              <i style="height:66%;" data-view-face-scan-page=""></i>
+              <i style="height:89%;" data-view-face-scan-page=""></i>
+              <i style="height:40%;" data-view-face-scan-page=""></i>
+              <i style="height:63%;" data-view-face-scan-page=""></i>
+              <i style="height:86%;" data-view-face-scan-page=""></i>
+              <i style="height:37%;" data-view-face-scan-page=""></i>
+              <i style="height:60%;" data-view-face-scan-page=""></i>
+              <i style="height:83%;" data-view-face-scan-page=""></i>
+              <i style="height:34%;" data-view-face-scan-page=""></i>
+            </div>
+            <h2 data-view-face-scan-page="">每个判断都能被追踪。</h2>
+            <p data-view-face-scan-page="">以 YuNet 完成人脸检测、以 SFace INT8 提取 embedding，并把质量门控、轻量轨迹预测和精确余弦检索串成统一 Pipeline。每条轨迹只在首次出现、质量提升或刷新到期时更新特征；CPU 与 OpenCV CUDA 自动短基准后再选路，避免为了 GPU 三个字母反而把体验跑慢。</p>
+          </article>
+        </section>
+        <section class="pipeline" data-view-face-scan-page="">
+          <header data-view-face-scan-page="">
+            <span data-view-face-scan-page="">PIPELINE TOPOLOGY / 01</span>
+            <h2 data-view-face-scan-page="">不是一次推理，<br data-view-face-scan-page="">是一条可观察的链路。</h2>
+          </header>
+          <div class="pipeline-flow" data-view-face-scan-page="">
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">01</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Image / Compare</h3>
+                <p data-view-face-scan-page="">目标照片建模、两图余弦对比、候选排名和标注导出</p>
+              </div>
+              <i data-view-face-scan-page="">PASS →</i>
+            </article>
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">02</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Stream Pipeline</h3>
+                <p data-view-face-scan-page="">视频、相机、浏览器 JPEG 帧共享检测、识别、跟踪和渲染链路</p>
+              </div>
+              <i data-view-face-scan-page="">PASS →</i>
+            </article>
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">03</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Face Library</h3>
+                <p data-view-face-scan-page="">SQLite 人脸样本、相似度检索、人物合并与本地数据管理</p>
+              </div>
+              <i data-view-face-scan-page="">PASS →</i>
+            </article>
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">04</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Quality Gate</h3>
+                <p data-view-face-scan-page="">清晰度、尺寸、曝光、对比度与检测置信度共同决定是否计算特征</p>
+              </div>
+              <i data-view-face-scan-page="">PASS →</i>
+            </article>
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">05</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Tracker</h3>
+                <p data-view-face-scan-page="">IoU、中心距离、速度预测与刷新策略，减少同一张脸的重复推理</p>
+              </div>
+              <i data-view-face-scan-page="">PASS →</i>
+            </article>
+            <article data-view-face-scan-page="">
+              <span data-view-face-scan-page="">06</span>
+              <div data-view-face-scan-page="">
+                <small data-view-face-scan-page="">NODE / ACTIVE</small>
+                <h3 data-view-face-scan-page="">Console / API</h3>
+                <p data-view-face-scan-page="">本地 Web 控制台、MJPEG 预览、快照、健康状态和 JSON 结果</p>
+              </div>
+              <i data-view-face-scan-page="">OUTPUT</i>
+            </article>
+          </div>
+        </section>
+        <section class="event-log" data-view-face-scan-page="">
+          <header data-view-face-scan-page="">
+            <span data-view-face-scan-page="">EVENT LOG / 02</span>
+            <h2 data-view-face-scan-page="">系统确认了什么</h2>
+            <i data-view-face-scan-page="">6 EVENTS</i>
+          </header>
+          <ol data-view-face-scan-page="">
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:01</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">图片检索、两图对比、视频、桌面摄像头与浏览器摄像头统一接入</p><i data-view-face-scan-page="">VERIFIED</i></li>
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:04</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">YuNet 检测 + SFace INT8 embedding，本地计算不依赖远程识别服务</p><i data-view-face-scan-page="">VERIFIED</i></li>
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:07</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">matched / suspicious / unknown 三段式状态，避免把阈值伪装成确定性结论</p><i data-view-face-scan-page="">VERIFIED</i></li>
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:10</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">质量门控、轨迹去重与抗抖动跟踪，降低逐帧重复计算</p><i data-view-face-scan-page="">VERIFIED</i></li>
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:13</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">SQLite 人脸库、人物样本合并、候选排名与 HTTP API</p><i data-view-face-scan-page="">VERIFIED</i></li>
+            <li data-view-face-scan-page=""><time data-view-face-scan-page="">00:00:16</time><span data-view-face-scan-page="">INFO</span><p data-view-face-scan-page="">人流密度、拥挤帧、快速移动等轻量现场提示指标</p><i data-view-face-scan-page="">VERIFIED</i></li>
+          </ol>
+        </section>
+        <section class="experiment-stages" data-view-face-scan-page="">
+          <p class="roadmap-note" data-view-face-scan-page="">后续演进 · 以下为路线图，具体阶段以项目说明为准。</p>
+          <header data-view-face-scan-page="">
+            <span data-view-face-scan-page="">EXPERIMENT STAGES / 03</span>
+            <h2 data-view-face-scan-page="">从验证样本到实时现场</h2>
+          </header>
+          <div data-view-face-scan-page="">
+            <article data-view-face-scan-page="">
+              <b data-view-face-scan-page="">01</b>
+              <span data-view-face-scan-page="">MVP</span>
+              <h3 data-view-face-scan-page="">先把“找得到”做成可验证的工具</h3>
+              <ul data-view-face-scan-page="">
+                <li data-view-face-scan-page="">目标照片建库与图片检索</li>
+                <li data-view-face-scan-page="">两图对比及阈值判断</li>
+                <li data-view-face-scan-page="">单目标视频 / 摄像头识别</li>
+                <li data-view-face-scan-page="">本地控制台与标注结果导出</li>
+              </ul>
+            </article>
+            <article data-view-face-scan-page="">
+              <b data-view-face-scan-page="">02</b>
+              <span data-view-face-scan-page="">V1</span>
+              <h3 data-view-face-scan-page="">让实时检索更稳，也让现场信息更可读</h3>
+              <ul data-view-face-scan-page="">
+                <li data-view-face-scan-page="">多目标与 SQLite 人脸库</li>
+                <li data-view-face-scan-page="">质量过滤、轨迹去重与抗抖动</li>
+                <li data-view-face-scan-page="">浏览器摄像头与 MJPEG 服务</li>
+                <li data-view-face-scan-page="">密度、拥挤与快速移动提示</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section class="ethics-panel" data-view-face-scan-page="">
+          <div class="ethics-title" data-view-face-scan-page="">
+            <span data-view-face-scan-page="">BOUNDARIES / 04</span>
+            <h2 data-view-face-scan-page="">能力边界<br data-view-face-scan-page="">也是系统的一部分。</h2>
+            <div class="fingerprint" aria-hidden="true" data-view-face-scan-page=""></div>
+          </div>
+          <ol data-view-face-scan-page="">
+            <li data-view-face-scan-page=""><b data-view-face-scan-page="">01</b><p data-view-face-scan-page="">本地优先：模型、特征与人脸库默认留在本机，不把隐私当作一个可选插件。</p></li>
+            <li data-view-face-scan-page=""><b data-view-face-scan-page="">02</b><p data-view-face-scan-page="">阈值不是概率承诺：不同镜头、光线和人群必须用验证集重新标定。</p></li>
+            <li data-view-face-scan-page=""><b data-view-face-scan-page="">03</b><p data-view-face-scan-page="">先解释再判断：低质量人脸仍可返回位置与拒绝原因，而不是悄悄消失。</p></li>
+            <li data-view-face-scan-page=""><b data-view-face-scan-page="">04</b><p data-view-face-scan-page="">能力有边界：不提供活体检测、防照片攻击或法律合规自动判断，也不把轻量指标包装成完整行为分析。</p></li>
+          </ol>
+        </section>
+      </div>
+    </article>
+    <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
+      <section class="related" data-view-project-navigation="">
+        <h2 data-view-project-navigation="">沿着这个想法，继续看看</h2>
+        <div data-view-project-navigation="">
+          <a href="../lipreading-studio/" data-view-project-navigation="">Lipreading Studio <span aria-hidden="true" data-view-project-navigation="">↗</span></a>
+        </div>
+      </section>
+      <nav class="project-pagination" aria-label="项目翻页" data-view-project-navigation="">
+        <a href="../screenshot/" class="previous" data-view-project-navigation=""><small data-view-project-navigation="">← 上一个项目</small><strong data-view-project-navigation="">Screenshot</strong></a>
+        <a href="../" class="all-projects" data-view-project-navigation="">全部作品 <span aria-hidden="true" data-view-project-navigation="">▦</span></a>
+        <a href="../miracast-bridge/" class="next" data-view-project-navigation=""><small data-view-project-navigation="">下一个项目 →</small><strong data-view-project-navigation="">Miracast Connect Service</strong></a>
+      </nav>
+    </div>
+  </main>
+  <footer class="site-footer shell" data-view-app="">
+    <span data-view-app="">© 2026 DEV / WORKS</span>
+    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <a href="#top" data-back-top="">回到顶部 ↑</a>
+  </footer>
+</body>
+</html>

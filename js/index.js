@@ -10,7 +10,7 @@
     { id: 'haunted', size: 0.78, base: 508, name: '幽灵小屋', color: '#a09bb8', x: 1750 },
     { id: 'pirate', size: 1, base: 600, name: '海盗船', title: 'Account', subtitle: '账号 · 欢迎回来', href: 'https://account.brez.top', color: '#bca17e', x: 2070 },
     { id: 'teacups', size: 0.93, base: 626, name: '旋转茶杯', title: 'Download', subtitle: '下载 · 带走一点灵感', href: 'https://download.brez.top', color: '#b4a1cc', x: 2480 },
-    { id: 'windmill', size: 0.86, base: 500, name: '风车塔', color: '#a0bdba', x: 2770 },
+    { id: 'windmill', size: 0.86, base: 500, name: '风车塔', title: 'Project', subtitle: '作品集 · 想法落地的地方', href: './project-show/', local: true, entryLabel: '浏览我的作品 →', color: '#a0bdba', x: 2770 },
     { id: 'bumper', size: 1, base: 610, name: '碰碰车', title: '交友', subtitle: '双人模式 · 还缺一位玩家', href: './personal-match-site/', local: true, entryLabel: '认识另一位玩家 →', color: '#bc8c9a', x: 3170 },
     { id: 'waterslide', size: 1, base: 528, name: '激流勇进', color: '#91bfc6', x: 3650 },
     { id: 'airplanes', size: 0.94, base: 616, name: '小小飞行家', color: '#b0b5d2', x: 4110 },
@@ -238,9 +238,7 @@
       </g>`)}
       </g><circle cy="180" r="19" fill="url(#brass)"/><circle cy="180" r="11" fill="url(#steel)"/>${range(6, i => circle(Math.sin(i * Math.PI / 3) * 15, 180 + Math.cos(i * Math.PI / 3) * 15, 1.4, '#859390', 'stroke="none"'))}
       <path d="M-90 500H90" stroke="#b7b7a2" stroke-width="7"/>
-    </g><g class="scenic-sign"><rect class="sign-board tower-sign" x="-36" y="310" width="72" height="119" rx="10"/>
-      <text class="sign-title" x="0" y="337" text-anchor="middle"><tspan x="0">风</tspan><tspan x="0" dy="26">车</tspan><tspan x="0" dy="26">塔</tspan></text><text class="sign-subtitle" x="0" y="417" text-anchor="middle">BREEZE PARK</text>
-      <g class="night-light"><path class="track-lights" d="M-33 324v91q0 11 11 11h44q11 0 11-11v-91q0-11-11-11h-44q-11 0-11 11Z" stroke="#ffe3ac" stroke-width="2" fill="none"/></g></g>`;
+    </g>${sign(ride, 0, 320, 190, 'project-sign')}`;
   }
   function haunted(ride) {
     return `<ellipse class="ride-shadow" cy="510" rx="193" ry="16"/><g class="ride-outline">
@@ -522,7 +520,7 @@
       </g>`).join('')}
     </g>
     ${entrance()}
-    <g aria-hidden="true" class="vegetation">${scenery}${flowerbeds}${[700,1610,2260,2940,3820,4550].map(bench).join('')}${[1695,1930,2820,3420,3950,4630].map(lamp).join('')}${balloons(1230, 570)}${balloons(2850, 517)}${balloons(4350, 518)}</g>
+    <g aria-hidden="true" class="vegetation">${scenery}${flowerbeds}${[700,1610,2260,2940,3820,4550].map(bench).join('')}${[1695,1930,2820,3420,3950,4630].map(lamp).join('')}${balloons(1230, 570)}${balloons(2915, 517)}${balloons(4350, 518)}</g>
     <rect id="park-walkway" x="0" y="652" width="${WORLD_WIDTH}" height="108" fill="transparent" style="cursor:crosshair"><title>点击道路，让树懒滑过去</title></rect>
   </svg>`;
 

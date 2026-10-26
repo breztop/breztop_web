@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="breconn 是一套目前约 2 万行代码、基于 Asio 的网络库。上层只使用简洁、统一的 Channel 接口，不需要直接处理不同传输协议的连接、收发与生命周期差异；底层目前提供 TCP、UDP、KCP，以及 UDP 组播与广播能力，QUIC 作为后续传输能力规划。协议层已经覆盖 HTTP 与 WebSocket，mDNS 被拆成解耦的服务发现模块，并通过插件机制为 RTP 等新协议保留动态扩展入口。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f6ee">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>breconn · DEV / WORKS</title>
+  <link rel="canonical" href="https://brez.top/project-show/projects/breconn/">
+  <link rel="icon" href="../../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles/base.css">
+  <link rel="stylesheet" href="../../styles/breconn.css">
+  <link rel="stylesheet" href="../../styles/native.css">
+  <script src="../../main.js" defer></script>
+</head>
+<body data-page="breconn" id="top">
+  <a class="skip-link" href="#main-content" data-view-app="">跳到主要内容</a>
+  <div class="park-return-row shell">
+    <a class="park-return" href="../../../" aria-label="返回 brez.top 微风游乐园">← 微风游乐园</a>
+    <span aria-hidden="true">PROJECT / 作品集</span>
+  </div>
+  <header class="site-header shell" data-view-app="">
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <nav aria-label="主导航" data-view-app="">
+      <a href="../../" data-view-app="" data-nav="home">首页</a>
+      <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
+      <a href="../../#about" data-view-app="" data-nav="about">关于我</a>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1" data-view-app="">
+    <article class="network-page" data-view-project-detail-view="" data-view-breconn-page="">
+      <header class="masthead" data-view-breconn-page="">
+        <a href="../" data-view-breconn-page="">← 全部作品</a>
+        <span data-view-breconn-page="">DOC.12 — REV.2026</span>
+      </header>
+      <div class="case-content" data-view-breconn-page="">
+        <section class="intro" data-view-breconn-page="">
+          <div class="intro-copy" data-view-breconn-page="">
+            <p data-view-breconn-page="">UNIFIED ASYNC NETWORKING</p>
+            <h1 data-view-breconn-page="">breconn</h1>
+            <div class="project-byline" data-view-breconn-page="" data-view-project-byline="">
+              <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>网络库架构 / 异步 I/O / 统一接口 / 服务发现 / 协议插件设计</p>
+              <ul aria-label="核心特点" data-view-project-byline="">
+                <li data-view-project-byline="">Asio</li>
+                <li data-view-project-byline="">Channel API</li>
+                <li data-view-project-byline="">TCP / UDP / KCP</li>
+              </ul>
+            </div>
+            <h2 data-view-breconn-page="">基于 Asio、以 Channel 统一接口的多传输与服务发现网络库</h2>
+            <div class="line-count" data-view-breconn-page="">
+              <strong data-view-breconn-page="">2 万+</strong>
+              <span data-view-breconn-page="">LINES OF<br data-view-breconn-page="">NETWORKING CORE</span>
+            </div>
+          </div>
+          <div class="intro-note" data-view-breconn-page="">
+            <span data-view-breconn-page="">ARCHITECTURE NOTE / 001</span>
+            <p data-view-breconn-page="">breconn 是一套目前约 2 万行代码、基于 Asio 的网络库。上层只使用简洁、统一的 Channel 接口，不需要直接处理不同传输协议的连接、收发与生命周期差异；底层目前提供 TCP、UDP、KCP，以及 UDP 组播与广播能力，QUIC 作为后续传输能力规划。协议层已经覆盖 HTTP 与 WebSocket，mDNS 被拆成解耦的服务发现模块，并通过插件机制为 RTP 等新协议保留动态扩展入口。</p>
+          </div>
+        </section>
+        <section class="topology" aria-labelledby="topology-title" data-view-breconn-page="">
+          <header data-view-breconn-page="">
+            <span data-view-breconn-page="">FIGURE 01</span>
+            <h2 id="topology-title" data-view-breconn-page="">One channel.<br data-view-breconn-page="">Many transports.</h2>
+            <p data-view-breconn-page="">所有后端向同一个稳定边界汇聚；协议再从边界之上生长。</p>
+          </header>
+          <div class="topology-board" data-view-breconn-page="">
+            <figure data-view-breconn-page="">
+              <img class="project-image" src="../../images/projects/breconn-cover.svg" alt="breconn 网络库架构图，以统一 Channel 连接 TCP、UDP、KCP 等传输实现，并在上层挂载 HTTP、WebSocket、mDNS 服务与可扩展协议插件" width="1536" height="1024" loading="eager" fetchpriority="high" decoding="async" data-view-breconn-page="" data-view-project-image="">
+              <figcaption data-view-breconn-page="">REFERENCE ARCHITECTURE / ASIO / CHANNEL / TRANSPORT / PROTOCOL PLUGINS</figcaption>
+            </figure>
+            <div class="node-map" aria-label="网络模块拓扑" data-view-breconn-page="">
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N01</span>
+                <strong data-view-breconn-page="">Asio Runtime</strong>
+                <p data-view-breconn-page="">统一管理异步 I/O、任务调度、超时与连接生命周期</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N02</span>
+                <strong data-view-breconn-page="">Channel API</strong>
+                <p data-view-breconn-page="">向上层提供一致的连接、收发、关闭、错误与状态事件接口</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N03</span>
+                <strong data-view-breconn-page="">Transport Backends</strong>
+                <p data-view-breconn-page="">承载 TCP、UDP 与 KCP 实现，并为后续 QUIC 后端保留扩展边界</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N04</span>
+                <strong data-view-breconn-page="">Multicast / Broadcast</strong>
+                <p data-view-breconn-page="">提供组播组管理、网卡选择与局域网广播收发能力</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N05</span>
+                <strong data-view-breconn-page="">mDNS Service</strong>
+                <p data-view-breconn-page="">将服务发现与公告解耦为独立模块，通过 Channel 接入而不依赖具体业务</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N06</span>
+                <strong data-view-breconn-page="">HTTP / WebSocket</strong>
+                <p data-view-breconn-page="">在 Channel 之上完成协议解析、封装、升级与会话处理</p>
+              </article>
+              <article data-view-breconn-page="">
+                <span data-view-breconn-page="">N07</span>
+                <strong data-view-breconn-page="">Protocol Plugins</strong>
+                <p data-view-breconn-page="">通过注册和装配机制动态接入 RTP 等新增协议模块</p>
+              </article>
+              <div class="channel-core" data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                CHANNEL API
+                <i data-view-breconn-page=""></i>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="specification" data-view-breconn-page="">
+          <aside data-view-breconn-page=""><span data-view-breconn-page="">PROJECT SPECIFICATION</span><dl data-view-breconn-page=""><div data-view-breconn-page=""><dt data-view-breconn-page="">RESPONSIBILITY</dt><dd data-view-breconn-page="">网络库架构 / 异步 I/O / 统一接口 / 服务发现 / 协议插件设计</dd></div><div data-view-breconn-page=""><dt data-view-breconn-page="">IMPLEMENTATION</dt><dd data-view-breconn-page="">C++ · Asio · TCP · UDP · KCP · Multicast · mDNS · HTTP · WebSocket · Plugin Architecture</dd></div></dl></aside>
+          <div class="decisions" data-view-breconn-page="">
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">PROBLEM / A</span>
+              <h2 data-view-breconn-page="">协议差异，不应该泄漏到业务。</h2>
+              <p data-view-breconn-page="">TCP、UDP 与 KCP 在连接语义、可靠性、消息边界和生命周期上差异明显，如果业务直接依赖各自的 Socket API，每增加一种传输方式都会把分支扩散到上层。组播、广播与 mDNS 又同时涉及网卡选择、地址管理和服务发现状态；如果与 UDP 或业务代码强绑定，协议层和发现服务便无法独立测试、替换与复用。</p>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">DECISION / B</span>
+              <h2 data-view-breconn-page="">把变化隔离在 Channel 的另一侧。</h2>
+              <p data-view-breconn-page="">以 Asio 承担异步 I/O 与事件循环，在传输实现之上建立统一 Channel 抽象，把打开、关闭、读写、错误和状态变化收敛为稳定接口。UDP 后端提供组播组管理与广播收发，mDNS 则作为独立服务使用标准 Channel 能力完成发现与公告。HTTP 与 WebSocket 作为协议层运行在 Channel 之上，并通过协议插件注册与装配机制扩展新的解析、封装和会话逻辑。</p>
+            </article>
+          </div>
+        </section>
+        <section class="capabilities" data-view-breconn-page="">
+          <header data-view-breconn-page="">
+            <span data-view-breconn-page="">CAPABILITY MATRIX</span>
+            <h2 data-view-breconn-page="">网络能力与实现边界</h2>
+            <b data-view-breconn-page="">能力与边界</b>
+          </header>
+          <div class="matrix" data-view-breconn-page="">
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">01</span>
+              <p data-view-breconn-page="">基于 Asio 组织异步 I/O、连接生命周期与事件调度</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">02</span>
+              <p data-view-breconn-page="">上层统一使用 Channel 接口，隐藏不同传输实现的操作差异</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">03</span>
+              <p data-view-breconn-page="">当前提供 TCP、UDP 与 KCP 传输能力</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">04</span>
+              <p data-view-breconn-page="">支持 UDP 组播组加入、离开以及局域网广播收发</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">05</span>
+              <p data-view-breconn-page="">mDNS 以解耦服务提供设备发现与服务公告，不绑定具体业务模块</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">06</span>
+              <p data-view-breconn-page="">QUIC 已纳入后续规划，当前尚未实现</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">规划中</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">07</span>
+              <p data-view-breconn-page="">协议层支持 HTTP 与 WebSocket，并与底层传输解耦</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+            <article data-view-breconn-page="">
+              <span data-view-breconn-page="">08</span>
+              <p data-view-breconn-page="">协议插件机制允许后续动态增加 RTP 等协议能力</p>
+              <div data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <em data-view-breconn-page="">项目能力</em>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="releases" data-view-breconn-page="">
+          <p class="roadmap-note" data-view-breconn-page="">后续演进 · 以下为路线图，具体阶段以项目说明为准。</p>
+          <header data-view-breconn-page="">
+            <span data-view-breconn-page="">EVOLUTION MAP</span>
+            <h2 data-view-breconn-page="">接口保持稳定，<br data-view-breconn-page="">能力继续向外扩张。</h2>
+          </header>
+          <div class="release-grid" data-view-breconn-page="">
+            <article data-view-breconn-page="">
+              <div class="release-node" data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <span data-view-breconn-page="">R1</span>
+              </div>
+              <p data-view-breconn-page="">CURRENT</p>
+              <h3 data-view-breconn-page="">稳定统一接口与现有网络能力</h3>
+              <ul data-view-breconn-page="">
+                <li data-view-breconn-page="">Asio 异步运行时</li>
+                <li data-view-breconn-page="">Channel 统一接口</li>
+                <li data-view-breconn-page="">TCP / UDP / KCP</li>
+                <li data-view-breconn-page="">UDP 组播与广播</li>
+                <li data-view-breconn-page="">解耦 mDNS 服务</li>
+                <li data-view-breconn-page="">HTTP / WebSocket</li>
+                <li data-view-breconn-page="">协议层插件机制</li>
+              </ul>
+            </article>
+            <article data-view-breconn-page="">
+              <div class="release-node" data-view-breconn-page="">
+                <i data-view-breconn-page=""></i>
+                <span data-view-breconn-page="">R2</span>
+              </div>
+              <p data-view-breconn-page="">NEXT</p>
+              <h3 data-view-breconn-page="">扩展传输后端与实时媒体协议</h3>
+              <ul data-view-breconn-page="">
+                <li data-view-breconn-page="">实现并接入 QUIC</li>
+                <li data-view-breconn-page="">增加 RTP 等协议插件</li>
+                <li data-view-breconn-page="">完善插件发现与动态装配</li>
+                <li data-view-breconn-page="">补充跨协议测试与性能基准</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section class="invariants" data-view-breconn-page="">
+          <header data-view-breconn-page="">
+            <span data-view-breconn-page="">ARCHITECTURAL INVARIANTS</span>
+            <h2 data-view-breconn-page="">任何新协议都不能破坏这些约束</h2>
+          </header>
+          <ol data-view-breconn-page="">
+            <li data-view-breconn-page=""><b data-view-breconn-page="">01</b><p data-view-breconn-page="">业务依赖 Channel，而不是依赖某一种 Socket 或传输协议。</p><span data-view-breconn-page="">LOCKED</span></li>
+            <li data-view-breconn-page=""><b data-view-breconn-page="">02</b><p data-view-breconn-page="">传输层解决数据如何到达，协议层解决数据如何解释，两者保持可独立扩展。</p><span data-view-breconn-page="">LOCKED</span></li>
+            <li data-view-breconn-page=""><b data-view-breconn-page="">03</b><p data-view-breconn-page="">新增后端或协议不应迫使已有上层业务修改调用方式。</p><span data-view-breconn-page="">LOCKED</span></li>
+            <li data-view-breconn-page=""><b data-view-breconn-page="">04</b><p data-view-breconn-page="">尚未实现的能力必须明确标记为规划项，避免把路线图写成现成功能。</p><span data-view-breconn-page="">LOCKED</span></li>
+          </ol>
+        </section>
+      </div>
+    </article>
+    <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
+      <nav class="project-pagination" aria-label="项目翻页" data-view-project-navigation="">
+        <a href="../conutline/" class="previous" data-view-project-navigation=""><small data-view-project-navigation="">← 上一个项目</small><strong data-view-project-navigation="">conutline</strong></a>
+        <a href="../" class="all-projects" data-view-project-navigation="">全部作品 <span aria-hidden="true" data-view-project-navigation="">▦</span></a>
+        <a href="../breinput/" class="next" data-view-project-navigation=""><small data-view-project-navigation="">下一个项目 →</small><strong data-view-project-navigation="">breinput</strong></a>
+      </nav>
+    </div>
+  </main>
+  <footer class="site-footer shell" data-view-app="">
+    <span data-view-app="">© 2026 DEV / WORKS</span>
+    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <a href="#top" data-back-top="">回到顶部 ↑</a>
+  </footer>
+</body>
+</html>
