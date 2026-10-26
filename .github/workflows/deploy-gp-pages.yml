@@ -27,33 +27,20 @@ jobs:
 
       - name: Build dist folder
         run: |
-          mkdir -p dist/js dist/css
-
-          # 1) Minify JS
-          if [ -f js/index.js ]; then
-            terser js/index.js --compress --mangle --output dist/js/index.js
-          else
-            echo "warning: js/index.js not found" >&2
-          fi
-
-          # 2) Minify CSS
-          if [ -f css/index.css ]; then
-            cleancss -o dist/css/index.css css/index.css
-          else
-            echo "warning: css/index.css not found" >&2
-          fi
-
-          # 3) Minify HTML
-          if [ -f index.html ]; then
+          node scripts/build-site.mjs
+          terser dist/js/index.js --compress --mangle --output dist/js/index.js
+          terser dist/personal-match-site/main.js --compress --mangle --output dist/personal-match-site/main.js
+          cleancss -o dist/css/index.css dist/css/index.css
+          cleancss -o dist/personal-match-site/styles.css dist/personal-match-site/styles.css
+          for page in dist/index.html dist/404.html dist/personal-match-site/index.html; do
             html-minifier-terser \
               --collapse-whitespace \
               --remove-comments \
               --minify-css true \
               --minify-js true \
-              index.html -o dist/index.html
-          else
-            echo "warning: index.html not found" >&2
-          fi      
+              "$page" -o "$page"
+          done
+          node scripts/check-site.mjs dist
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4

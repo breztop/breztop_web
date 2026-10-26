@@ -70,16 +70,16 @@ html[data-light="morning"] {
 }
 .site-header { position: absolute; z-index: 10; top: max(28px, env(safe-area-inset-top)); left: 3.5%; pointer-events: none; }
 .brand { display: block; padding: 0; background: transparent; text-align: left; pointer-events: auto; }
-.brand-name { font-size: 25px; letter-spacing: -.9px; font-weight: 700; }
+.brand-name { font-size: 50px; letter-spacing: -1.8px; font-weight: 700; line-height: 1.1; }
 .brand-name > span { font-weight: 400; }
-.brand-name small { display: block; font-size: 10px; letter-spacing: 2.6px; font-weight: 400; color: var(--muted); margin-top: 5px; }
+.brand-name small { display: block; font-size: 20px; letter-spacing: 3px; font-weight: 500; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .park { position: absolute; inset: 0; overflow: clip; }
 .park-viewport { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; cursor: grab; touch-action: pan-x; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .park-viewport::-webkit-scrollbar { display: none; }
 .park-viewport.is-dragging { cursor: grabbing; user-select: none; }
 .park-viewport.is-dragging .ride { cursor: grabbing; }
 .park-world { position: absolute; left: 0; bottom: 0; }
-.park-scene { display: block; width: 100%; height: 100%; overflow: visible; }
+.park-scene { display: block; width: 100%; height: 100%; overflow: hidden; }
 .park-scene text { stroke: none; font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", sans-serif; }
 .land-hill-back { fill: var(--hill-back); }
 .land-hill { fill: var(--hill); }
@@ -112,6 +112,30 @@ html[data-light="morning"] {
 .entry-button-label { font-size: 12px; fill: #77618f; font-weight: 600; letter-spacing: .4px; pointer-events: none; }
 .page-entry:hover .entry-button, .page-entry:focus-visible .entry-button { fill: #f1e8fd; stroke: #9578b5; stroke-width: 1.8; }
 .page-entry:focus-visible { outline: none; }
+.destination-sign .sign-board { stroke-width: 1.7; }
+.destination-shadow { fill: #756b6124; }
+.destination-post { fill: none; stroke: #9caa99; stroke-width: 3.5; stroke-linecap: round; }
+.destination-eyebrow, .destination-number { font-family: ui-monospace, monospace !important; font-size: 7.5px; letter-spacing: 1.5px; fill: #786981; }
+.destination-number { letter-spacing: 1px; }
+.destination-sign .sign-title { font-size: 24px; font-weight: 700; letter-spacing: .2px; }
+.destination-sign .sign-subtitle { fill: #756b75; font-size: 10.5px; letter-spacing: .3px; }
+.destination-sign .entry-button-label { font-size: 12px; letter-spacing: .5px; }
+.resume-ticket .sign-board { fill: #fff9eb; stroke: #b29bb7; }
+.resume-ticket .sign-title { fill: #66506e; }
+.resume-ticket .entry-button { fill: #ede1ee; stroke: #b39abc; }
+.resume-ticket .entry-button-label { fill: #66506e; }
+.ticket-perforation { fill: none; stroke: #cebdc6; stroke-width: .8; stroke-dasharray: 2 4; }
+.game-ticket .sign-board { fill: #faf7e9; stroke: #b0c1b2; }
+.game-ticket .sign-title { fill: #657b6f; font-weight: 600; }
+.game-ticket .sign-subtitle { fill: #828879; }
+.game-ticket .destination-eyebrow, .game-ticket .destination-number { fill: #718579; }
+.game-ticket .destination-shadow { fill: #75836b15; }
+.game-ticket .destination-post { stroke: #b2c1ae; stroke-width: 3; }
+.game-ticket .entry-button { fill: #e3eada; stroke: #a9bcae; }
+.game-ticket .entry-button-label { fill: #60776c; font-weight: 600; }
+.game-ticket .page-entry:hover .entry-button, .game-ticket .page-entry:focus-visible .entry-button { fill: #d4e2cd; stroke: #8da58e; stroke-width: 1.6; }
+.resume-ticket .page-entry:hover .entry-button, .resume-ticket .page-entry:focus-visible .entry-button { fill: #e2cfe8; stroke: #92709d; }
+.guide-sign-title { font-size: 18px; font-weight: 700; white-space: pre; }
 .hanging-sign { transform-box: fill-box; transform-origin: top center; animation: sign-sway 5s ease-in-out infinite alternate; }
 .ride-bulb { fill: #fff0b9; stroke: #cbbd8d; stroke-width: .7; }
 .night-light { opacity: var(--night-opacity); transition: opacity 1s; }
@@ -179,6 +203,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .board-glow { opacity: .7; }
 .sloth-bubble { position: absolute; left: 50%; top: -5px; transform: translate(-50%, -100%) rotate(-3deg); white-space: nowrap; padding: 8px 12px; font-size: 10px; letter-spacing: .5px; color: #756678; background: #fffcf0e6; border: 1px solid #b5a5b933; border-radius: 12px 12px 12px 2px; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .sloth.is-moving .sloth-bubble { opacity: 1; }
+.sloth.near-destination .sloth-bubble { opacity: 0; transition: none; }
 .skate-controls { position: absolute; top: calc(100% - 36px); left: -52px; right: -52px; height: 40px; display: grid; place-items: center; pointer-events: none; }
 .skate-hint { color: var(--muted); font-size: 9px; letter-spacing: .5px; text-shadow: 0 1px 3px var(--path); padding-top: 37px; white-space: nowrap; }
 .move-button { position: absolute; top: 0; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: var(--glass); backdrop-filter: blur(8px); pointer-events: auto; transition: background .2s, transform .2s; }
@@ -301,8 +326,8 @@ html.motion-paused .time-controls .phase-button { animation: none; }
 }
 @media (max-width: 600px) {
   .site-header { top: max(23px, env(safe-area-inset-top)); left: 24px; }
-  .brand-name { font-size: 23px; }
-  .brand-name small { font-size: 9px; }
+  .brand-name { font-size: 46px; }
+  .brand-name small { font-size: 18px; }
   .sun { width: 66px; height: 66px; right: 13%; }
   .moon { width: 45px; height: 45px; right: 14%; }
   .moon::after { width: 41px; height: 41px; }
@@ -320,8 +345,8 @@ html.motion-paused .time-controls .phase-button { animation: none; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .site-header { top: 18px; left: 24px; }
-  .brand-name { font-size: 22px; }
-  .sloth { width: 105px; }
+  .brand-name { font-size: 44px; }
+  .sloth { width: 76px; }
   .park-tools { bottom: 12px; right: 18px; }
   .icon-button, .cycle-button { width: 34px; height: 34px; }
 }

@@ -1,1 +1,22 @@
 todo
+
+# Local previews, build output and private material never belong in this repository.
+dist/
+.preview/
+node_modules/
+.env*
+!.env.example
+private/
+**/*.private.*
+**/*.local.*
+**/profile.config.js
+**/docs/
+**/output/
+**/.next/
+**/out/
+**/.openai/
+**/*.pdf
+**/*.doc
+**/*.docx
+**/*.map
+*.log
