@@ -20,7 +20,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%237c5cff'/%3E%3Ctext x='18' y='47' font-family='sans-serif' font-size='44' font-weight='700' fill='white'%3Eb%3C/text%3E%3C/svg%3E" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
   <link rel="stylesheet" href="css/index.css" />
-  <script src="js/index.js" defer></script>
+  <script src="js/index.js" type="module"></script>
   <script>window.goatcounter = { path: function () { return '/' + location.host + location.pathname; }, title: document.title };</script>
   <script data-goatcounter="https://stats.brez.top/count" async src="https://stats.brez.top/count.js"></script>
 </head>
@@ -37,10 +37,16 @@
       <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
       <symbol id="i-dawn" viewBox="0 0 24 24"><path d="M3 17h18M5 21h14M6 13a6 6 0 0 1 12 0M12 9V2m-3 3 3-3 3 3M3 7l2 2m14 0 2-2"/></symbol>
       <symbol id="i-skate" viewBox="0 0 24 24"><path d="M2 11q1 4 5 4h10q4 0 5-4M7 15v3m10-3v3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></symbol>
+      <symbol id="i-air-balloon" viewBox="0 0 80 130"><path d="M13 51C-5-7 85-7 67 51L48 90H32Z" fill="var(--canvas)" stroke="var(--metal-dark)" stroke-width="1.2"/><path d="M40 8C9 13 12 49 32 88h8C27 48 27 18 40 8Zm0 0C71 13 68 49 48 88h-8C53 48 53 18 40 8Z" fill="var(--paint-lilac)"/><path d="M14 48q26 11 52 0M32 90h16m-17 1 2 15m16-15-2 15" fill="none" stroke="var(--metal-dark)" stroke-width="1.1"/><path d="M31 106h18l-3 14H34Z" fill="var(--wood-light)" stroke="var(--wood-dark)"/><path d="M35 111h10m-8-5v14m6-14v14" stroke="var(--wood-dark)" stroke-width=".7"/><path d="M40 91v10" stroke="#d8a66a" stroke-width="3"/></symbol>
     </defs>
   </svg>
   <a class="skip-link" href="#park-viewport">跳到游乐园</a>
-  <div class="sky scene-layer sky-layer" id="sky-layer" data-depth="0" aria-hidden="true"><div class="stars" id="stars"></div><div class="sun"></div><div class="moon"></div><div class="sky-cloud cloud-one"></div><div class="sky-cloud cloud-two"></div><div class="sky-cloud cloud-three"></div></div>
+  <div class="sky scene-layer sky-layer" id="sky-layer" data-depth="0" aria-hidden="true">
+    <div class="stars" id="stars"></div><div class="sun"></div><div class="moon"></div>
+    <div class="sky-cloud cloud-one"></div><div class="sky-cloud cloud-two"></div><div class="sky-cloud cloud-three"></div>
+    <svg class="sky-balloon balloon-near" viewBox="0 0 80 130"><use href="#i-air-balloon"/></svg><svg class="sky-balloon balloon-far" viewBox="0 0 80 130"><use href="#i-air-balloon"/></svg>
+    <svg class="sky-sketch" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><g class="sky-wisps" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M740 133q83-16 164 0m-141 9q99-14 179 0M1190 275q65-10 104 0m-85 9h128"/><path class="sky-flock" d="m946 220 8-5 9 4m15-15 8-4 7 4m21 21 8-4 8 5"/></g></svg>
+  </div>
   <header class="site-header">
     <button class="brand" id="home-button" type="button" aria-label="回到游乐园入口"><span class="brand-name">brez<span>.top</span><small>微风中的快乐</small></span></button>
   </header>
@@ -85,7 +91,7 @@
       </div>
     </div>
     <p id="travel-status" class="sr-only" role="status" aria-live="polite"></p>
-    <noscript><nav class="fallback-nav" aria-label="页面入口"><p>开启 JavaScript 即可漫游游乐园，也可以通过以下入口访问：</p><a href="https://blog.brez.top" target="_blank" rel="noopener noreferrer">Blog 博客 →</a><a href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">CardChess 游戏 →</a><a href="https://resume.brez.top" target="_blank" rel="noopener noreferrer">Resume 简历 →</a><a href="./project-show/">Project 作品集 →</a><a href="https://account.brez.top" target="_blank" rel="noopener noreferrer">Account 账号 →</a><a href="https://download.brez.top" target="_blank" rel="noopener noreferrer">Download 下载 →</a><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">bilibili B 站 →</a><a href="./personal-match-site/">交友 · 双人模式，还缺一位玩家 →</a></nav></noscript>
+    <noscript><nav class="fallback-nav" aria-label="页面入口"><p>开启 JavaScript 即可漫游游乐园，也可以通过以下入口访问：</p><a href="https://blog.brez.top" target="_blank" rel="noopener noreferrer">Blog 博客 →</a><a href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">CardChess 游戏 →</a><span>旋转木马 · 简历入口暂未开放</span><a href="./project-show/">Project 作品集 →</a><a href="https://account.brez.top" target="_blank" rel="noopener noreferrer">Account 账号 →</a><a href="https://download.brez.top" target="_blank" rel="noopener noreferrer">Download 下载 →</a><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">bilibili B 站 →</a><a href="./personal-match-site/">交友 · 双人模式，还缺一位玩家 →</a><a href="./snack-town/">好吃小镇 · 请我吃饭 →</a></nav></noscript>
   </main>
   <div class="park-tools" role="group" aria-label="园区控制">
     <div class="time-controls" role="group" aria-label="昼夜循环设置">

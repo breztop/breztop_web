@@ -1,10 +1,15 @@
 :root {
   color-scheme: light;
-  --ink: #394744; --muted: #73817a; --accent: #7c5cff;
-  --sky-top: #e3f0f3; --sky-bottom: #fff9eb; --surface: #fffdf5; --line: #56645c;
-  --grass: #dce5bd; --grass-back: #e6ebd1; --path: #f3e8d2; --path-line: #dfd3bb;
-  --mountain-far: #cedee0; --mountain-near: #b5cecb; --mountain-shadow: #9cb8b9;
-  --hill: #d5e2d5; --hill-back: #e0e9de; --tree: #b6cba4; --tree-dark: #9db78e;
+  --ink: #344b43; --muted: #647669; --accent: #7c5cff;
+  --sky-top: #dcebef; --sky-bottom: #fcf3dd; --surface: #fffdf5; --line: #56645c;
+  --grass: #c1d29c; --grass-back: #dce4ba; --path: #eee0c2; --path-line: #c3b48e;
+  --mountain-far: #c2d5d9; --mountain-near: #a5bfc0; --mountain-shadow: #7b9e9e;
+  --hill: #acbfa4; --hill-back: #c8d5b8; --tree: #77996b; --tree-dark: #426a53;
+  --leaf-light: #abc18a; --bark: #7e7358; --wood-light: #d5b984; --wood-dark: #8e714e;
+  --stone-light: #e2d7b8; --stone-dark: #b4aa88; --joint: #b9ad8d;
+  --forest: #82a18b; --forest-back: #abc1aa; --water: #9fc7bd; --water-dark: #76a5a6; --water-shine: #d6e6ce; --bank: #9cb483;
+  --canvas: #f8eac6; --canvas-shadow: #c7b28b; --metal-light: #e2e8d8; --metal-mid: #a2b7ac; --metal-dark: #59766a;
+  --paint-rose: #c69580; --paint-lilac: #ac96b3; --paint-sage: #85aa95; --shadow: #3c5946; --art-brightness: 1;
   --glass: #fffdf5b3; --border: #53634b24; --night-opacity: 0; --day-opacity: 1;
   font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   color: var(--ink); background: var(--sky-top); font-synthesis: none; -webkit-font-smoothing: antialiased;
@@ -30,7 +35,12 @@ html[data-light="dusk"] {
   --surface: #fff0df; --line: #6b5c66; --grass: #d2c8a6; --grass-back: #e0d5b8;
   --mountain-far: #d0bdc9; --mountain-near: #c1b7bf; --mountain-shadow: #ad9eb1;
   --path: #f1d9bc; --path-line: #d5bda6; --hill: #c7bdc5; --hill-back: #dbced0;
-  --tree: #b6b69d; --tree-dark: #a1a288; --glass: #fff0dfba; --border: #79606e28;
+  --tree: #8f9670; --tree-dark: #535f4e; --glass: #fff0dfba; --border: #79606e28;
+  --leaf-light: #b6ad87; --bark: #7b6a59; --wood-light: #d1ad83; --wood-dark: #8d6954;
+  --stone-light: #d9c3a7; --stone-dark: #ab9680; --joint: #b19a81;
+  --forest: #8e9c8b; --forest-back: #b5b5a4; --water: #b2b9b3; --water-dark: #879fa3; --water-shine: #e2d7c2; --bank: #a4a17c;
+  --canvas: #edd4b2; --canvas-shadow: #b09c87; --metal-light: #ced3c6; --metal-mid: #9fa9a2; --metal-dark: #656f67;
+  --paint-rose: #bc8e81; --paint-lilac: #a08aab; --paint-sage: #8e9d8c; --shadow: #594d53; --art-brightness: .93;
   --night-opacity: .45; --day-opacity: .6;
 }
 html[data-light="night"] {
@@ -38,8 +48,13 @@ html[data-light="night"] {
   --ink: #e8e7ec; --muted: #a6adc1; --sky-top: #171d38; --sky-bottom: #354465;
   --surface: #2c3450; --line: #5d687e; --grass: #455b5b; --grass-back: #3e5456;
   --mountain-far: #34435d; --mountain-near: #3a5263; --mountain-shadow: #253e53;
-  --path: #6b7079; --path-line: #85818a; --hill: #344c58; --hill-back: #2f4054;
-  --tree: #536d64; --tree-dark: #405c56; --glass: #242d47cf; --border: #d6dcf02b;
+  --path: #56666b; --path-line: #818775; --hill: #344c58; --hill-back: #2f4054;
+  --tree: #45695a; --tree-dark: #264c46; --glass: #242d47cf; --border: #d6dcf02b;
+  --leaf-light: #708a72; --bark: #515c5b; --wood-light: #909581; --wood-dark: #505f59;
+  --stone-light: #637878; --stone-dark: #42585b; --joint: #526768;
+  --forest: #314e53; --forest-back: #3b565c; --water: #436d75; --water-dark: #30525e; --water-shine: #7baca6; --bank: #435f51;
+  --canvas: #b7c0ae; --canvas-shadow: #788e87; --metal-light: #a2b7ad; --metal-mid: #6d8e86; --metal-dark: #3b5b58;
+  --paint-rose: #8e7b7f; --paint-lilac: #79718f; --paint-sage: #567b70; --shadow: #132d34; --art-brightness: .8;
   --night-opacity: 1; --day-opacity: 0;
 }
 .sky { position: absolute; inset: 0; overflow: hidden; pointer-events: none; background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 76%); }
@@ -50,8 +65,13 @@ html[data-light="dusk"] .sun { background: #ffbf8a; box-shadow: 0 0 90px 40px #f
 .moon::after { content: ""; position: absolute; width: 48px; height: 48px; top: -6px; left: 15px; border-radius: 50%; background: var(--sky-top); }
 
 .stars { position: absolute; inset: 0; opacity: var(--night-opacity); }
-.star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #ffefca; animation: twinkle var(--duration, 4s) ease-in-out infinite alternate; }
-.star:nth-child(5n) { width: 5px; height: 5px; clip-path: polygon(50% 0,65% 35%,100% 50%,65% 65%,50% 100%,35% 65%,0 50%,35% 35%); }
+.star { position: absolute; border-radius: 50%; background: #ffefca; opacity: var(--star-alpha); animation: star-drift var(--drift-time) ease-in-out var(--star-delay) infinite alternate, star-glint var(--glint-time) ease-in-out var(--star-delay) infinite alternate; }
+.star-cross { clip-path: polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%); border-radius: 0; }
+.shooting-star { position: absolute; width: 78px; height: 1px; background: linear-gradient(90deg, #fff3c8, transparent); rotate: -28deg; opacity: 0; animation: meteor-pass var(--meteor-time) linear infinite; }
+.sky-balloon { position: absolute; height: auto; pointer-events: none; opacity: calc(var(--day-opacity) * .8); animation: balloon-wander 23s ease-in-out infinite alternate; }
+.balloon-near { width: 63px; left: 53%; top: 15%; }
+.balloon-far { width: 34px; left: 27%; top: 29%; opacity: calc(var(--day-opacity) * .5); animation-duration: 31s; animation-delay: -15s; }
+.sky-flock { animation: birds-glide 19s ease-in-out infinite alternate; }
 .sky-cloud { margin-left: var(--sky-pan, 0px); position: absolute; width: 150px; height: 24px; border-radius: 80px; background: #fffdf1; opacity: .6; animation: cloud-drift 65s ease-in-out infinite alternate; }
 .sky-cloud::before, .sky-cloud::after { content: ""; position: absolute; bottom: 0; border-radius: 50%; background: inherit; }
 .sky-cloud::before { width: 65px; height: 60px; left: 28px; }
@@ -65,7 +85,12 @@ html[data-light="morning"] {
   --surface: #fff5e8; --line: #67746c; --grass: #d8dfba; --grass-back: #e6e7ca;
   --mountain-far: #cadbe0; --mountain-near: #bfd0ca; --mountain-shadow: #a7bfc2;
   --path: #f0e1cd; --path-line: #daceba; --hill: #cdded3; --hill-back: #dce6dd;
-  --tree: #b6c6a5; --tree-dark: #9cb494; --glass: #fff5e8b3; --border: #687a6024;
+  --tree: #88a07b; --tree-dark: #58785f; --glass: #fff5e8b3; --border: #687a6024;
+  --leaf-light: #b0c299; --bark: #837966; --wood-light: #d9bfa0; --wood-dark: #937e66;
+  --stone-light: #e4d9c4; --stone-dark: #b6b39b; --joint: #b9b39d;
+  --forest: #90ad99; --forest-back: #b4c8b6; --water: #accfc7; --water-dark: #8cb6b8; --water-shine: #e4ecda; --bank: #afbe97;
+  --canvas: #f2e7d0; --canvas-shadow: #c0b5a1; --metal-light: #e1e5d8; --metal-mid: #afc1b9; --metal-dark: #718a7d;
+  --paint-rose: #c5a18e; --paint-lilac: #b1a0b9; --paint-sage: #97b5a4; --shadow: #5c7467; --art-brightness: .97;
   --night-opacity: .15; --day-opacity: .8;
 }
 .site-header { position: absolute; z-index: 10; top: max(28px, env(safe-area-inset-top)); left: 3.5%; pointer-events: none; }
@@ -110,6 +135,12 @@ html[data-light="morning"] {
 .page-entry { cursor: pointer; outline: none; }
 .entry-button { fill: #faf4e6; stroke: var(--ride-color); stroke-width: 1.1; transition: fill .15s, stroke .15s; }
 .entry-button-label { font-size: 12px; fill: #77618f; font-weight: 600; letter-spacing: .4px; pointer-events: none; }
+.entry-unavailable rect { fill: #e6e5d9; stroke: #b1b5a0; stroke-width: 1; }
+.entry-unavailable text { fill: #747c6a; font-size: 12px; letter-spacing: 2px; }
+.snack-sign .sign-board { fill: #fff2d7; stroke: #b78365; }
+.snack-sign .sign-title { fill: #7d523b; font-weight: 700; }
+.snack-sign .entry-button { fill: #efe0b8; stroke: #b78365; }
+.snack-sign .entry-button-label { fill: #81553e; }
 .page-entry:hover .entry-button, .page-entry:focus-visible .entry-button { fill: #f1e8fd; stroke: #9578b5; stroke-width: 1.8; }
 .page-entry:focus-visible { outline: none; }
 .destination-sign .sign-board { stroke-width: 1.7; }
@@ -190,8 +221,8 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .flag-wave { transform-box: fill-box; transform-origin: left center; animation: flag-wave 3s ease-in-out infinite alternate; }
 
 /* The character has a world position; its controls travel at skateboard height. */
-.sloth { position: absolute; z-index: 5; left: 0; top: 0; width: clamp(118px, 12vw, 162px); transform: translate(-50%, -90.5%); }
-.sloth-character { display: block; width: 100%; padding: 0; background: transparent; border-radius: 40%; touch-action: none; cursor: grab; }
+.sloth { position: absolute; z-index: 5; left: 0; top: 0; width: clamp(118px, 12vw, 162px); transform: translate(-50%, -90.5%); pointer-events: none; }
+.sloth-character { display: block; width: 100%; padding: 0; background: transparent; border-radius: 40%; touch-action: none; cursor: grab; pointer-events: auto; }
 .sloth-character:active { cursor: grabbing; }
 .sloth-character svg { width: 100%; height: auto; overflow: visible; pointer-events: none; }
 .sloth-character > svg { stroke: none; }
@@ -287,6 +318,11 @@ a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
 @keyframes sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
 @keyframes sign-sway { from { transform: rotate(-2deg); } to { transform: rotate(2deg); } }
 @keyframes twinkle { from { opacity: .35; } to { opacity: 1; } }
+@keyframes star-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(var(--drift-x),var(--drift-y),0); } }
+@keyframes star-glint { from { opacity: calc(var(--star-alpha) * .35); } to { opacity: var(--star-alpha); } }
+@keyframes meteor-pass { 0%,88%,100% { opacity: 0; transform: translate(0,0); } 89% { opacity: .8; } 94% { opacity: 0; transform: translate(-220px,50px); } }
+@keyframes balloon-wander { from { transform: translate(-20px,8px) rotate(-4deg); } to { transform: translate(27px,-14px) rotate(4deg); } }
+@keyframes birds-glide { from { transform: translate(-38px,6px); } to { transform: translate(45px,-10px); } }
 @keyframes cloud-drift { from { translate: -45px 0; } to { translate: 60px 0; } }
 @keyframes track-flow { to { stroke-dashoffset: -156; } }
 @keyframes airflow { from { opacity: .25; transform: translateX(3px); } to { opacity: .9; transform: translateX(-5px); } }
@@ -388,3 +424,36 @@ html.motion-paused .time-controls .phase-button { animation: none; }
 html[data-light="day"] .night-light { visibility: hidden; }
 
 html[data-light="day"] .night-light *, html[data-light="day"] .star { animation-play-state: paused !important; }
+
+/* Scenery has its own contrast and material palette; navigation stays crisp. */
+.sky-sketch { position: absolute; inset: 0; width: 100%; height: 100%; color: #74958e; opacity: .55; pointer-events: none; }
+.sky-wisps { stroke-width: 1.1; }
+.sky-wisps > path:first-child { stroke: #fffdf1; stroke-width: 2; opacity: .8; }
+html[data-light="night"] .sky-sketch { opacity: .15; }
+.park-detail, .park-gardens, .garden-lighting, .woodland-layer { pointer-events: none; }
+.ride-shadow { fill: var(--shadow); opacity: .23; filter: none; }
+.ride-outline { stroke: var(--metal-dark); filter: brightness(var(--art-brightness)); }
+.ride-outline .night-light { filter: brightness(1.35); }
+.entrance-garden, .entrance-balloons, .snack-kiosk { filter: brightness(var(--art-brightness)); }
+.garden-tree .tree-sway { animation-duration: 9s; }
+.garden-tree .tree-sway { transform-origin: bottom center; }
+.sign-board { stroke-width: 1.7; }
+.sign-subtitle { fill: #717568; }
+.entry-button-label { fill: #645479; }
+.resume-ticket .destination-post, .game-ticket .destination-post { stroke: var(--metal-dark); }
+.resume-ticket .sign-board { stroke: #a58bac; }
+.scenic-sign.wood-grain .sign-board, .wood-grain .sign-board { fill: url(#garden-timber); stroke: var(--wood-dark); }
+.wood-grain .sign-title, .wood-grain .sign-subtitle { fill: #4b5142; }
+.brand-name { color: var(--ink); letter-spacing: -2.5px; }
+.brand-name small { font-size: 17px; letter-spacing: 4px; }
+.sloth-character { filter: brightness(var(--art-brightness)); }
+.sloth-shadow { opacity: .25; }
+.park-tools .icon-button, .park-tools .cycle-button { box-shadow: 0 2px 6px #3048330a; }
+@media (max-width: 600px) {
+  .brand-name { font-size: 43px; }
+  .brand-name small { font-size: 15px; letter-spacing: 3px; }
+  .sky-sketch { width: 185%; left: -45%; }
+  #ride-ferris .hanging-sign { scale: 1.12; }
+  .balloon-near { left: 55%; top: 21%; width: 39px; }
+  .balloon-far { left: 14%; top: 36%; width: 25px; }
+}

@@ -1,3 +1,5 @@
+import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLights, gardenGroups, entranceDetails, foregroundDetail, snackStreet } from './park-art.js';
+
 (() => {
   'use strict';
 
@@ -5,18 +7,20 @@
   // Attractions without a destination stay as scenery.
   const rides = [
     { id: 'ferris', size: 1.2, base: 520, name: '摩天轮', title: 'Blog', subtitle: '博客 · 记录技术与生活', href: 'https://blog.brez.top', color: '#ab98cb', x: 572 },
-    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: 'Resume', subtitle: '简历 · 认识一下我', href: 'https://resume.brez.top', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
+    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: '旋转木马', subtitle: '简历入口暂未开放', closed: true, entryLabel: '暂未开放', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
     { id: 'coaster', size: 1.3, base: 538, name: '过山车', title: 'CardChess', subtitle: '游戏 · 下一步，出奇制胜', href: 'https://cardchess.brez.top', color: '#90afb0', x: 1270, signX: 138, signY: 360 },
-    { id: 'haunted', size: 0.78, base: 508, name: '幽灵小屋', color: '#a09bb8', x: 1750 },
-    { id: 'pirate', size: 1, base: 600, name: '海盗船', title: 'Account', subtitle: '账号 · 欢迎回来', href: 'https://account.brez.top', color: '#bca17e', x: 2070 },
-    { id: 'teacups', size: 0.93, base: 626, name: '旋转茶杯', title: 'Download', subtitle: '下载 · 带走一点灵感', href: 'https://download.brez.top', color: '#b4a1cc', x: 2480 },
-    { id: 'windmill', size: 0.86, base: 500, name: '风车塔', title: 'Project', subtitle: '作品集 · 想法落地的地方', href: './project-show/', local: true, entryLabel: '浏览我的作品 →', color: '#a0bdba', x: 2770 },
+    { id: 'haunted', size: 0.78, base: 475, name: '幽灵小屋', color: '#a09bb8', x: 1750 },
+    { id: 'pirate', size: 1, base: 566, name: '海盗船', title: 'Account', subtitle: '账号 · 欢迎回来', href: 'https://account.brez.top', color: '#bca17e', x: 2070 },
+    { id: 'teacups', size: 0.93, base: 626, name: '旋转茶杯', title: 'Download', subtitle: '下载 · 带走一点灵感', href: 'https://download.brez.top', color: '#b4a1cc', x: 2480, signX: -130, signY: 326 },
+    { id: 'windmill', size: 0.86, base: 450, name: '风车塔', title: 'Project', subtitle: '作品集 · 想法落地的地方', href: './project-show/', local: true, entryLabel: '浏览我的作品 →', color: '#a0bdba', x: 2770 },
     { id: 'bumper', size: 1, base: 610, name: '碰碰车', title: '交友', subtitle: '双人模式 · 还缺一位玩家', href: './personal-match-site/', local: true, entryLabel: '认识另一位玩家 →', color: '#bc8c9a', x: 3170 },
-    { id: 'waterslide', size: 1, base: 528, name: '激流勇进', color: '#91bfc6', x: 3650 },
-    { id: 'airplanes', size: 0.94, base: 616, name: '小小飞行家', color: '#b0b5d2', x: 4110 },
+    { id: 'waterslide', size: 1, base: 493, name: '激流勇进', color: '#91bfc6', x: 3650 },
+    { id: 'airplanes', size: 0.94, base: 572, name: '小小飞行家', color: '#b0b5d2', x: 4110 },
+    { id: 'snackstreet', size: 1, base: 604, name: '小吃街', title: '好吃小镇', subtitle: '我有一个吃遍世界的梦', href: './snack-town/', local: true, entryLabel: '请我吃饭 →', color: '#b78365', x: 4640, signX: 0, signY: 306 },
   ];
   // Higher bases sit nearer the path and are painted in front of the back row.
   const ridesByDepth = [...rides].sort((a, b) => a.base - b.base);
+  const ferrisWide = { x: rides[0].x, base: rides[0].base, size: rides[0].size };
   const WORLD_WIDTH = Math.ceil((Math.max(...rides.map(ride => ride.x + 315 * ride.size)) + 250) / 100) * 100;
   const WORLD_HEIGHT = 760;
   const root = document.documentElement;
@@ -35,7 +39,9 @@
     ? `href="${ride.href}" aria-label="${ride.title}，${ride.subtitle}"`
     : `href="${ride.href}" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开 ${ride.title || ride.name}"`;
   function entryButton(ride, x, y, width = 142, label = '点击进入 ↗', height = 25) {
+    if (!ride.href) return `<g class="entry-unavailable" aria-label="${ride.subtitle}"><rect x="${x - width / 2}" y="${y}" width="${width}" height="${height}" rx="8"/><text x="${x}" y="${y + (height + 9) / 2}" text-anchor="middle">${ride.entryLabel || '暂未开放'}</text></g>`;
     return `<a class="page-entry" ${destinationAttributes(ride)}>
+      <rect class="entry-hit" x="${x - width / 2 - 4}" y="${y + height / 2 - Math.max(height, 44) / 2}" width="${width + 8}" height="${Math.max(height, 44)}" fill="transparent"/>
       <rect class="entry-button" x="${x - width / 2}" y="${y}" width="${width}" height="${height}" rx="8"/>
       <text class="entry-button-label" x="${x}" y="${y + (height + 9) / 2}" text-anchor="middle">${ride.entryLabel || label}</text>
     </a>`;
@@ -47,7 +53,7 @@
       <rect class="destination-shadow" x="-93" y="5" width="194" height="124" rx="14"/>
       <rect class="sign-board" x="-97" width="194" height="124" rx="14"/>
       <path d="M-83 1H83q13 0 13 13v14H-96V14q0-13 13-13Z" fill="#e5dce8"/>
-      <text class="destination-eyebrow" x="-79" y="18">PERSONAL PASS</text>
+      <text class="destination-eyebrow" x="-79" y="18">CAROUSEL · SLOW DAYS</text>
       <text class="destination-number" x="78" y="18" text-anchor="end">02</text>
       <g class="destination-emblem" transform="translate(-64 51)" aria-hidden="true">
         <circle r="16" fill="#efe6ed" stroke="#c5b1c7"/>
@@ -87,7 +93,8 @@
     const scenic = !ride.href;
     const height = scenic ? 64 : 94;
     return `<g transform="translate(${x} ${y})"><g class="${scenic ? 'scenic-sign' : ''} ${classes}">
-      <rect class="sign-board" x="${-width / 2}" y="0" width="${width}" height="${height}" rx="10"/>
+      ${classes.includes('hanging-sign') ? `<g fill="none" stroke="var(--metal-dark)" stroke-width="2"><path d="M${-width / 2 - 6}-5h${width + 12}m${-width + 20}-1v-24m${width - 40} 24v-24"/><circle cx="${-width / 2 + 14}" cy="-2" r="4"/><circle cx="${width / 2 - 14}" cy="-2" r="4"/></g>` : ''}
+      <rect class="sign-board" x="${-width / 2}" y="0" width="${width}" height="${height}" rx="${classes.includes('wood-grain') ? 4 : 10}"/>
       <rect x="${-width / 2 + 5}" y="5" width="${width - 10}" height="${height - 10}" rx="7" fill="none" stroke="var(--ride-color)" stroke-width=".7" opacity=".45"/>
       ${classes.includes('mesh-sign') ? `<rect x="${-width / 2 + 5}" y="5" width="${width - 10}" height="${height - 10}" rx="7" fill="url(#sign-mesh)"/>` : ''}
       ${classes.includes('wood-grain') ? `<path d="M${-width / 2 + 10} 12h24m8-2h18M${width / 2 - 43} ${height - 10}h30" fill="none" stroke="#94704c" stroke-width=".8" opacity=".4"/>` : ''}
@@ -103,14 +110,14 @@
     return `<ellipse class="ride-shadow" cy="502" rx="184" ry="16"/>
       <g class="ride-outline">
         <path d="m-107 491 93-240h28l93 240-24 4L0 284-83 495Z" fill="url(#steel)"/>
-        <path d="M-84 481 0 269l84 212M-63 436H63M-47 392h94M-62 436 45 392m-90 0 107 44" fill="none" stroke="#91a59d" stroke-width="2"/>
+        <path d="M-84 481 0 269l84 212M-63 436H63M-47 392h94M-62 436 45 392m-90 0 107 44" fill="none" stroke="var(--metal-dark)" stroke-width="2"/>
         <path d="M-120 489h45v11h-45Zm195 0h45v11H75Z" fill="url(#stone)"/>
         ${bolts(-111, 495, 3)}${bolts(84, 495, 3)}
         <g transform="translate(0 253)"><circle cx="-7" cy="-4" r="165" fill="none" stroke="#a4b2af" stroke-width="3"/>
           <g class="wheel-spin">
             <circle r="165" fill="none" stroke="url(#steel)" stroke-width="8"/>
             <circle r="155" fill="none" stroke="#a5b4b0" stroke-width="2"/>
-            ${range(24, i => { const a = i * Math.PI / 12; const b = a + Math.PI / 12; return `<path d="M${Math.sin(a) * 155} ${Math.cos(a) * 155} 0 0 ${Math.sin(b) * 165} ${Math.cos(b) * 165}" fill="none" stroke="#adbbb7" stroke-width="1.1"/><path d="M${Math.sin(a) * 155} ${Math.cos(a) * 155} ${Math.sin(b) * 165} ${Math.cos(b) * 165}" stroke="#b7c4bd" fill="none" stroke-width="1"/>`; })}
+            ${range(24, i => { const a = i * Math.PI / 12; const b = a + Math.PI / 12; return `<path d="M${Math.sin(a) * 155} ${Math.cos(a) * 155} 0 0 ${Math.sin(b) * 165} ${Math.cos(b) * 165}" fill="none" stroke="var(--metal-mid)" stroke-width="1.1"/><path d="M${Math.sin(a) * 155} ${Math.cos(a) * 155} ${Math.sin(b) * 165} ${Math.cos(b) * 165}" stroke="var(--metal-dark)" stroke-width="1"/>`; })}
             <circle r="165" fill="none" stroke="#fff8df" stroke-width="2" class="rim-shimmer"/>
             ${range(12, i => { const a = i * Math.PI / 6; return `<g transform="translate(${Math.sin(a) * 165} ${Math.cos(a) * 165})"><g class="cabin-upright">
               <path d="M0 0v13m-7 1 7-6 7 6" fill="none" stroke="#7c9190" stroke-width="2"/>
@@ -126,7 +133,8 @@
           ${range(6, i => circle(Math.sin(i * Math.PI / 3) * 19, Math.cos(i * Math.PI / 3) * 19, 1.3, '#7c8190', 'stroke="none"'))}
         </g>
         <path d="M-53 279v21m106-21v21" stroke="#9b9c90" fill="none"/>
-        <path d="M-135 485v-36h50m170 0h50v36m-260-17h45m170 0h45" fill="none" stroke="#a3b2a3" stroke-width="2"/>
+        <g stroke="var(--metal-dark)" stroke-width="2" fill="none"><path d="M-158 490v-37h63m190 0h63v37m-316-20h63m190 0h63"/>${range(6, i => `<path d="M${-150 + i * 10} 455v34m${249} 0v-34"/>`)}<path d="M-47 491v-38h94v38m-94-22h94m-73-15v35m25-35v35m25-35v35"/></g>
+        <path d="M-127 497h53m148 0h53" stroke="var(--metal-dark)" stroke-width="3" opacity=".55"/>
       </g>${sign(ride, 0, 300, 166, 'hanging-sign')}`;
   }
 
@@ -174,9 +182,13 @@
         ${[-1, 1].map(dir => `<path d="M0 202Q${dir * 39} 251 ${dir * 90} 289h${dir * 53}Q${dir * 68} 248 0 202Z" fill="#f0dfb7"/>`).join('')}
         <ellipse cy="291" rx="179" ry="14" fill="#e8cda8"/><path d="M-178 291v17q20 17 40-1 20 17 40-1 20 17 40-1 20 17 40-1 20 17 40-1 20 17 40-1 20 17 40-1 20 17 40-1 17 15 34-1v-15" fill="url(#ivory-paint)"/>
         <ellipse cy="291" rx="177" ry="12" fill="none" stroke="#ad8d74" stroke-width="2"/>
+        <path d="M0 205q-21 42-91 78m91-78q22 42 91 78m-91-74q-6 48-8 76m-69-30-29 32m185-32 29 32" fill="none" stroke="var(--canvas-shadow)" stroke-width="1.4" opacity=".65"/>
+        <path d="M-160 304v8m40-7v8m40-7v8m40-7v8m40-7v8m40-7v8m40-7v8m40-7v8m40-7v8" stroke="var(--paint-rose)" stroke-width="2"/>
         <g class="night-light"><ellipse class="carousel-trim" cy="292" rx="177" ry="12" fill="none" stroke="#ffe3a1" stroke-width="3"/></g>
       </g><path d="M0 200v-38" fill="none" stroke="url(#brass)" stroke-width="3"/><circle cy="199" r="7" fill="url(#brass)"/>
       <path class="flag-wave" d="M0 163q23-10 41 0l-12 10 12 8q-22-8-41 0Z" fill="#a38dbd"/>
+      <path d="M-164 490v-42m328 42v-42M-164 454h40m248 0h40m-328 20h40m248 0h40" fill="none" stroke="var(--metal-dark)" stroke-width="2"/>
+      <path d="M-155 449v38m16-38v42m278-42v42m16-42v38" fill="none" stroke="var(--metal-mid)" stroke-width="1.5"/>
     </g>${resumeSign(ride)}`;
   }
   function pirate(ride) {
@@ -221,8 +233,8 @@
       <g class="cup-orbit">${cup('#d3a99a')}</g>
       <g class="cup-orbit">${cup('#a3bbb1')}</g>
       <g class="cup-orbit">${cup('#b5a1c7')}</g>
-    </g><path d="M-210 452v48" stroke="#a4b09a" stroke-width="4"/>
-    <g transform="translate(-210 380) scale(.79)">${sign(ride, 0, 0, 171)}</g>`;
+    </g><path d="M${ride.signX} ${ride.signY + 84}V500" stroke="var(--metal-dark)" stroke-width="4"/>
+    <g transform="translate(${ride.signX} ${ride.signY}) scale(.9)">${sign(ride, 0, 0, 171)}</g>`;
   }
 
   function windmill(ride) {
@@ -280,8 +292,8 @@
     </g><g transform="translate(0 411)">${bumperCar('#b09dc0', 'bumper-one')}${bumperCar('#c9a580', 'bumper-two')}${bumperCar('#97b6af', 'bumper-three')}
       <g class="night-light"><g class="collision-sparks" stroke="#ffd389" stroke-width="2" fill="none"><path d="m20-8 6-14m2 21 13-5m-12-12 10-10m-22 8-4-10"/></g></g></g>
       <g class="ride-outline"><path d="M-205 461V320m410 141V320" stroke="url(#steel)" stroke-width="7"/><path d="M-219 463q220 70 439 0" stroke="#8da49e" stroke-width="2" fill="none"/></g>
-      <path d="M-169 408v102" stroke="#9aaea2" stroke-width="4"/>
-      ${sign(ride, -133, 380, 180, 'mesh-sign')}<g class="night-light"><g class="bumper-sign-lights">${bulbRow(-217, 438, 9)}</g></g>`;
+      <path d="M-169 378v132" stroke="var(--metal-dark)" stroke-width="4"/>
+      ${sign(ride, -133, 350, 180, 'mesh-sign')}<g class="night-light"><g class="bumper-sign-lights">${bulbRow(-217, 408, 9)}</g></g>`;
   }
   const SLIDE_TRACK = 'M-164 200C-115 201-138 282-82 294S-30 383 32 389S83 449 168 454';
   function waterslide(ride) {
@@ -336,10 +348,7 @@
   }
 
   function tree(x, y, size = 1, rounded = true) {
-    return `<g class="decor-cluster" data-left="${x - 65 * size}" data-right="${x + 65 * size}" transform="translate(${x} ${y}) scale(${size})" aria-hidden="true"><path class="tree-trunk" d="M0 0v-75m0 37-17-19m17 5 16-20"/>
-      <g class="tree-sway" style="animation-delay:-${Math.abs(x % 7)}s">${rounded
-      ? '<path class="tree-crown" d="M-36-49q-23-19-5-37-12-24 13-32 4-27 28-22 25-7 32 19 28 7 16 32 22 24-1 41-20 15-42 3-23 12-41-4Z"/><path d="M-14-102q-10 12-8 25m29-51q10 4 13 16" fill="none" stroke="#e7edce" stroke-width="2" opacity=".5"/>'
-      : '<path class="tree-crown-dark" d="M0-157-47-69h22l-32 39H57L25-69h22Z"/><path d="M0-139v93" stroke="#e4e8cd" opacity=".35" fill="none"/>'}</g></g>`;
+    return gardenTree(x, y, size, rounded);
   }
 
   function balloons(x, y) {
@@ -347,14 +356,6 @@
       <ellipse cx="-19" cy="-110" rx="16" ry="21" fill="#ccb7d5"/><ellipse cx="22" cy="-115" rx="15" ry="20" fill="#dcbba4"/><ellipse cy="-140" rx="17" ry="23" fill="#adc7b9"/>
       <path d="m-24-122-3 7m44-10-3 6m-17-25-3 8" fill="none" stroke="#fff6e1" stroke-width="2.5" opacity=".7"/>
       <path d="m-19-88-3 5h6Zm41-7-3 5h6ZM0-115l-3 5h6Z" fill="#b9aaac"/></g></g>`;
-  }
-
-  function bench(x) {
-    return `<g class="decor-cluster" data-left="${x - 42}" data-right="${x + 42}" transform="translate(${x} 630)" stroke="#8c9580" stroke-width="2" fill="#c3ba99" aria-hidden="true"><path d="M-30-27h60v18h-60Zm-5 22h70v7h-70Z"/><path d="M-25 1v11m50-11v11M-26-9v5m52-5v5" fill="none" stroke-width="3"/></g>`;
-  }
-
-  function lamp(x) {
-    return `<g class="decor-cluster" data-left="${x - 16}" data-right="${x + 42}" transform="translate(${x} 612)" stroke="#7f9182" stroke-width="2" fill="none" aria-hidden="true"><path d="M0 0v-111q0-18 14-18h8m-22 14h-8"/><path d="M14-129h17l-3 21H17Z" fill="#e9dfbe"/><path d="M10-129h25l-6-9H17Z" fill="#9daa97"/><path d="M-7 0H7" stroke-width="5"/><g class="night-light"><ellipse cx="22" cy="-113" rx="22" ry="30" fill="url(#lamp-glow)" stroke="none"/><path d="M18-125h9v16h-9Z" fill="#ffe4a2" stroke="none"/></g></g>`;
   }
 
   function shrub(x, y, size = 1) {
@@ -401,7 +402,7 @@
   function entrance() {
     return `<g id="entrance-scene" class="entrance-scene" data-left="0" data-right="1120">
       <g class="entrance-garden vegetation" aria-hidden="true">
-        <ellipse cx="385" cy="565" rx="393" ry="85" fill="var(--path-line)" opacity=".38"/>
+        <ellipse cx="385" cy="565" rx="393" ry="85" fill="var(--shadow)" opacity=".2"/>
         <ellipse cx="385" cy="556" rx="381" ry="77" fill="url(#plaza-paving)"/>
         <path d="M35 568q352-83 705 0m-619 30q266-57 533 0" stroke="#f8f3de" stroke-width="2" fill="none" opacity=".7"/>
         <path d="M0 541q34-59 93-51l-9 45q-36 1-65 30Z" fill="#d0c9ae"/><path d="M4 537q31-47 86-45l-9 36q-39 0-64 28Z" fill="url(#entry-hedge)"/>
@@ -415,6 +416,7 @@
         <path d="M544 422h38l-4 26h-30Z" stroke="#8fa49a" stroke-width="2" fill="url(#brass)"/>
         <g class="night-light"><ellipse cx="563" cy="441" rx="23" ry="34" fill="url(#lamp-glow)"/><path d="M551 427h24v16h-24" fill="#ffe1a2" stroke="none"/></g>
       </g>
+      ${entranceDetails()}
       <g id="guide-open" class="entrance-action" role="button" tabindex="0" aria-label="打开园区导览" aria-haspopup="dialog" transform="translate(169 548)" style="--ride-color:#ab9ac5">
         <title>园区导览</title>
         <g class="ride-outline">
@@ -452,22 +454,22 @@
 
   function materialDefs() {
     const gradient = (id, colors, horizontal = false) => `<linearGradient id="${id}" x1="0%" y1="0%" x2="${horizontal ? '100%' : '20%'}" y2="${horizontal ? '20%' : '100%'}">${colors.map((color, i) => `<stop offset="${i / (colors.length - 1)}" stop-color="${color}"/>`).join('')}</linearGradient>`;
-    return `${gradient('robot-shell', ['#faf5df', '#e0e4d0', '#bccdbd'])}${gradient('plaza-paving', ['#f6eedb', '#e9dfc3', '#d9d3b7'])}${gradient('entry-hedge', ['#c7d7ad', '#a6bf93', '#90ad85'])}${gradient('steel', ['#e5e9dc', '#a5b9b3', '#d2ddd1', '#859e9a'], true)}
-      ${gradient('brass', ['#f2e1b6', '#c5ad7c', '#e2ce9d', '#a48c64'], true)}
-      ${gradient('glass', ['#e0ebe5', '#b6cfcd', '#85a8b0'])}
-      ${gradient('lavender-paint', ['#d0c4da', '#afa1bd', '#8f87a0'])}
-      ${gradient('sage-paint', ['#d1dfcf', '#a3bcb0', '#7f9f98'])}
-      ${gradient('rose-paint', ['#e7c8b8', '#cfa697', '#ad8e89'])}
-      ${gradient('ivory-paint', ['#fff4db', '#e8d8b6', '#cabb9e'])}
-      ${gradient('wood-hull', ['#d9bb89', '#b7976e', '#7f7768'])}
-      ${gradient('stone', ['#e0dfcf', '#c7c9b9', '#a9b5a7'])}
-      ${gradient('slate-roof', ['#a1abb6', '#7f8e9d', '#677b87'])}
-      ${gradient('arena-floor', ['#d3d8c9', '#b6c4b7', '#9bb4aa'])}
-      ${gradient('flume-water', ['#b4d9d2', '#8cbcc3', '#79a8b5'])}
+    return `${gradient('robot-shell', ['var(--canvas)', 'var(--metal-light)', 'var(--metal-mid)'])}${gradient('plaza-paving', ['var(--canvas)', 'var(--stone-light)', 'var(--stone-dark)'])}${gradient('entry-hedge', ['var(--leaf-light)', 'var(--tree)', 'var(--tree-dark)'])}${gradient('steel', ['var(--metal-light)', 'var(--metal-mid)', 'var(--metal-light)', 'var(--metal-dark)'], true)}
+      ${gradient('brass', ['var(--canvas)', 'var(--wood-light)', 'var(--canvas)', 'var(--wood-dark)'], true)}
+      ${gradient('glass', ['var(--metal-light)', 'var(--water)', 'var(--water-dark)'])}
+      ${gradient('lavender-paint', ['var(--canvas)', 'var(--paint-lilac)', 'var(--metal-dark)'])}
+      ${gradient('sage-paint', ['var(--metal-light)', 'var(--paint-sage)', 'var(--metal-dark)'])}
+      ${gradient('rose-paint', ['var(--canvas)', 'var(--paint-rose)', 'var(--wood-dark)'])}
+      ${gradient('ivory-paint', ['var(--canvas)', 'var(--stone-light)', 'var(--canvas-shadow)'])}
+      ${gradient('wood-hull', ['var(--wood-light)', 'var(--wood-dark)', 'var(--metal-dark)'])}
+      ${gradient('stone', ['var(--stone-light)', 'var(--stone-dark)', 'var(--joint)'])}
+      ${gradient('slate-roof', ['var(--metal-mid)', 'var(--metal-dark)', 'var(--shadow)'])}
+      ${gradient('arena-floor', ['var(--metal-light)', 'var(--metal-mid)', 'var(--paint-sage)'])}
+      ${gradient('flume-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
       <clipPath id="ride-envelope" clipPathUnits="userSpaceOnUse"><rect x="-310" y="0" width="620" height="555" rx="8"/></clipPath>
-      ${gradient('pool-water', ['#a9d0ca', '#8fbfc1', '#7baab5'])}
+      ${gradient('pool-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
       ${gradient('mountain-wash', ['var(--mountain-far)', 'var(--mountain-near)'])}
-      <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".85"/></linearGradient>
+      <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".42"/></linearGradient>
       <linearGradient id="sign-face" x2="0" y2="1"><stop stop-color="#fffbed"/><stop offset="1" stop-color="#eee4cc"/></linearGradient>
       <radialGradient id="lamp-glow"><stop stop-color="#ffe4a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe4a0" stop-opacity="0"/></radialGradient>
       <pattern id="sign-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="m0 0 8 8m0-8-8 8m16-8-8 8" stroke="#a4aca0" stroke-width=".5" opacity=".3"/></pattern>`;
@@ -481,7 +483,7 @@
       return `Q${(start + end) / 2} ${y + (i % 2 ? wave : -wave)} ${end} ${y}`;
     })}V${WORLD_HEIGHT}H0Z`;
     return `<g id="mountain-layer" class="scene-layer mountain-layer" data-depth="0.16" aria-hidden="true">
-      <path d="M-1100 480V347${ridge}L7900 501H-1100Z" fill="url(#mountain-wash)" opacity=".73"/>
+      <path d="M-1100 480V347${ridge}L7900 501H-1100Z" fill="url(#mountain-wash)" opacity=".85"/>
       ${range(peaks.length, i => { const x = -650 + i * 600; const h = peaks[i]; return `<path d="M${x} ${h}q93 97 255 ${357 - h}l-178 118Z" fill="var(--mountain-shadow)" opacity=".14"/>`; })}
       <path d="M-1000 494V386Q-720 285-400 380T180 355T790 372T1380 340T1990 379T2580 352T3190 381T3780 347T4390 377T4980 351T5590 377T6200 347T6800 383T7500 350V502Z" fill="var(--mountain-near)" opacity=".7"/>
       <g fill="var(--mountain-shadow)" opacity=".3">${range(100, i => { const x = -300 + i * 74; const y = 438 + Math.sin(i * .7) * 9; const h = 16 + i % 5 * 6; return `<path d="M${x} ${y - h}l-${h / 3} ${h * .7}h${h / 6}l-${h / 4} ${h * .4}h${h * .8}l-${h / 4}-${h * .4}h${h / 6}Z"/>`; })}</g>
@@ -489,42 +491,54 @@
     </g>
     <g class="scene-layer park-ground" aria-hidden="true">
       <path class="grass-back" d="${groundShape(438, 24)}"/>
-      ${range(Math.ceil(WORLD_WIDTH / 270), i => tree(42 + i * 270, 475 + Math.sin(i * 1.7) * 9, .27 + i % 4 * .05, i % 3 !== 0))}
-      <path class="grass" d="${groundShape(515, 18)}"/>
-      ${ridesByDepth.map(ride => `<path d="M${ride.x + 24} 660Q${ride.x - 40} 613 ${ride.x} ${ride.base + 7}" fill="none" stroke="var(--path-line)" stroke-width="34"/><path d="M${ride.x + 24} 660Q${ride.x - 40} 613 ${ride.x} ${ride.base + 7}" fill="none" stroke="var(--path)" stroke-width="31"/>
-        <ellipse cx="${ride.x}" cy="${ride.base + 5}" rx="${214 * ride.size}" ry="${30 * ride.size}" fill="var(--path)" stroke="var(--path-line)" stroke-width="1" opacity=".9"/>`).join('')}
+      ${woodland()}
+      <path d="${groundShape(511, 26)}" fill="url(#meadow-wash)"/>
+      ${gardenWater()}
+      ${ridesByDepth.map(ride => `<path id="access-${ride.id}" d="M${ride.x + 24} 661Q${ride.x - 40} 613 ${ride.x} ${ride.base + 7}" fill="none" stroke="var(--path-line)" stroke-width="36"/><path id="access-fill-${ride.id}" d="M${ride.x + 24} 661Q${ride.x - 40} 613 ${ride.x} ${ride.base + 7}" fill="none" stroke="var(--path)" stroke-width="32"/>${rideFooting(ride)}`).join('')}
       <path class="park-path" d="${groundShape(651, 16)}"/>
-      <path d="M0 747H${WORLD_WIDTH}" stroke="#fff8e5" stroke-dasharray="2 35" stroke-width="1" opacity=".4"/>
-      ${range(Math.ceil(WORLD_WIDTH / 79), i => `<path d="M${i * 79} ${614 + Math.sin(i) * 8}l-3-5m3 5 4-6" stroke="#a6b687" stroke-width=".8" fill="none" opacity=".6"/>`)}
+      <path d="${groundShape(651, 16)}" fill="url(#path-grain)"/>
+      ${[[95, 605], [590, 595], [780, 637], [1610, 603], [1940, 641], [2650, 634], [3360, 611], [3940, 643], [4460, 621]].map(([x, y]) => `<path d="m${x} ${y} 7-13-2 13 10-7m-27 10 2-7 4 7" fill="none" stroke="var(--tree)" stroke-width="1.1" opacity=".7"/>`).join('')}
     </g>`;
   }
 
-  const drawings = { ferris, coaster, carousel, pirate, teacups, windmill, haunted, bumper, waterslide, airplanes };
+  const drawings = { ferris, coaster, carousel, pirate, teacups, windmill, haunted, bumper, waterslide, airplanes, snackstreet: ride => snackStreet(sign(ride, 0, ride.signY, 214, 'snack-sign')) };
   // Leave the entrance ticket faces clear of foreground trees and shrubs.
-  const scenery = [1670,1900,2600,2810,3440,3930,4450,4610].map((x,i) => tree(x, 594 + i % 3 * 6, .55 + i % 3 * .08, i % 3 !== 0)).join('');
-  const gardens = range(Math.ceil(WORLD_WIDTH / 287), i => {
-    const x = 38 + i * 287;
-    return (x > 830 && x < 1060) || (x > 1280 && x < 1615) || (x > 2200 && x < 2360) ? '' : shrub(x, 588 + i % 2 * 7, .4 + i % 3 * .12);
-  });
-  const flowerbeds = range(Math.ceil(WORLD_WIDTH / 271), i => { const x = 62 + i * 271; return x > 200 && x < 800 ? '' : flowerbed(x, 634 + i % 2 * 4, .5 + i % 3 * .09); });
-  world.innerHTML = `<svg class="park-scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WORLD_WIDTH} ${WORLD_HEIGHT}" width="${WORLD_WIDTH}" height="${WORLD_HEIGHT}" aria-label="游乐园，十座持续运转的游乐设施">
-    <defs>${materialDefs()}</defs>
+  world.innerHTML = `<svg class="park-scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WORLD_WIDTH} ${WORLD_HEIGHT}" width="${WORLD_WIDTH}" height="${WORLD_HEIGHT}" aria-label="游乐园，十座持续运转的游乐设施与好吃小镇小吃街">
+    <defs>${materialDefs()}${sceneryDefs()}</defs>
     ${landscape()}
-    <g aria-hidden="true" class="vegetation">${gardens}</g>
+    ${gardenLights()}
     <g id="ride-layer" class="scene-layer ride-layer" data-depth="1">
       ${ridesByDepth.map(ride => `<g id="ride-${ride.id}" class="ride" role="group" aria-label="${ride.name}${ride.title ? ` · ${ride.title}` : ''}" style="--ride-color:${ride.color}" data-ride="${ride.id}">
-        <title>${ride.name}${ride.title ? ` · 入口按钮打开 ${ride.title}` : ' · 游乐设施'}</title>
+        <title>${ride.name}${ride.closed ? ' · 简历入口暂未开放，木马继续运转' : ride.title ? ` · 入口按钮打开 ${ride.title}` : ' · 游乐设施'}</title>
         <g class="ride-placement" clip-path="url(#ride-envelope)" transform="translate(${ride.x} ${ride.base - 500 * ride.size}) scale(${ride.size})"><g class="ride-body">
           ${drawings[ride.id](ride)}
         </g></g>
       </g>`).join('')}
     </g>
     ${entrance()}
-    <g aria-hidden="true" class="vegetation">${scenery}${flowerbeds}${[700,1610,2260,2940,3820,4550].map(bench).join('')}${[1695,1930,2820,3420,3950,4630].map(lamp).join('')}${balloons(1230, 570)}${balloons(2915, 517)}${balloons(4350, 518)}</g>
+    ${gardenGroups()}
+    <g aria-hidden="true" class="vegetation">${balloons(1620, 560)}${balloons(2915, 517)}${balloons(4350, 518)}</g>
+    ${foregroundDetail(WORLD_WIDTH)}
     <rect id="park-walkway" x="0" y="652" width="${WORLD_WIDTH}" height="108" fill="transparent" style="cursor:crosshair"><title>点击道路，让树懒滑过去</title></rect>
   </svg>`;
 
-  document.getElementById('stars').innerHTML = range(55, i => `<i class="star" style="left:${(i * 37.7) % 100}%;top:${(i * 17.3) % 62 + 4}%;--duration:${2 + i % 5}s;animation-delay:-${i % 6}s"></i>`);
+  // Rejection sampling gives the sky natural gaps without the former diagonal lattice.
+  const starPoints = [];
+  for (let i = 0; i < 92; i++) {
+    let point;
+    for (let attempt = 0; attempt < 40; attempt++) {
+      point = { x: Math.random() * 100, y: 3 + Math.random() * 61 };
+      if (point.x < 22 && point.y < 15) continue;
+      if (Math.hypot(point.x - 81, point.y - 19) < 7) continue;
+      if (starPoints.every(other => Math.hypot((point.x - other.x) * 1.25, point.y - other.y) > 3)) break;
+    }
+    starPoints.push(point);
+  }
+  document.getElementById('stars').innerHTML = starPoints.map(point => {
+    const cross = Math.random() < .13;
+    const size = cross ? 4 : 1.1 + Math.random() * 2;
+    return `<i class="star${cross ? ' star-cross' : ''}" style="left:${point.x.toFixed(3)}%;top:${point.y.toFixed(3)}%;width:${size.toFixed(2)}px;height:${size.toFixed(2)}px;--drift-x:${(-25 + Math.random() * 50).toFixed(1)}px;--drift-y:${(-15 + Math.random() * 30).toFixed(1)}px;--drift-time:${(20 + Math.random() * 26).toFixed(2)}s;--glint-time:${(2.5 + Math.random() * 5).toFixed(2)}s;--star-delay:-${(Math.random() * 40).toFixed(2)}s;--star-alpha:${(.45 + Math.random() * .5).toFixed(2)}"></i>`;
+  }).join('') + range(3, i => `<i class="shooting-star" style="left:${40 + i * 23}%;top:${10 + i * 7}%;--meteor-time:${23 + i * 13}s;animation-delay:-${i * 7}s"></i>`);
   const bilibili = { id: 'bilibili', name: 'B 站', title: 'bilibili', href: 'https://space.bilibili.com/630698674', color: '#cf9fb9', x: 352 };
   const stops = [{ id: 'entrance', name: '园区入口', x: 190 }, bilibili, ...rides.map(ride => ride.signX === undefined ? ride : {
     ...ride, x: ride.x + ride.signX * ride.size, frameOnArrival: true,
@@ -533,7 +547,7 @@
   const entries = [bilibili, ...rides].sort((a, b) => a.x - b.x);
   document.getElementById('guide-list').innerHTML = entries.map((ride, i) => `<div class="guide-row guide-ticket" style="--ride-color:${ride.color}">
     <${ride.href ? 'a' : 'div'} class="guide-destination" ${ride.href ? destinationAttributes(ride) : ''}>
-      <span class="guide-number">${String(i + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.local ? ride.subtitle : ride.title ? `${ride.name} · 打开页面` : '游乐设施'}</small></span>${ride.href ? '<span class="guide-arrow" aria-hidden="true">↗</span>' : ''}
+      <span class="guide-number">${String(i + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.closed || ride.local ? ride.subtitle : ride.title ? `${ride.name} · 打开页面` : '游乐设施'}</small></span>${ride.href ? '<span class="guide-arrow" aria-hidden="true">↗</span>' : ''}
     </${ride.href ? 'a' : 'div'}>
     <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>滑板前往</span></button>
   </div>`).join('');
@@ -552,6 +566,7 @@
       bumper: '<path d="M-25 23V-8h50v31m-52-31L0-23 27-8ZM-18 11q2-9 12-7 12-2 20 7v7h-32Zm19-7v-12"/><ellipse cy="18" rx="19" ry="4"/>',
       waterslide: '<path d="M-23 24V-24h9v48m-9-35h9m-9 12h9M-13-20C0-20-7 5 7 5s4 16 18 16" stroke-width="5"/><path d="M-13-20C0-20-7 5 7 5s4 16 18 16" stroke="#fff7e6"/><ellipse cx="17" cy="25" rx="17" ry="4"/>',
       airplanes: '<path d="M-26 2q23-14 49-5 8 6 0 10h-49Zm11-6-7-14h11L3-4M-4 6l10 17h12L10 5m-29-2-9-12h10m43-13v38M0 12v16"/>',
+      snackstreet: '<path d="M-24-8h48l-7-17h-34ZM-24-8v9q6 7 12 0 6 7 12 0 6 7 12 0 6 7 12 0V-8M-20 4v20h40V4M-25 14h50M-9-22l-3 13m21-13 3 13"/>',
     };
     return `<g transform="scale(.78)" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${artwork[id]}</g>`;
   }
@@ -564,7 +579,7 @@
     const tour = [{ id: 'entrance', title: '园区入口', color: '#92a582' }, ...entries];
     const columns = compact ? 4 : 6;
     const width = compact ? 408 : 760;
-    const height = compact ? 366 : 268;
+    const height = (compact ? 30 : 12) + Math.ceil(tour.length / columns) * (compact ? 112 : 128);
     const points = tour.map((stop, i) => {
       const row = Math.floor(i / columns);
       const column = row % 2 ? columns - 1 - i % columns : i % columns;
@@ -601,12 +616,14 @@
   const proximityNodes = rides.map(ride => ({ ride, node: document.getElementById(`ride-${ride.id}`), visible: true, proximity: '' }));
   const tools = document.querySelector('.park-tools');
   const mountainLayer = document.getElementById('mountain-layer');
+  const woodlandLayer = document.getElementById('woodland-layer');
   const status = document.getElementById('travel-status');
   const activeRides = new Set();
   const decorativeItems = [...world.querySelectorAll('.decor-cluster, #entrance-scene')].map(node => ({ node, left: Number(node.dataset.left), right: Number(node.dataset.right), visible: true }));
   let visibleSlice = '';
   let motionReady = false;
   let layoutMetrics = { width: 0, height: 0, half: 60, compact: false };
+  let compactScene = null;
   let lastActorTransform = '';
   function updateVisibility(force = false) {
     const left = viewport.scrollLeft / scale;
@@ -670,13 +687,14 @@
       }
     }
     actorScreenX = actor.x * scale - viewport.scrollLeft;
-    sloth.classList.toggle('near-destination', stops.some(stop => stop.frameOnArrival && Math.abs(actor.x - stop.x) < 170));
+    sloth.classList.toggle('near-destination', stops.some(stop => (stop.href || stop.closed) && Math.abs(actor.x - stop.x) < 180));
     const top = layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
     const transform = `translate3d(${actorScreenX.toFixed(2)}px,${top.toFixed(2)}px,0) translate(-50%,-90.5%)`;
     if (transform !== lastActorTransform) { sloth.style.transform = transform; lastActorTransform = transform; }
     tools.classList.toggle('dock-left', layoutMetrics.compact && actorScreenX >= layoutMetrics.width / 2 - .5);
     const mountainOffset = motionQuery.matches ? 0 : viewport.scrollLeft / scale * .84;
     mountainLayer.setAttribute('transform', `translate(${mountainOffset.toFixed(2)} 0)`);
+    woodlandLayer.setAttribute('transform', `translate(${(motionQuery.matches ? 0 : viewport.scrollLeft / scale * .35).toFixed(2)} 0)`);
     root.style.setProperty('--sky-pan', `${motionQuery.matches ? 0 : -viewport.scrollLeft * .025}px`);
     updateVisibility();
     proximityNodes.forEach(item => {
@@ -690,6 +708,17 @@
   function layout() {
     renderGuideMap();
     layoutMetrics = { width: viewport.clientWidth, height: viewport.clientHeight, half: sloth.offsetWidth / 2, compact: innerWidth <= 600 };
+    if (compactScene !== layoutMetrics.compact) {
+      compactScene = layoutMetrics.compact;
+      const ride = rides[0];
+      Object.assign(ride, compactScene ? { x: 375, base: 430, size: .83 } : ferrisWide);
+      document.querySelector('#ride-ferris .ride-placement').setAttribute('transform', `translate(${ride.x} ${ride.base - 500 * ride.size}) scale(${ride.size})`);
+      document.getElementById('pad-ferris').setAttribute('transform', `translate(${ride.x} ${ride.base}) scale(${ride.size})`);
+      const path = `M${ride.x + 24} 661Q${ride.x - 40} 613 ${ride.x} ${ride.base + 7}`;
+      document.getElementById('access-ferris').setAttribute('d', path);
+      document.getElementById('access-fill-ferris').setAttribute('d', path);
+      root.dataset.scene = compactScene ? 'compact' : 'wide';
+    }
     scale = Math.min((viewport.clientHeight - 76) / WORLD_HEIGHT, innerWidth <= 600 ? Math.min(.9, viewport.clientWidth / 480) : 1.3);
     scale = Math.max(.36, scale);
     world.style.width = `${WORLD_WIDTH * scale}px`;
@@ -1015,7 +1044,7 @@
     { id: 'night', name: '夜晚', icon: 'moon', sun: 55, moon: 1 },
     { id: 'morning', name: '早晨', icon: 'dawn', sun: 29, moon: .2 },
   ];
-  const colorNames = ['ink', 'muted', 'sky-top', 'sky-bottom', 'surface', 'line', 'grass', 'grass-back', 'path', 'path-line', 'hill', 'hill-back', 'tree', 'tree-dark', 'mountain-far', 'mountain-near', 'mountain-shadow'];
+  const colorNames = ['ink', 'muted', 'sky-top', 'sky-bottom', 'surface', 'line', 'grass', 'grass-back', 'path', 'path-line', 'hill', 'hill-back', 'tree', 'tree-dark', 'mountain-far', 'mountain-near', 'mountain-shadow', 'leaf-light', 'bark', 'wood-light', 'wood-dark', 'stone-light', 'stone-dark', 'joint', 'forest', 'forest-back', 'water', 'water-dark', 'water-shine', 'bank', 'canvas', 'canvas-shadow', 'metal-light', 'metal-mid', 'metal-dark', 'paint-rose', 'paint-lilac', 'paint-sage', 'shadow'];
   const rgb = value => {
     const hex = value.trim().replace('#', '');
     return [0, 2, 4].map(index => parseInt(hex.slice(index, index + 2), 16));
@@ -1027,6 +1056,7 @@
       colors: colorNames.map(name => rgb(styles.getPropertyValue(`--${name}`))),
       night: parseFloat(styles.getPropertyValue('--night-opacity')),
       day: parseFloat(styles.getPropertyValue('--day-opacity')),
+      brightness: parseFloat(styles.getPropertyValue('--art-brightness')),
     };
   });
   let cycleMode = '3';
@@ -1059,6 +1089,7 @@
     colorNames.forEach((name, i) => lightProperty(`--${name}`, `rgb(${a.colors[i].map((value, channel) => Math.round(mix(value, b.colors[i][channel], blend))).join(',')})`));
     lightProperty('--night-opacity', mix(a.night, b.night, blend).toFixed(3));
     lightProperty('--day-opacity', mix(a.day, b.day, blend).toFixed(3));
+    lightProperty('--art-brightness', mix(a.brightness, b.brightness, blend).toFixed(3));
     lightProperty('--moon-opacity', mix(phases[phase].moon, phases[next].moon, blend).toFixed(3));
     lightProperty('--sun-top', `${mix(phases[phase].sun, phases[next].sun, blend)}%`);
     modeButton.style.setProperty('--cycle-progress', String(cycleMode === 'infinity' ? 0 : progress));

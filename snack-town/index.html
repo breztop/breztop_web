@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>好吃小镇 · 请我吃饭 — 微风中的快乐</title>
+  <meta name="description" content="我有一个吃遍世界的梦。来好吃小镇散散步，在 B 站关注「微风中的快乐」，私信一句「请吃饭」。" />
+  <meta name="theme-color" content="#dbe6da" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f3dfb8'/%3E%3Cpath d='M9 29h46Q49 51 32 51T9 29' fill='%23a65e43'/%3E%3Cpath d='M22 23q-7-7 0-14m10 14q7-7 0-14m10 14q-7-7 0-14' fill='none' stroke='%237b6044' stroke-width='3'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="main.js" defer></script>
+</head>
+<body class="is-booting">
+  <section id="town-boot" class="boot-screen" aria-label="好吃小镇启动画面">
+    <button id="skip-boot" type="button" aria-label="跳过开场动画"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 8 7-8 7Zm9 0 8 7-8 7Z"/></svg></button>
+    <div class="boot-center">
+      <h1 id="boot-title" aria-live="polite">欢迎来到<br />好吃小镇</h1>
+    </div>
+  </section>
+
+  <main id="town-shell" class="town-shell" hidden>
+    <a class="back-link round-button" href="../" aria-label="返回游乐园"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5-7 7 7 7M3 12h18"/></svg></a>
+    <button class="replay-button round-button" id="replay-boot" type="button" aria-label="重播开场动画"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg></button>
+    <div id="town-viewport" class="town-viewport" tabindex="0" role="region" aria-label="好吃小镇。用左右方向键、下方箭头或拖动小厨师散步；底部图标可前往摊位。">
+      <div id="town-world" class="town-world">
+        <div id="town-canvas" class="town-canvas">
+          <img class="town-art" src="street.svg" width="1880" height="900" alt="" aria-hidden="true" draggable="false" />
+          <article class="station station-follow" aria-labelledby="follow-title">
+            <h2 id="follow-title">微风中的快乐</h2>
+            <div class="station-actions"><a id="follow-link" class="station-action" href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer" aria-label="在 B 站关注微风中的快乐"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 4m5-4-3 4M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 12v3m8-3v3"/></svg></a></div>
+          </article>
+          <article class="station station-message" aria-labelledby="message-title">
+            <h2 id="message-title"><span id="invite-word">请吃饭</span></h2>
+            <div class="station-actions">
+              <button id="copy-invite" class="station-action" type="button" aria-label="复制请吃饭"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5V3h12v14h-3M4 7h12v14H4Z"/></svg><svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 5L20 6"/></svg></button>
+              <a id="message-link" class="station-action" href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer" aria-label="打开 B 站主页，点发消息发送请吃饭"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 18-7-7 18-3-8-8-3Zm8 3L21 3"/></svg></a>
+            </div>
+          </article>
+            <button id="town-player" class="town-player" type="button" aria-label="拖动小厨师左右移动，也可使用方向键">
+              <svg viewBox="0 0 100 130" aria-hidden="true"><ellipse cx="50" cy="119" rx="36" ry="6" fill="#6d7551" opacity=".2"/><g stroke="#655849" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="m33 91-6 22h13l8-20m12-2 10 22H57l-6-20" fill="#b09c7c"/><path d="M26 65q-9 8-10 25l10 1 11-17m35-9q14 8 16 24l-10 2-12-19" fill="#baa788"/><path d="M30 67q20-10 40 0l2 28q-22 17-44 0Z" fill="#9d896d"/><path d="M36 70h28v27q-14 8-28 0Z" fill="#76917a"/><path d="M41 82h18v10H41Z" fill="#d5dcc0"/><path d="M24 46q-3-25 26-27 31 1 27 29 0 22-27 24-28-1-26-26Z" fill="#b6a080"/><path d="M31 43q-1-18 18-16l9 2q14-1 14 15 2 19-22 21-21-1-19-22Z" fill="#f2e2c0"/><path d="m31 40 9-5 8 7-10 13-10-9m29-5 8-6 8 8-8 12-10-8" fill="#806954" stroke="none"/><path d="m33 44 6-2m24 0 6 2m-24 10q6 5 12-1" fill="none"/><ellipse cx="50" cy="48" rx="3" ry="2" fill="#655447"/><path d="M29 30v-12q-11-11 0-17 8-4 15 3 9-9 18-2 13-5 17 6 2 8-8 12v10Z" fill="#fff3da"/><path d="M30 23h40v8H30Z" fill="#e5d9b8"/><path d="m85 88 2-25m0-3q-7-12 0-17 7 5 0 17" fill="#cba26d" stroke="#a17c4d"/><path d="M26 113h17m14 0h17" stroke-width="4"/></g></svg>
+            </button>
+        </div>
+      </div>
+    </div>
+    <nav class="town-controls" aria-label="小镇移动和目的地">
+      <button id="walk-left" class="round-button" type="button" aria-label="向左走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+      <div class="quest-nav">
+        <button class="round-button" type="button" data-walk="follow" aria-label="走到关注小摊"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 4m5-4-3 4M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 12v3m8-3v3"/></svg></button>
+        <button class="round-button" type="button" data-walk="message" aria-label="走到请吃饭邮局"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3Zm0 0 9 8 9-8"/></svg></button>
+      </div>
+      <button id="walk-right" class="round-button" type="button" aria-label="向右走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+    </nav>
+    <p id="town-status" class="sr-only" role="status" aria-live="polite"></p>
+    <div id="town-toast" class="sr-only" role="status" aria-live="polite"></div>
+  </main>
+  <noscript><style>.boot-screen{display:none!important}.town-shell[hidden]{display:block!important}</style></noscript>
+</body>
+</html>

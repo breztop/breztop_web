@@ -1,0 +1,195 @@
+// Original, code-native scenery. Coordinates use the park's 5300 × 760 world.
+// Decorative groups never capture input; their bounds let the main scene suspend them off screen.
+const repeat = (count, draw) => Array.from({ length: count }, (_, index) => draw(index)).join('');
+const cluster = (x, y, reach, content, extra = '') => `<g class="decor-cluster park-detail ${extra}" data-left="${x - reach}" data-right="${x + reach}" transform="translate(${x} ${y})" aria-hidden="true">${content}</g>`;
+
+export function sceneryDefs() {
+  return `<linearGradient id="leaf-canopy" x1="1" y1="0" x2="0" y2="1"><stop stop-color="var(--leaf-light)"/><stop offset=".48" stop-color="var(--tree)"/><stop offset="1" stop-color="var(--tree-dark)"/></linearGradient>
+    <linearGradient id="garden-timber" x2="0" y2="1"><stop stop-color="var(--wood-light)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
+    <linearGradient id="garden-water" x2="0" y2="1"><stop stop-color="var(--water-dark)"/><stop offset="1" stop-color="var(--water)"/></linearGradient>
+    <linearGradient id="meadow-wash" x2="0" y2="1"><stop stop-color="var(--grass)"/><stop offset="1" stop-color="var(--grass-back)"/></linearGradient>
+    <radialGradient id="contact-shadow"><stop stop-color="var(--shadow)" stop-opacity=".3"/><stop offset="1" stop-color="var(--shadow)" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ground-lantern"><stop stop-color="#ffcf83" stop-opacity=".48"/><stop offset=".45" stop-color="#efba70" stop-opacity=".2"/><stop offset="1" stop-color="#efba70" stop-opacity="0"/></radialGradient>
+    <pattern id="garden-paving" width="44" height="22" patternUnits="userSpaceOnUse"><path d="M0 0h44v22H0Z" fill="var(--stone-light)"/><path d="M0 1h44M0 21h44M22 0v21M0 0v21m44-21v21" fill="none" stroke="var(--joint)" stroke-width=".7" opacity=".58"/><path d="M3 4h15m8 0h14" stroke="var(--canvas)" stroke-width=".7" opacity=".5"/></pattern>
+    <pattern id="path-grain" width="69" height="41" patternUnits="userSpaceOnUse"><g fill="var(--wood-dark)" opacity=".13"><circle cx="5" cy="11" r=".8"/><circle cx="41" cy="6" r=".55"/><circle cx="24" cy="32" r=".65"/><circle cx="61" cy="25" r=".8"/><ellipse cx="47" cy="35" rx="1.6" ry=".55"/></g></pattern>
+    <pattern id="roof-tiles" width="17" height="11" patternUnits="userSpaceOnUse"><path d="M0 10h17M8 0v10" fill="none" stroke="var(--canvas)" stroke-width=".6" opacity=".32"/></pattern>`;
+}
+
+export function gardenTree(x, y, size = 1, broad = true) {
+  const crown = broad
+    ? `<path d="M-7-47q-41 14-50-14-25-8-12-32-15-27 14-40 0-30 33-29 21-25 43-4 32-7 39 24 30 6 22 34 18 27-8 42-9 28-43 14Z" fill="var(--tree-dark)"/>
+       <path d="M-50-84q-12-18 8-32-3-26 23-28 17-24 36-8 28-7 33 22 21 5 16 26 13 22-9 35-13 20-38 5-28 17-43-4-22 4-26-16Z" fill="url(#leaf-canopy)"/>
+       <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+       <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/>`
+    : `<path d="M1-184-29-136h15l-36 54h20l-35 49q62 18 127-2L28-85h19L15-135h14Z" fill="var(--tree-dark)"/>
+       <path d="M1-180 5-137l21 1-14-2 30 49-27-8 32 51q-22 7-43 8L0-87l-21 3 21-51-16-1Z" fill="var(--tree)"/>
+       <path d="m0-166 1 23m-21 31 19 7m5 19 21 7m-59 19 29 6" fill="none" stroke="var(--leaf-light)" stroke-width="1.5" opacity=".55"/>`;
+  return `<g class="decor-cluster park-detail garden-tree" data-left="${x - 85 * size}" data-right="${x + 85 * size}" transform="translate(${x} ${y}) scale(${size})" aria-hidden="true">
+    <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
+    <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
+    <g class="tree-sway" style="animation-delay:-${Math.abs(x % 7)}s">${crown}</g>
+    <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
+  </g>`;
+}
+
+export function woodland() {
+  const groves = [[-220, 448, 1], [120, 435, .8], [730, 445, .78], [1400, 456, 1.1], [1750, 434, .88], [2240, 448, 1.05], [2840, 440, .82], [3330, 451, 1.1], [3900, 447, .9], [4550, 450, 1.1], [5130, 443, .95], [5700, 448, .85]];
+  return `<g id="woodland-layer" class="woodland-layer" aria-hidden="true">
+    <path d="M-650 447Q-300 388 40 423T650 415T1270 430T1930 414T2580 431T3230 412T3890 427T4500 413T5220 429T6000 416V504H-650Z" fill="var(--forest-back)"/>
+    ${groves.map(([x, y, size], index) => `<g transform="translate(${x} ${y}) scale(${size})" fill="var(--forest)">
+      <path d="M-145 29q-27-33 8-47-14-33 20-39-2-30 30-31 16-28 40-6 28-16 45 12 32-4 37 27 32 5 22 33 27 12 18 40Z"/>
+      <path d="M-10 38q-23-31 7-49-9-28 20-37 3-29 29-22 19-22 37-2 26-12 35 18 33 3 24 33 30 19 8 44Z" opacity=".75"/>
+      <path d="M-${index % 2 ? 105 : 62} 25v-43m-10 14 10 8 12-13m61 36v-31m-9 8 9 9 11-13" fill="none" stroke="var(--forest-back)" stroke-width="2" opacity=".45"/>
+    </g>`).join('')}
+    <g fill="var(--forest)" opacity=".65">${repeat(34, i => { const x = -250 + i * 183 + (i % 3) * 24; const h = 27 + i % 4 * 9; return `<path d="m${x} 462-${h * .65} 0 ${h * .32}-${h * .45}h-${h * .17}l${h * .5}-${h * .9} ${h * .5} ${h * .9}h-${h * .17}l${h * .32} ${h * .45}Z"/>`; })}</g>
+  </g>`;
+}
+
+export function gardenWater() {
+  return `<g class="park-detail garden-water" aria-hidden="true">
+    <path d="M1430 490q139-69 277-16 121-37 250 9 94 28 19 61-112 30-228-3-174 19-304-4-74-22-14-47Z" fill="var(--bank)"/>
+    <path d="M1453 491q123-52 252-7 119-35 239 8 73 24 16 42-103 25-214-3-171 20-293-5-43-15 0-35Z" fill="url(#garden-water)"/>
+    <path d="M1809 524c-88 27-54 58 6 76s75 30 44 54h69c28-49-44-65-91-84s-30-33 20-43Z" fill="var(--bank)"/>
+    <path d="M1823 526c-85 29-45 47 8 67s70 36 46 61h32c25-43-35-59-87-80s-31-29 25-46Z" fill="url(#garden-water)"/>
+    <g fill="none" stroke="var(--water-shine)" stroke-linecap="round" opacity=".65"><path d="M1501 499h64m-42 10h27m83 1h88m110-15h43m-120 24h64m-48 22 22-5m-50 22 24 8m-2 13 20 6m4 18 21 6" stroke-width="1.7"/><path d="M1490 520h42m187-25h33m102 20h46" stroke-width=".8"/></g>
+    <path d="M3245 501q111-39 257-13 126-43 275-11 165 35 63 67-156 30-305-3-190 29-295-1-58-17 5-39Z" fill="var(--bank)"/>
+    <path d="M3270 501q103-28 230-3 122-43 273-10 131 26 50 44-150 23-288-2-164 25-278-1-40-14 13-28Z" fill="url(#garden-water)"/>
+    <path d="M3340 515h89m98-8h54m121 9h75m-230 11h52" stroke="var(--water-shine)" stroke-width="1.7" opacity=".6"/>
+    ${[[1470, 528], [1784, 548], [1908, 624], [3270, 532], [3766, 517]].map(([x, y]) => `<g transform="translate(${x} ${y})"><path d="m-15 2 7-11 19 1 9 10Z" fill="var(--stone-dark)"/><path d="m-15 2 7-11 9 4 10-3 9 10Z" fill="var(--stone-light)"/><path d="M-20 7q21-7 42 0" stroke="var(--water-shine)" fill="none" opacity=".5"/></g>`).join('')}
+  </g>`;
+}
+
+export function rideFooting(ride) {
+  return `<g id="pad-${ride.id}" class="ride-footing park-detail" transform="translate(${ride.x} ${ride.base}) scale(${ride.size})" aria-hidden="true">
+    <ellipse cy="17" rx="231" ry="36" fill="url(#contact-shadow)"/>
+    <path d="M-209 2v9c0 38 418 38 418 0V2Z" fill="var(--stone-dark)"/>
+    <ellipse cy="2" rx="209" ry="29" fill="url(#garden-paving)" stroke="var(--joint)" stroke-width="1.3"/>
+    <ellipse cy="1" rx="198" ry="24" fill="none" stroke="var(--canvas)" stroke-width="1" opacity=".6"/>
+    <path d="M-33 30h66l9 8h-84Zm-9 9h84l7 7h-98Z" fill="var(--stone-light)" stroke="var(--joint)" stroke-width=".8"/>
+    <path d="M-33 32h66m-75 9h84" stroke="var(--canvas)" stroke-width="1" opacity=".7"/>
+    <g class="night-light"><ellipse cy="8" rx="180" ry="32" fill="url(#ground-lantern)" opacity=".55"/></g>
+  </g>`;
+}
+
+export function gardenBench(x, y = 630, withStory = false) {
+  return cluster(x, y, 65, `<ellipse cy="6" rx="54" ry="10" fill="url(#contact-shadow)"/>
+    <g stroke="var(--metal-dark)" stroke-width="2" stroke-linejoin="round"><path d="M-28-20v32m56-32v32m-64-20v-11m72 11v-11" fill="none" stroke-width="3"/>
+    <path d="M-34-36h68v8h-68Zm0 10h68v8h-68Zm-3 17h74l5 7h-84Z" fill="url(#garden-timber)"/>
+    <path d="M-28 6h56m-59-37h12m24 9h17" fill="none" stroke-width="1"/>
+    <path d="M-37-13h10m10 0h-9m63 0h-10" fill="none" stroke-width="3"/></g>
+    ${withStory ? `<path d="M15-28q0-10 9-10t9 10v20H15Z" fill="#b48269" stroke="var(--wood-dark)" stroke-width="1.3"/><path d="M20-36v-4q4-5 8 0v4m-10 17h12v8H18Z" fill="none" stroke="#ecd0a5" stroke-width="1.2"/>
+      <path d="M-16-19h10l-2 13h-7Z" fill="var(--canvas)" stroke="var(--wood-dark)" stroke-width=".7"/><path d="M-18-20h14" stroke="var(--wood-dark)" stroke-width="1.5"/>
+      <g transform="translate(-6 12)"><path d="M-15-6q-2-13 8-15 0-14 4-14 5 1 3 14 12 2 10 15Z" fill="#d3bc96" stroke="var(--wood-dark)" stroke-width="1"/><path d="m-3-12 8 3-5 10-10-4Z" fill="#eee1ba"/><path d="m-6-9 8 3m-9 1 6 2" stroke="#879981" stroke-width=".8"/><circle cx="-8" cy="-17" r="1" fill="#44594e"/></g>` : ''}`, 'garden-bench');
+}
+
+export function gardenLamp(x, y = 618) {
+  return cluster(x, y, 75, `<ellipse cy="1" rx="23" ry="5" fill="url(#contact-shadow)"/>
+    <g fill="none" stroke="var(--metal-dark)" stroke-width="2"><path d="M0 0v-126q0-17 15-17h12m-27 13h-7m4 119h7"/><path d="M-6 0H6m-3-130H2" stroke-width="5"/><path d="M17-143h17l-2 24H19Z" fill="var(--canvas)"/><path d="m13-144 7-9h12l7 9Zm4 26h17l-6 6h-5Z" fill="var(--metal-dark)"/><path d="M26-141v21" stroke-width="1"/></g>
+    <g class="night-light"><ellipse cx="23" cy="4" rx="72" ry="22" fill="url(#ground-lantern)"/><ellipse cx="26" cy="-130" rx="31" ry="42" fill="url(#lamp-glow)"/><path d="M20-140h11v18H20Z" fill="#ffe6aa"/></g>`, 'garden-lamp');
+}
+
+function planter(x, y, size, variety = 0) {
+  return cluster(x, y, 90 * size, `<g transform="scale(${size})"><ellipse cy="5" rx="79" ry="12" fill="url(#contact-shadow)"/>
+    <path d="M-67 0q67 18 134 0v10q-67 19-134 0Z" fill="var(--stone-dark)"/><ellipse rx="68" ry="12" fill="var(--bark)" stroke="var(--stone-light)" stroke-width="3"/>
+    <path d="M-58-1q-13-23 9-27-3-22 17-17 17-22 30-2 24-13 29 9 30-3 30 25L49 1Z" fill="var(--tree-dark)"/>
+    <path d="M-52-1q-2-27 19-22 2-24 21-13 18-19 31 5 23-6 28 22Z" fill="var(--tree)"/>
+    ${repeat(9, i => { const px = -53 + i * 13; const h = 17 + (i * 7 % 19); return `<path d="M${px} 1v-${h}" stroke="var(--leaf-light)" stroke-width="1.5"/><g transform="translate(${px} -${h})" fill="${['#e5a489', '#e8ce8a', '#b6a8c5'][(i + variety) % 3]}"><circle cx="-3" r="3.5"/><circle cx="3" r="3.5"/><circle cy="-3" r="3.5"/><circle cy="3" r="3.5"/><circle r="1.9" fill="#f5e6b4"/></g>`; })}</g>`);
+}
+
+function snackKiosk(x, y) {
+  return cluster(x, y, 85, `<ellipse cy="4" rx="77" ry="14" fill="url(#contact-shadow)"/>
+    <g stroke="var(--wood-dark)" stroke-linejoin="round" stroke-width="1.4"><path d="M-47-72h94V-4h-94Z" fill="url(#garden-timber)"/><path d="M-42-23h84m-70 1v17m27-17v17m27-17v17" fill="none"/><path d="M-52-38H52v8H-52Z" fill="var(--canvas)"/>
+    <path d="M-59-79-43-102h86l16 23v10H-59Z" fill="#b4775d"/><path d="m-32-102-9 23h17l5-23m16 0v23h18l-4-23m17 0 9 23h17l-13-23" fill="var(--canvas)" stroke="none"/>
+    <path d="M-59-78h118v9q-10 10-20 0-10 10-20 0-10 10-20 0-10 10-20 0-10 10-20 0-10 10-18 0Z" fill="#b4775d"/>
+    <path d="M-44-67h88v28h-88Z" fill="var(--metal-dark)"/><rect x="-37" y="-62" width="74" height="19" rx="2" fill="#f0dbb2"/>
+    <path d="m-27-31-2-13h11l-2 13m45-1v-6" fill="var(--canvas)"/><path d="M22-38q-8-6 0-12 8 6 0 12Z" fill="#d9a38c"/>
+    <path d="M-34-15h23m-20 5h17M-48-4h96" fill="none" stroke="var(--canvas)" stroke-width=".8"/>
+    <circle cx="-32" cy="3" r="6" fill="var(--metal-dark)"/><circle cx="32" cy="3" r="6" fill="var(--metal-dark)"/></g>
+    <text y="-49" text-anchor="middle" font-size="10" font-weight="700" fill="#6a5744" letter-spacing="1.3">微风补给站</text>
+    <g class="night-light"><ellipse cy="0" rx="76" ry="25" fill="url(#ground-lantern)"/><path d="M-40-68h80" stroke="#ffe1a0" stroke-width="2"/></g>`, 'snack-kiosk');
+}
+
+function noticeBoard(x, y) {
+  return cluster(x, y, 45, `<ellipse cy="4" rx="44" ry="8" fill="url(#contact-shadow)"/>
+    <path d="M-24-24V8m48-32V8" stroke="var(--wood-dark)" stroke-width="4"/>
+    <path d="M-35-91h70v71h-70Z" fill="var(--wood-dark)" stroke="var(--wood-light)" stroke-width="3"/>
+    <path d="m-28-81 24-2 3 36-24 2Z" fill="#e8dcb9"/><path d="m3-79 24 3-4 37-24-3Z" fill="#afbdab"/>
+    <g transform="translate(-13 -68) rotate(-5)"><path d="M-8-7H8V9H-8Z" fill="#5d7d6b"/><path d="M-8-7H0V1h8v8H0V1h-8Z" fill="#d9d8b1"/></g>
+    <text x="-13" y="-49" text-anchor="middle" font-size="4.5" fill="#5f6d57">CardChess</text>
+    <path d="m6-64 7-7 8 9m-16 6 15 2m-16 4 12 2M-23-33h44" stroke="var(--canvas)" stroke-width="1" fill="none"/>
+    <circle cx="-19" cy="-80" r="1.5" fill="#ba8568"/><circle cx="14" cy="-75" r="1.5" fill="#ba8568"/>`);
+}
+
+function footbridge(x, y) {
+  return cluster(x, y, 109, `<ellipse cy="25" rx="103" ry="18" fill="url(#contact-shadow)"/>
+    <path d="M-96 8Q0-30 96 8v13Q0-16-96 21Z" fill="var(--wood-dark)"/>
+    <path d="M-96 5Q0-32 96 5v8Q0-20-96 13Z" fill="url(#garden-timber)" stroke="var(--wood-dark)" stroke-width="1.3"/>
+    <path d="M-82 0v9m18-15v9m19-14v9m20-13v9m21-12v9m21-8v9m21-6v9m20-3v9m19-1v9" stroke="var(--canvas-shadow)" stroke-width="1"/>
+    <g stroke="var(--wood-dark)" fill="none" stroke-width="3" stroke-linecap="round"><path d="M-93 3v-30m31 20v-31m31 22v-31M0-20v-31m31 34v-31m31 41v-31m31 40v-31M-93-28Q0-67 93-28"/><path d="M-93-17Q0-55 93-17" stroke-width="1.5"/></g>
+    <path d="M-91-30Q0-68 91-30" stroke="var(--wood-light)" fill="none" stroke-width="1.2"/>`);
+}
+
+export function gardenLights() {
+  return `<g class="garden-lighting" aria-hidden="true">${[813, 1638, 2180, 2854, 3460, 4000, 4570].map(x => gardenLamp(x)).join('')}</g>`;
+}
+
+export function gardenGroups() {
+  const trees = [[-17, 579, .81, true], [745, 613, .57, true], [1558, 603, .7, false], [1680, 598, .54, true], [1930, 616, .76, true], [2642, 607, .66, true], [2805, 593, .54, false], [3420, 609, .68, true], [3918, 615, .79, false], [4495, 607, .72, true], [4610, 608, .46, true]];
+  return `<g class="park-gardens" aria-hidden="true">
+    ${trees.map(args => gardenTree(...args)).join('')}
+    ${[[29, 630, .65, 1], [652, 627, .78, 0], [1092, 641, .52, 2], [1540, 635, .66, 1], [1914, 636, .57, 0], [2327, 639, .65, 2], [2816, 621, .7, 1], [3404, 638, .73, 0], [3973, 632, .62, 2], [4570, 634, .74, 1]].map(args => planter(...args)).join('')}
+    ${gardenBench(737, 640, true)}${gardenBench(2295, 646)}${gardenBench(2918, 631, true)}${gardenBench(3876, 647)}
+    ${snackKiosk(1174, 611)}${noticeBoard(1280, 624)}${footbridge(1855, 609)}
+    ${cluster(3460, 590, 110, `<g stroke="var(--wood-dark)" stroke-width="1.5" fill="none"><path d="M-70 0v-36m140 36v-36M-70-26q70 30 140 0"/><path d="M-72-37h4m68 0h4m66 0h4" stroke-width="3"/></g><path d="M-94 6q36-16 68-3m92-3q30-14 54-1" stroke="var(--leaf-light)" stroke-width="5" fill="none"/>`)}
+    ${cluster(4310, 610, 80, `<ellipse cy="3" rx="65" ry="10" fill="url(#contact-shadow)"/><path d="M-49 0v-53h98V0Z" fill="var(--wood-dark)"/><path d="m-56-53 56-35 56 35Z" fill="var(--metal-dark)"/><path d="m-56-53 56-35 56 35Z" fill="url(#roof-tiles)"/><path d="M-39-46h78v37h-78Z" fill="var(--canvas)"/><path d="M-34-35h24m-24 7h31m-31 7h22m18-14h20m-20 7h17m-17 7h22" stroke="var(--wood-dark)" stroke-width="1.2"/><path d="M0-45v34" stroke="var(--wood-dark)"/>`)}
+  </g>`;
+}
+
+export function entranceDetails() {
+  return `<g class="park-detail entrance-craft" aria-hidden="true">
+    <path d="M70 567q298-60 543-9" fill="none" stroke="var(--stone-dark)" stroke-width="12"/>
+    <path d="M70 562q298-60 543-9" fill="none" stroke="var(--canvas)" stroke-width="7" stroke-dasharray="24 2"/>
+    <path d="M78 570q293-60 526-10" fill="none" stroke="var(--joint)" stroke-width="1"/>
+    <ellipse cx="385" cy="552" rx="360" ry="64" fill="url(#garden-paving)" opacity=".42"/>
+    <path d="M604 590q93-24 171 30v16q-83-50-169-21Z" fill="var(--stone-dark)"/><path d="M606 584q92-24 169 27" fill="none" stroke="var(--leaf-light)" stroke-width="4"/>
+    <path d="M416 597q25 5 53-1m-54 6q24 5 51-1" fill="none" stroke="var(--joint)" stroke-width=".8"/>
+    <g transform="translate(521 534)" stroke="var(--metal-dark)" stroke-width="1.2"><ellipse cy="3" rx="15" ry="4" fill="url(#contact-shadow)"/><path d="M-9-24H9L7 0H-7Z" fill="var(--tree-dark)"/><path d="M-11-27h22v5h-22Z" fill="var(--metal-dark)"/><path d="M-5-19v14m5-14v14m5-14v14" stroke="var(--leaf-light)"/><path d="M-2-31v-4h4v4" fill="none"/></g>
+    <g transform="translate(85 586)"><path d="m-7-9 9 4 9-3-3 8H-6Z" fill="#b5916c"/><circle cx="-5" cy="-9" r="4" fill="#b5916c"/><path d="m-9-10-5 2 5 1m9 5 6-3M-3 0v4m7-4v4" fill="none" stroke="var(--wood-dark)" stroke-width="1"/></g>
+    <g class="night-light"><ellipse cx="340" cy="561" rx="242" ry="66" fill="url(#ground-lantern)"/><ellipse cx="574" cy="568" rx="79" ry="24" fill="url(#ground-lantern)"/></g>
+  </g>`;
+}
+
+export function foregroundDetail(width) {
+  return `<g class="park-detail foreground-detail" aria-hidden="true">
+    <path d="M0 655Q300 635 650 652T1300 652T1950 652T2600 652T3250 652T3900 652T${width} 652" fill="none" stroke="var(--stone-dark)" stroke-width="7"/>
+    <path d="M0 651Q300 631 650 648T1300 648T1950 648T2600 648T3250 648T3900 648T${width} 648" fill="none" stroke="var(--canvas)" stroke-width="4" stroke-dasharray="27 2" opacity=".7"/>
+    <path d="M0 677H${width}" fill="none" stroke="var(--canvas)" stroke-width="1" stroke-dasharray="2 12" opacity=".45"/>
+    <text x="392" y="714" fill="var(--wood-dark)" opacity=".45" font-size="8" letter-spacing="3">B R E E Z E  P A R K</text>
+    ${[[80, 756, 1.1], [1060, 762, .8], [2260, 764, 1], [3130, 761, .9], [4590, 759, 1.2]].map(([x, y, size]) => `<g transform="translate(${x} ${y}) scale(${size})" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g>`).join('')}
+  </g>`;
+}
+
+export function snackStreet(signMarkup) {
+  return `<ellipse class="ride-shadow" cy="507" rx="285" ry="18"/>
+    <g class="ride-outline snack-street-buildings">
+      <path d="M-278 492V302h132v190m293 0V304h131v188" fill="url(#ivory-paint)"/>
+      <path d="m-290 305 30-42h100l31 42Zm420 0 32-42h100l29 42Z" fill="var(--paint-rose)"/>
+      <path d="m-253 264-15 40h22l10-40m25 0-4 40h24l-1-40m368 0-12 40h23l7-40m25 0 3 40h22l-8-40" fill="var(--canvas)" stroke="none"/>
+      <path d="M-259 332h92v115h-92Zm426 0h92v115h-92Z" fill="var(--metal-dark)"/>
+      <path d="M-265 452h107v12h-107Zm422 0h108v12H157Z" fill="var(--wood-light)"/>
+      <path d="M-250 347h72v76h-72Zm427 0h72v76h-72Z" fill="var(--canvas)"/>
+      <g fill="var(--paint-rose)" stroke="none"><circle cx="-214" cy="385" r="22"/><path d="M182 375h58q-7 27-29 27t-29-27Z"/></g>
+      <path d="M-226 386q12-14 25 0m-21 7 18 0m404-26q-9-11 0-21m10 21q9-11 0-21m10 21q-9-11 0-21" fill="none" stroke="var(--wood-light)" stroke-width="2"/>
+      <path d="M-139 493V218m278 275V218" stroke="var(--wood-dark)" stroke-width="8"/>
+      <path d="M-162 222Q0 151 162 222l-8 18Q0 180-154 240Z" fill="url(#rose-paint)"/>
+      <path d="M-160 221Q0 151 160 221" fill="none" stroke="var(--canvas)" stroke-width="3"/>
+      <path d="M-139 248Q0 298 139 248" fill="none" stroke="var(--metal-dark)" stroke-width="1.3"/>
+      ${[-108, -54, 0, 54, 108].map((x, i) => `<g transform="translate(${x} ${258 + Math.sin((i + 1) / 6 * Math.PI) * 18})"><path d="M0-8v10" stroke="var(--wood-dark)"/><ellipse cy="15" rx="9" ry="13" fill="${i % 2 ? 'var(--canvas)' : 'var(--paint-rose)'}"/><path d="M-5 3h10m-10 24h10" stroke="var(--wood-dark)"/></g>`).join('')}
+      <path d="M-123 319v174m246-174v174" stroke="var(--wood-dark)" stroke-width="4"/>
+      <path d="M-266 480h103m326 0h103" stroke="var(--wood-dark)" stroke-width="2"/>
+    </g>
+    <text x="-213" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">热乎乎的小饼</text><text x="214" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">来一碗热面</text>
+    <text y="217" text-anchor="middle" font-size="21" font-weight="700" letter-spacing="6" fill="var(--wood-dark)">小 吃 街</text>
+    ${signMarkup}
+    <g class="night-light"><ellipse cy="478" rx="235" ry="35" fill="url(#ground-lantern)"/><path d="M-139 248Q0 298 139 248" fill="none" stroke="#ffe0a1" stroke-width="2"/>${[-108, -54, 0, 54, 108].map((x, i) => `<ellipse cx="${x}" cy="${273 + Math.sin((i + 1) / 6 * Math.PI) * 18}" rx="15" ry="22" fill="url(#lamp-glow)"/>`).join('')}</g>`;
+}
