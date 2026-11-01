@@ -4,6 +4,7 @@ todo
 dist/
 .preview/
 node_modules/
+/artwork/
 .env*
 !.env.example
 private/
