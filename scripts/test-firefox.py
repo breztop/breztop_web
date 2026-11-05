@@ -60,7 +60,7 @@ def key(value):
 
 
 def go(stop):
-    js('document.querySelector(`[data-stop="${arguments[0]}"]`).click()', stop)
+    js('document.querySelector("#guide-fixed").click();document.querySelector(`.guide-skate[data-skate="${arguments[0]}"]`).click()', stop)
     time.sleep(.1)
 
 
@@ -131,7 +131,7 @@ try:
     req('/refresh', {})
     time.sleep(.2)
     assert js('return document.querySelector("#cycle-mode span").textContent') == '10 分钟'
-    js('document.querySelector("[data-stop=snackstreet]").click()')
+    go('snackstreet')
     time.sleep(3.9)
     assert js('return document.querySelector("#travel-status").textContent') == '已到达好吃小镇'
     print('PASS mobile clock default and animated travel')

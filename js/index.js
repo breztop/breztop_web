@@ -446,6 +446,15 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
         <text class="sign-title" y="25" text-anchor="middle" style="fill:#af809b">bilibili</text><text class="sign-subtitle" y="42" text-anchor="middle">B 站 · 微风放映室</text>${entryButton({title: 'bilibili', href: 'https://space.bilibili.com/630698674'}, 0, 51, 136)}
         <g class="night-light">${bulbRow(-66, 79, 9)}</g>
       </g>
+      <g id="park-direction" transform="translate(372 680)" aria-label="乐园方向，向右探索">
+        <ellipse cx="-12" cy="69" rx="39" ry="6" fill="var(--shadow)" opacity=".15"/>
+        <path d="M-12 5v61" fill="none" stroke="var(--wood-dark)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M-102-31H78l26 25L78 19H-102Z" fill="url(#garden-timber)" stroke="var(--wood-dark)" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M-91-22H71m-162 32H71" fill="none" stroke="var(--canvas)" opacity=".45"/>
+        <circle cx="-88" cy="-6" r="2" fill="var(--wood-dark)"/>
+        <text x="-7" y="2" text-anchor="middle" fill="var(--ink)" font-size="23" font-weight="700" letter-spacing="2">乐园方向</text>
+        <path d="M59-6h24m-8-8 8 8-8 8" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
       <g class="entrance-balloons vegetation" aria-hidden="true">${balloons(58, 402)}${balloons(468, 515)}${balloons(704, 479)}</g>
       <g class="entrance-drifters vegetation" aria-hidden="true">${range(9, i => `<path class="entry-seed" style="animation-delay:-${i * 1.3}s;animation-duration:${9 + i % 3}s" d="M${75 + i * 71} ${376 + i % 3 * 31}q9-13 16-3-9 9-16 3Z" fill="${i % 2 ? '#d5b9ce' : '#d4dcaf'}" opacity=".6"/>`)}</g>
       ${parkRobot()}
@@ -552,33 +561,10 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>滑板前往</span></button>
   </li>`).join('');
 
-  const route = document.getElementById('park-route');
-  route.innerHTML = stops.map(stop => `<button type="button" data-stop="${stop.id}" aria-label="前往${stop.title || stop.name}"><span aria-hidden="true">●</span><small>${stop.title || stop.name}</small></button>`).join('');
-  route.addEventListener('click', event => {
-    const button = event.target.closest('[data-stop]');
-    if (button) { dismissHint(); goTo(button.dataset.stop); }
-  });
-  const firstHint = document.getElementById('first-hint');
-  try { firstHint.hidden = localStorage.getItem('breeze-visited') === '1'; } catch { firstHint.hidden = false; }
-  function dismissHint() {
-    firstHint.hidden = true;
-    try { localStorage.setItem('breeze-visited', '1'); } catch { /* Optional preference. */ }
-  }
-  document.getElementById('hint-close').addEventListener('click', dismissHint);
-  viewport.addEventListener('pointerdown', dismissHint, { once: true });
-  viewport.addEventListener('keydown', dismissHint, { once: true });
-  viewport.addEventListener('wheel', dismissHint, { once: true, passive: true });
   let currentStop = '';
-  function updateRoute() {
+  function updateCurrentStop() {
     const nearest = stops.reduce((a, b) => Math.abs(a.x - actor.x) < Math.abs(b.x - actor.x) ? a : b);
-    if (currentStop === nearest.id) return;
     currentStop = nearest.id;
-    route.querySelectorAll('[data-stop]').forEach(button => {
-      if (button.dataset.stop === currentStop) {
-        button.setAttribute('aria-current', 'location');
-        route.scrollLeft = button.offsetLeft - route.clientWidth / 2 + button.offsetWidth / 2;
-      } else button.removeAttribute('aria-current');
-    });
   }
 
   function mapIcon(id, color) {
@@ -733,7 +719,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
       if (item.proximity !== value) { item.node.style.setProperty('--proximity-scale', value); item.proximity = value; }
     });
     updatePosition();
-    updateRoute();
+    updateCurrentStop();
   }
   function layout() {
     const oldWidth = layoutMetrics.width;
@@ -820,7 +806,6 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   function goTo(id) {
     const stop = stops.find(item => item.id === id);
     if (stop) {
-      dismissHint();
       travelTo(stop.x, 710, stop.title || stop.name, stop.x);
     }
   }
@@ -1199,7 +1184,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   guideScroll.addEventListener('scroll', updateGuideOverflow, { passive: true });
   new ResizeObserver(updateGuideOverflow).observe(guideScroll);
   document.getElementById('guide-fixed').addEventListener('click', openGuide);
-  function openGuide() { dismissHint(); guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
+  function openGuide() { guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
   guideOpen.addEventListener('click', openGuide);
   guideOpen.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openGuide(); }
