@@ -1,5 +1,5 @@
 // The camera contains both the SVG world and its HTML character, so they zoom together.
-export function initParkCamera({ root, camera, viewport, world, motionQuery, prepare, onFinish }) {
+export function initParkCamera({ root, camera, viewport, world, motionQuery, prepare, onFinish, duration = 3200, hold = 240 }) {
   let frame = 0;
   let playing = false;
   let arrivalScroll = 0;
@@ -30,7 +30,7 @@ export function initParkCamera({ root, camera, viewport, world, motionQuery, pre
     root.dataset.intro = 'playing';
     interruptions.forEach(type => window.addEventListener(type, finish, { capture: true, passive: true }));
     function paint(now) {
-      const t = Math.min(1, Math.max(0, (now - started - 240) / 3200));
+      const t = Math.min(1, Math.max(0, (now - started - hold) / duration));
       const eased = t * t * t * (10 + t * (-15 + t * 6));
       const zoom = Math.pow(overview, 1 - eased);
       const focusX = sceneWidth / 2 + (arrivalScroll + width / 2 - sceneWidth / 2) * eased;

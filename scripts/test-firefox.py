@@ -74,6 +74,7 @@ try:
     for width, height in [(320, 740), (390, 844), (768, 900), (1024, 768), (1440, 900), (844, 390)]:
         size(width, height)
         js('document.querySelector("#home-button").click()')
+        assert js('return [...document.querySelectorAll(".park-tools button")].filter(button=>!button.hidden).every(button=>{const r=button.getBoundingClientRect();return r.top>=innerHeight*.6 && r.bottom<=innerHeight && r.left>=0 && r.right<=innerWidth})')
         assert js('return Math.abs(document.querySelector("#park-viewport").getBoundingClientRect().bottom-innerHeight)<1')
         assert js('''
             const label=document.querySelector('#park-direction text').getBoundingClientRect();
@@ -95,6 +96,9 @@ try:
         js('document.querySelector("#guide-fixed").click()')
         time.sleep(.1)
         assert js('return document.querySelector("dialog").open')
+        assert js('return document.querySelector("#guide-map-panel").hidden && !document.querySelector("#guide-entries-panel").hidden')
+        assert js('return document.querySelectorAll("#guide-list li").length') == 9
+        js('document.querySelector("#guide-map-tab").click()')
         assert js('''const map=document.querySelector('#guide-map svg').getBoundingClientRect();
             return [...document.querySelectorAll('.map-stop text')].every(e=>{
                 const r=e.getBoundingClientRect();return r.left>=map.left && r.right<=map.right && r.bottom<=map.bottom});''')
@@ -113,6 +117,16 @@ try:
     key('\ue00c')
     assert js('return !document.querySelector("dialog").open && document.activeElement.id==="guide-fixed"')
     print('PASS End destination, keyboard dialog and focus restoration')
+
+    js('document.querySelector("#guide-fixed").click();document.querySelector("#guide-entries-tab").focus()')
+    key('\ue014')
+    assert js('return document.querySelector("#guide-map-tab").getAttribute("aria-selected")==="true" && !document.querySelector("#guide-map-panel").hidden')
+    assert js('return document.querySelector(".map-stop[aria-current=location]").dataset.skate') == 'snackstreet'
+    js('document.querySelector(".map-stop[data-skate=haunted]").focus()')
+    key('\ue007')
+    assert js('return !document.querySelector("dialog").open && document.activeElement.id==="sloth-drag"')
+    assert js('return document.querySelector("#travel-status").textContent')=='已到达幽灵小屋'
+    print('PASS guide tabs, current-location marker, scenery navigation and focus')
 
     # Use real pointer input to enter a local destination.
     size(1024, 768)
@@ -159,10 +173,11 @@ try:
     overview = js('const r=document.querySelector(".park-scene").getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}')
     assert overview['left'] >= -1 and overview['right'] <= 391, overview
     assert js('return !document.querySelector(".camera-floor") && Math.abs(document.querySelector(".park-scene").getBoundingClientRect().bottom-innerHeight)<1')
-    time.sleep(1.1)
+    time.sleep(2.8)
+    assert js('return document.documentElement.dataset.intro') == 'playing'
     assert js('return Math.abs(document.querySelector(".park-scene").getBoundingClientRect().bottom-innerHeight)<1')
     assert js('return document.querySelector(".park-scene").getBoundingClientRect().width') > overview['width'] * 1.1
-    time.sleep(2.5)
+    time.sleep(3.0)
     assert js('return document.documentElement.dataset.intro==="ready" && !document.querySelector("#park-camera").style.transform')
     assert js('return document.querySelector("#sloth-drag").getBoundingClientRect().bottom<=innerHeight')
     req('/refresh', {})

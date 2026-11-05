@@ -534,18 +534,30 @@ import { initParkCamera } from './park-camera.js';
     ...ride, x: ride.x + ride.signX * ride.size,
   })].sort((a, b) => a.x - b.x);
   const guide = document.getElementById('park-guide');
+  const guideTabs = [...guide.querySelectorAll('[data-guide-view]')];
+  const guideEntriesPanel = document.getElementById('guide-entries-panel');
+  const guideMapPanel = document.getElementById('guide-map-panel');
   const entries = [bilibili, ...rides].sort((a, b) => a.x - b.x);
-  document.getElementById('guide-list').innerHTML = entries.map((ride, i) => `<li class="guide-row guide-ticket" style="--ride-color:${ride.color}">
+  document.getElementById('guide-list').innerHTML = entries.filter(ride => ride.href || ride.closed).map(ride => `<li class="guide-row guide-ticket" style="--ride-color:${ride.color}">
     <${ride.href ? 'a' : 'div'} class="guide-destination" ${ride.href ? destinationAttributes(ride) : ''}>
-      <span class="guide-number">${String(i + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.closed || ride.local ? ride.subtitle : ride.title ? `${ride.name} · 打开页面` : '游乐设施'}</small></span>${ride.href ? '<span class="guide-arrow" aria-hidden="true">↗</span>' : ''}
+      <span class="guide-number">${String(entries.indexOf(ride) + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.subtitle || ride.name}</small></span>${ride.href ? `<span class="guide-arrow" aria-hidden="true">${ride.local ? '→' : '↗'}</span>` : ''}
     </${ride.href ? 'a' : 'div'}>
-    <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>滑板前往</span></button>
+    <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>前往</span></button>
   </li>`).join('');
 
   let currentStop = '';
   function updateCurrentStop() {
     const nearest = stops.reduce((a, b) => Math.abs(a.x - actor.x) < Math.abs(b.x - actor.x) ? a : b);
+    if (currentStop === nearest.id) return;
     currentStop = nearest.id;
+    if (guide.open) syncGuideLocation();
+  }
+
+  function syncGuideLocation() {
+    guide.querySelectorAll('.map-stop, .guide-skate').forEach(node => {
+      if (node.dataset.skate === currentStop) node.setAttribute('aria-current', 'location');
+      else node.removeAttribute('aria-current');
+    });
   }
 
   function mapIcon(id, color) {
@@ -568,9 +580,9 @@ import { initParkCamera } from './park-camera.js';
   }
   let mapCompact = null;
   function renderGuideMap() {
-    if (!guide.open) return;
+    if (!guide.open || guideMapPanel.hidden) return;
     const compact = innerWidth <= 600;
-    if (mapCompact === compact) return;
+    if (mapCompact === compact) { syncGuideLocation(); return; }
     mapCompact = compact;
     const tour = [{ id: 'entrance', title: '园区入口', color: '#92a582' }, ...entries];
     const columns = compact ? 4 : 6;
@@ -599,19 +611,22 @@ import { initParkCamera } from './park-camera.js';
       ${range(compact ? 8 : 12, i => { const x = 18 + i * (width - 36) / (compact ? 7 : 11); const y = height - 14 - i % 3 * 6; return `<g transform="translate(${x} ${y})"><path d="M0 0v-13" stroke="#9eab81" stroke-width="2"/><path d="M0-26-8-9H8Z" fill="#b2c39a"/><circle cx="9" cy="-3" r="3" fill="#cfb8d4"/></g>`; })}
       ${points.map((stop, i) => `<g class="map-stop" role="button" tabindex="0" data-skate="${stop.id}" aria-label="滑板前往${stop.title || stop.name}" transform="translate(${stop.x} ${stop.y})">
         <rect x="-45" y="-32" width="90" height="88" rx="16" fill="transparent"/>
-        <circle cy="-1" r="28" fill="#fffbef" stroke="${stop.color}" stroke-width="1.3"/>
+        <circle class="map-current" cy="-1" r="33" fill="none" stroke="#7c5cff" stroke-width="2" stroke-dasharray="3 4"/>
+        <circle class="map-disc" cy="-1" r="28" fill="#fffbef" stroke="${stop.color}" stroke-width="1.3"/>
         <circle cy="-1" r="24" fill="${stop.color}" opacity=".08"/>
         ${mapIcon(stop.id, stop.color)}
         <circle cx="24" cy="-23" r="8" fill="${stop.color}"/><text x="24" y="-20" text-anchor="middle" font-size="8" fill="#fffdf2">${i === 0 ? '始' : i}</text>
         <text y="43" text-anchor="middle" font-size="${compact ? 13 : 12}" fill="#657260" font-family="inherit">${stop.title || stop.name}</text>
       </g>`).join('')}
     </svg>`;
+    syncGuideLocation();
   }
 
   const proximityNodes = rides.map(ride => ({ ride, node: document.getElementById(`ride-${ride.id}`), visible: true, proximity: '' }));
   const mountainLayer = document.getElementById('mountain-layer');
   const woodlandLayer = document.getElementById('woodland-layer');
   const status = document.getElementById('travel-status');
+  const tools = document.querySelector('.park-tools');
   const activeRides = new Set();
   const decorativeItems = [...world.querySelectorAll('.decor-cluster, #entrance-scene')].map(node => ({ node, left: Number(node.dataset.left), right: Number(node.dataset.right), visible: true }));
   let visibleSlice = '';
@@ -686,6 +701,8 @@ import { initParkCamera } from './park-camera.js';
     const top = layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
     const transform = `translate3d(${actorScreenX.toFixed(2)}px,${top.toFixed(2)}px,0) translate(-50%,-90.5%)`;
     if (transform !== lastActorTransform) { sloth.style.transform = transform; lastActorTransform = transform; }
+    const atEntrance = layoutMetrics.compact && actor.x < 340 && viewport.scrollLeft < 240 * scale;
+    tools.classList.toggle('dock-left', atEntrance || actorScreenX >= layoutMetrics.width / 2);
     const mountainOffset = motionQuery.matches ? 0 : viewport.scrollLeft / scale * .84;
     mountainLayer.setAttribute('transform', `translate(${mountainOffset.toFixed(2)} 0)`);
     woodlandLayer.setAttribute('transform', `translate(${(motionQuery.matches ? 0 : viewport.scrollLeft / scale * .35).toFixed(2)} 0)`);
@@ -803,6 +820,7 @@ import { initParkCamera } from './park-camera.js';
   guide.addEventListener('click', event => {
     const button = event.target.closest('[data-skate]');
     if (button) selectMapStop(button.dataset.skate);
+    else if (event.target.closest('a.guide-destination')) guide.close();
   });
   guide.addEventListener('keydown', event => {
     const button = event.target.closest('.map-stop');
@@ -1051,13 +1069,36 @@ import { initParkCamera } from './park-camera.js';
 
   const guideOpen = document.getElementById('guide-open');
   const guideScroll = document.getElementById('guide-scroll');
+  function setGuideView(view, focus = false) {
+    guideTabs.forEach(tab => {
+      const active = tab.dataset.guideView === view;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      if (active && focus) tab.focus();
+    });
+    guideEntriesPanel.hidden = view !== 'entries';
+    guideMapPanel.hidden = view !== 'map';
+    guideScroll.scrollTop = 0;
+    renderGuideMap();
+    requestAnimationFrame(updateGuideOverflow);
+  }
+  guideTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => setGuideView(tab.dataset.guideView));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? guideTabs.length - 1
+        : (index + (event.key === 'ArrowRight' ? 1 : -1) + guideTabs.length) % guideTabs.length;
+      setGuideView(guideTabs[next].dataset.guideView, true);
+    });
+  });
   function updateGuideOverflow() {
     document.getElementById('guide-more').hidden = guideScroll.scrollTop + guideScroll.clientHeight >= guideScroll.scrollHeight - 4;
   }
   guideScroll.addEventListener('scroll', updateGuideOverflow, { passive: true });
   new ResizeObserver(updateGuideOverflow).observe(guideScroll);
   document.getElementById('guide-fixed').addEventListener('click', openGuide);
-  function openGuide() { entranceCamera?.finish(); guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
+  function openGuide() { entranceCamera?.finish(); guide.showModal(); setGuideView('entries'); syncGuideLocation(); }
   guideOpen.addEventListener('click', openGuide);
   guideOpen.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openGuide(); }
@@ -1073,6 +1114,7 @@ import { initParkCamera } from './park-camera.js';
 
   entranceCamera = initParkCamera({
     root, camera: document.getElementById('park-camera'), viewport, world, motionQuery,
+    duration: 5200, hold: 400,
     prepare() {
       stopTravel();
       actor.x = 190; actor.y = 710;

@@ -246,32 +246,37 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .vegetation { pointer-events: none; }
 .shrub-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 5s ease-in-out infinite alternate; }
 .flower-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 4s ease-in-out infinite alternate; }
-.park-tools { position: absolute; z-index: 9; top: max(96px, calc(env(safe-area-inset-top) + 84px)); right: 24px; display: flex; align-items: center; gap: 9px; }
+.park-tools { position: absolute; z-index: 9; bottom: max(18px, env(safe-area-inset-bottom)); right: 24px; display: flex; align-items: center; gap: 9px; }
+.park-tools.dock-left { left: 24px; right: auto; }
 .time-controls { position: relative; display: flex; align-items: center; gap: 7px; margin-right: 4px; }
 .icon-button, .cycle-button { position: relative; display: grid; place-items: center; height: 38px; padding: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--ink); border-radius: 50%; backdrop-filter: blur(10px); }
 .icon-button { width: 38px; }
 .icon-button svg { width: 17px; height: 17px; }
 .icon-button:hover, .cycle-button:hover { background: var(--surface); color: var(--accent); }
 .icon-button[aria-pressed="true"] { color: var(--accent); }
-.time-controls .phase-button { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); animation: open-inward-left .2s ease-out; }
-@keyframes open-inward-left { from { opacity: 0; transform: translate(8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+.time-controls .phase-button { position: absolute; left: 0; bottom: calc(100% + 9px); animation: phase-reveal .2s ease-out; }
+@keyframes phase-reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 .cycle-button { width: 38px; border-radius: 50%; font-family: ui-monospace, monospace; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .cycle-button::before { content: ""; position: absolute; inset: -2px; border-radius: inherit; background: conic-gradient(#a18ac8 calc(var(--cycle-progress, 0) * 1turn), transparent 0); mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0); pointer-events: none; }
 /* Printed park map and perforated day-pass stubs. */
 .park-guide { --guide-paper: #f9f3e3; color-scheme: light; width: min(800px, calc(100vw - 28px)); max-height: calc(100svh - 38px); padding: 27px; border: 2px solid #d5c7a9; border-radius: 23px 11px 22px 12px; background: linear-gradient(90deg, transparent 49.7%, #b5a68310 50%, transparent 50.3%), linear-gradient(#fffcf255, #efe5ca22), var(--guide-paper); color: #5d6757; box-shadow: 0 24px 80px #26382e33, inset 0 0 0 6px #fffbef; overflow-y: auto; }
 .park-guide::backdrop { background: #26382d59; backdrop-filter: blur(7px); }
 .guide-heading { display: flex; flex-shrink: 0; justify-content: space-between; align-items: flex-start; gap: 18px; padding-bottom: 8px; }
-.eyebrow { color: #8c947a; font-size: 8px; font-weight: 500; letter-spacing: 2px; margin: 0 0 11px; }
+.guide-tabs { display: flex; flex-shrink: 0; align-self: flex-start; gap: 4px; margin: 12px 0 16px; padding: 4px; border: 1px solid #d5c7a9; border-radius: 24px; background: #ede7d7; }
+.guide-tabs button { min-height: 38px; padding: 8px 18px; border-radius: 20px; background: transparent; color: #665f4d; font-size: 13px; }
+.guide-tabs [aria-selected="true"] { background: #fffdf5; color: #66506e; box-shadow: 0 1px 4px #756b6124; }
 .guide-heading h2 { position: relative; display: inline-block; padding: 9px 25px; margin: 0; border: 1px solid #c7b99b; border-radius: 6px 9px 7px 5px; background: linear-gradient(130deg, #eee2c5, #e0d3b0); box-shadow: 0 3px 0 #ccbc9740; font-size: 25px; font-weight: 500; letter-spacing: 5px; transform: rotate(-1.5deg); }
 .guide-heading h2::before, .guide-heading h2::after { content: ""; position: absolute; top: 48%; width: 4px; height: 4px; background: #a89979; border-radius: 50%; box-shadow: inset 0 1px 1px #fff6d6; }
 .guide-heading h2::before { left: 10px; }
 .guide-heading h2::after { right: 10px; }
 .guide-heading .icon-button { color: #8d8a74; background: #fff9e8; border-color: #d1c6aa; transform: rotate(5deg); }
-.guide-map { margin: 19px 0 21px; border: 1px dashed #c9c5a0; border-radius: 15px; background: #f2f1de; box-shadow: inset 0 0 0 5px #fcf8e8; overflow: hidden; }
+.guide-map { border: 1px dashed #c9c5a0; border-radius: 15px; background: #f2f1de; box-shadow: inset 0 0 0 5px #fcf8e8; overflow: hidden; }
 .guide-map svg { width: 100%; height: auto; display: block; }
 .map-stop { cursor: pointer; outline: none; }
-.map-stop > circle:nth-of-type(1) { transition: fill .15s, filter .15s; }
-.map-stop:hover > circle:nth-of-type(1), .map-stop:focus-visible > circle:nth-of-type(1) { fill: #fffdf4; filter: drop-shadow(0 2px 3px #7d85623a); }
+.map-stop > .map-disc { transition: fill .15s, filter .15s; }
+.map-stop:hover > .map-disc, .map-stop:focus-visible > .map-disc { fill: #fffdf4; filter: drop-shadow(0 2px 3px #7d85623a); }
+.map-current { opacity: 0; }
+.map-stop[aria-current="location"] .map-current { opacity: 1; }
 .map-stop:focus-visible > rect { stroke: #a58db7; stroke-width: 1.4; stroke-dasharray: 3 4; }
 .guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 14px; list-style: none; margin: 0; padding: 0 3px 10px; }
 .guide-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 89px; min-width: 0; border: 1px solid color-mix(in srgb, var(--ride-color), #bcb495 35%); border-radius: 8px; background: linear-gradient(90deg, color-mix(in srgb, var(--ride-color), transparent 91%) 0 35px, #fffaf0 35px); box-shadow: 1px 3px 0 #c5b99016; transition: transform .2s; }
@@ -287,17 +292,17 @@ a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
 .guide-destination .guide-arrow { margin-left: auto; color: var(--ride-color); font-size: 15px; }
 .guide-skate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; padding: 8px; border-left: 1px dashed #c9bda6; border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--ride-color), transparent 90%); font-size: 12px; color: #505c47; letter-spacing: .4px; }
 .guide-skate svg { width: 21px; height: 21px; color: var(--ride-color); }
+.guide-skate[aria-current="location"] { background: #e2d8eb; color: #66506e; }
 @media (max-width: 600px) {
   .park-guide { padding: 22px 15px; border-radius: 18px 10px 18px 10px; }
   .guide-heading h2 { font-size: 21px; padding: 8px 22px; }
-  .guide-map { margin: 17px 0 20px; }
   .guide-list { grid-template-columns: 1fr; gap: 11px; }
   .guide-row { grid-template-columns: minmax(0, 1fr) 89px; }
-  .guide-heading .eyebrow { font-size: 7px; letter-spacing: 1.4px; }
   .guide-destination { padding: 13px 10px; }
   .guide-destination strong { font-size: 13px; }
 }
 .toast { position: absolute; z-index: 30; top: 50%; right: calc(100% + 14px); width: max-content; max-width: min(240px, calc(100vw - 100px)); transform: translate(8px, -50%); padding: 11px 15px; color: var(--ink); background: var(--surface); border: 1px solid var(--border); box-shadow: 0 5px 25px #19233315; border-radius: 11px; font-size: 11px; line-height: 1.7; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+.park-tools.dock-left .toast { right: auto; left: calc(100% + 14px); transform: translate(-8px, -50%); }
 .park-tools .toast.show { opacity: 1; transform: translate(0, -50%); }
 .fallback-nav { position: absolute; top: 35%; left: 8%; right: 8%; z-index: 8; padding: 24px; border-radius: 16px; background: var(--surface); font-size: 14px; }
 .fallback-nav a { display: inline-block; margin: 8px; text-decoration: underline; }
@@ -358,14 +363,15 @@ html.motion-paused .time-controls .phase-button { animation: none; }
   .skate-controls { left: -39px; right: -39px; }
   .move-button { width: 36px; height: 36px; }
   .sloth-bubble { font-size: 9px; padding: 7px 9px; }
-  .park-tools { right: 16px; top: max(164px, calc(env(safe-area-inset-top) + 152px)); gap: 7px; flex-direction: column; align-items: flex-end; }
+  .park-tools { right: 16px; bottom: max(15px, env(safe-area-inset-bottom)); gap: 7px; flex-direction: column; align-items: flex-end; }
+  .park-tools.dock-left { left: 16px; right: auto; align-items: flex-start; }
   .time-controls { margin-right: 0; }
   .icon-button, .cycle-button { width: 35px; height: 35px; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .site-header { top: 18px; left: 24px; }
   .brand-name { font-size: 44px; }
-  .park-tools { top: 70px; right: 18px; }
+  .park-tools { bottom: 12px; right: 18px; }
   .icon-button, .cycle-button { width: 34px; height: 34px; }
 }
 

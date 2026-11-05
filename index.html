@@ -112,9 +112,15 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>
   <dialog id="park-guide" class="park-guide" aria-labelledby="guide-title">
-    <div class="guide-heading"><div><p class="eyebrow">brez.top · 微风中的快乐</p><h2 id="guide-title">园区导览</h2></div><button id="guide-close" class="icon-button" type="button" aria-label="关闭园区导览"><svg><use href="#i-close"/></svg></button></div>
-    <div class="guide-scroll" id="guide-scroll" tabindex="0" aria-label="园区地图与入口列表"><div id="guide-map" class="guide-map" role="group" aria-label="游乐园路线图"></div>
-    <ol id="guide-list" class="guide-list"></ol></div><p class="guide-more" id="guide-more" hidden>向下滚动，查看全部入口 ↓</p>
+    <div class="guide-heading"><h2 id="guide-title">园区导览</h2><button id="guide-close" class="icon-button" type="button" aria-label="关闭园区导览"><svg><use href="#i-close"/></svg></button></div>
+    <div class="guide-tabs" role="tablist" aria-label="查看入口或地图">
+      <button id="guide-entries-tab" type="button" role="tab" aria-selected="true" aria-controls="guide-entries-panel" data-guide-view="entries">页面入口</button>
+      <button id="guide-map-tab" type="button" role="tab" aria-selected="false" aria-controls="guide-map-panel" tabindex="-1" data-guide-view="map">园区地图</button>
+    </div>
+    <div class="guide-scroll" id="guide-scroll" tabindex="0" aria-label="园区入口与地图">
+      <section id="guide-entries-panel" role="tabpanel" aria-labelledby="guide-entries-tab"><ol id="guide-list" class="guide-list"></ol></section>
+      <section id="guide-map-panel" role="tabpanel" aria-labelledby="guide-map-tab" hidden><div id="guide-map" class="guide-map" role="group" aria-label="游乐园路线图"></div></section>
+    </div><p class="guide-more" id="guide-more" hidden>向下查看 ↓</p>
   </dialog>
 </body>
 </html>
