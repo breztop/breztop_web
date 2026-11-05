@@ -178,8 +178,13 @@ export function snackStreet(signMarkup) {
       <path d="M-259 332h92v115h-92Zm426 0h92v115h-92Z" fill="var(--metal-dark)"/>
       <path d="M-265 452h107v12h-107Zm422 0h108v12H157Z" fill="var(--wood-light)"/>
       <path d="M-250 347h72v76h-72Zm427 0h72v76h-72Z" fill="var(--canvas)"/>
-      <g fill="var(--paint-rose)" stroke="none"><circle cx="-214" cy="385" r="22"/><path d="M182 375h58q-7 27-29 27t-29-27Z"/></g>
-      <path d="M-226 386q12-14 25 0m-21 7 18 0m404-26q-9-11 0-21m10 21q9-11 0-21m10 21q-9-11 0-21" fill="none" stroke="var(--wood-light)" stroke-width="2"/>
+      <g class="food-bun"><ellipse cx="-214" cy="409" rx="31" ry="5" fill="var(--wood-light)"/><circle cx="-214" cy="385" r="23" fill="var(--paint-rose)"/><path d="M-234 385q20-28 40 0m-35 8h30m-25 8h20" fill="none" stroke="var(--wood-light)" stroke-width="2"/><g fill="var(--canvas)" stroke="none">${[[-222,374],[-212,369],[-202,377],[-226,382],[-212,381],[-201,387]].map(([x,y]) => `<ellipse cx="${x}" cy="${y}" rx="2" ry=".8" transform="rotate(-28 ${x} ${y})"/>`).join('')}</g></g>
+      <g class="food-noodles"><path d="M182 375h58q-7 27-29 27t-29-27Z" fill="var(--paint-rose)"/><ellipse cx="211" cy="375" rx="29" ry="5" fill="var(--wood-light)"/><path d="M192 372q6-10 10 1t10-1 10 1 10-1m-38 7q10-5 16 1t15-1" fill="none" stroke="var(--canvas)" stroke-width="1.8"/><g fill="var(--paint-sage)" stroke="none"><ellipse cx="200" cy="374" rx="4" ry="2"/><ellipse cx="218" cy="372" rx="3" ry="2"/></g><path d="m226 354 13 21m-8-23 13 20" stroke="var(--wood-dark)" stroke-width="1.5"/><path d="M198 390q12 8 26-1" stroke="var(--canvas)" fill="none"/></g>
+      <g class="food-steam" fill="none" stroke="var(--canvas)" stroke-width="2" opacity=".7"><path d="M199 363q-7-8 0-16t0-15m12 31q7-8 0-16t0-15m12 31q-7-8 0-16t0-15"/></g>
+      <path d="M-272 311h120m291 0h132M-274 469h119m298 0h124m-534 8h32m29 0h34m321 0h33m27 0h33" fill="none" stroke="var(--wood-dark)" stroke-width=".7" opacity=".5"/>
+      <path d="M-284 304h151m269 0h141" stroke="var(--canvas)" stroke-width="2"/>
+      <g fill="var(--metal-mid)" stroke="none">${[-270,-153,155,270].map(x=>`<circle cx="${x}" cy="459" r="1.6"/>`).join('')}</g>
+      <g class="night-light" stroke="none"><path d="M-250 347h72v76h-72Zm427 0h72v76h-72Z" fill="#ffdb98" opacity=".35"/></g>
       <path d="M-139 493V218m278 275V218" stroke="var(--wood-dark)" stroke-width="8"/>
       <path d="M-162 222Q0 151 162 222l-8 18Q0 180-154 240Z" fill="url(#rose-paint)"/>
       <path d="M-160 221Q0 151 160 221" fill="none" stroke="var(--canvas)" stroke-width="3"/>
@@ -188,7 +193,7 @@ export function snackStreet(signMarkup) {
       <path d="M-123 319v174m246-174v174" stroke="var(--wood-dark)" stroke-width="4"/>
       <path d="M-266 480h103m326 0h103" stroke="var(--wood-dark)" stroke-width="2"/>
     </g>
-    <text x="-213" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">热乎乎的小饼</text><text x="214" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">来一碗热面</text>
+    <text class="food-label" x="-213" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">热乎乎的小饼</text><text class="food-label" x="214" y="326" text-anchor="middle" font-size="10" fill="var(--wood-dark)">来一碗热面</text>
     <text y="217" text-anchor="middle" font-size="21" font-weight="700" letter-spacing="6" fill="var(--wood-dark)">小 吃 街</text>
     ${signMarkup}
     <g class="night-light"><ellipse cy="478" rx="235" ry="35" fill="url(#ground-lantern)"/><path d="M-139 248Q0 298 139 248" fill="none" stroke="#ffe0a1" stroke-width="2"/>${[-108, -54, 0, 54, 108].map((x, i) => `<ellipse cx="${x}" cy="${273 + Math.sin((i + 1) / 6 * Math.PI) * 18}" rx="15" ry="22" fill="url(#lamp-glow)"/>`).join('')}</g>`;

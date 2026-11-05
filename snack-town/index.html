@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-intro="pending">
+<html lang="zh-CN" data-light="day" data-intro="pending">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -13,27 +13,47 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%237c5cff'/%3E%3Ctext x='18' y='47' font-family='sans-serif' font-size='44' font-weight='700' fill='white'%3Eb%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+      <symbol id="i-dusk" viewBox="0 0 24 24"><path d="M3 17h18M5 21h14M6 13a6 6 0 0 1 12 0M12 2v3M3 6l2 2m14 0 2-2"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/><path d="M18 2v4m-2-2h4"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Zm6-2v16m6-14v16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+      <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 10 6-4m-6 8 6 4"/></symbol>
+      <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+      <symbol id="i-dawn" viewBox="0 0 24 24"><path d="M3 17h18M5 21h14M6 13a6 6 0 0 1 12 0M12 9V2m-3 3 3-3 3 3M3 7l2 2m14 0 2-2"/></symbol>
+      <symbol id="i-skate" viewBox="0 0 24 24"><path d="M2 11q1 4 5 4h10q4 0 5-4M7 15v3m10-3v3"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></symbol>
+      <symbol id="i-air-balloon" viewBox="0 0 80 130"><path d="M13 51C-5-7 85-7 67 51L48 90H32Z" fill="var(--canvas)" stroke="var(--metal-dark)" stroke-width="1.2"/><path d="M40 8C9 13 12 49 32 88h8C27 48 27 18 40 8Zm0 0C71 13 68 49 48 88h-8C53 48 53 18 40 8Z" fill="var(--paint-lilac)"/><path d="M14 48q26 11 52 0M32 90h16m-17 1 2 15m16-15-2 15" fill="none" stroke="var(--metal-dark)" stroke-width="1.1"/><path d="M31 106h18l-3 14H34Z" fill="var(--wood-light)" stroke="var(--wood-dark)"/><path d="M35 111h10m-8-5v14m6-14v14" stroke="var(--wood-dark)" stroke-width=".7"/><path d="M40 91v10" stroke="#d8a66a" stroke-width="3"/></symbol>
+    </defs>
+  </svg>
+  <header class="site-header"><a class="brand" href="../" aria-label="返回微风游乐园"><span class="brand-name">brez<span>.top</span><small>微风中的快乐</small></span></a></header>
+  <a class="guide-fixed town-back" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5-7 7 7 7M3 12h18"/></svg>返回乐园</a>
   <main id="town-shell" class="town-shell">
-    <header class="town-heading"><a href="../">brez<span>.top</span></a><p>好吃小镇 · 微风中的快乐</p></header>
-    <a class="back-link round-button" href="../" aria-label="返回 brez.top · 微风中的快乐"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5-7 7 7 7M3 12h18"/></svg></a>
-    <button class="replay-button round-button" id="replay-boot" type="button" aria-label="重播开场动画"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg></button>
+    <h1 class="sr-only">好吃小镇 · 请我吃饭</h1>
+    <p class="sr-only" id="town-instructions">拖动场景或树懒、使用左右方向键探索。点击小路滑行，角落图标可前往摊位。</p>
     <div id="town-camera" class="park-camera">
-    <div id="town-viewport" class="town-viewport park-viewport" tabindex="0" role="region" aria-label="好吃小镇。用左右方向键、下方箭头或拖动树懒散步；底部图标可前往摊位。">
-      <div id="town-world" class="town-world park-world">
-        <div id="town-canvas" class="town-canvas">
-          <img class="town-art" src="street.svg" width="1880" height="900" alt="" aria-hidden="true" draggable="false" />
-          <article class="station station-follow" aria-labelledby="follow-title">
+      <div id="town-viewport" class="town-viewport park-viewport" tabindex="0" role="region" aria-label="好吃小镇" aria-describedby="town-instructions">
+        <div id="town-world" class="town-world park-world">
+          <div id="town-canvas" class="town-canvas">
+            <img class="town-art" src="street.svg" width="1880" height="900" alt="" aria-hidden="true" draggable="false" />
+            <article class="station station-follow" aria-labelledby="follow-title">
             <h2 id="follow-title">微风中的快乐</h2><p>在 B 站相遇</p>
             <div class="station-actions"><a id="follow-link" class="station-action" href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer" aria-label="在 B 站关注微风中的快乐"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 4m5-4-3 4M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 12v3m8-3v3"/></svg><span>关注 B 站</span></a></div>
           </article>
-          <article class="station station-message" aria-labelledby="message-title">
+<article class="station station-message" aria-labelledby="message-title">
             <h2 id="message-title"><span id="invite-word">请吃饭</span></h2><p>复制口令，来聊聊吧</p>
             <div class="station-actions">
               <button id="copy-invite" class="station-action" type="button" aria-label="复制请吃饭"><svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5V3h12v14h-3M4 7h12v14H4Z"/></svg><svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 5L20 6"/></svg><span>复制</span></button>
               <a id="message-link" class="station-action" href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer" aria-label="打开 B 站主页，点发消息发送请吃饭"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 18-7-7 18-3-8-8-3Zm8 3L21 3"/></svg><span>私信</span></a>
             </div>
           </article>
-            <button id="town-player" class="town-player" type="button" aria-label="拖动树懒左右移动，也可使用方向键">
+          </div>
+        </div>
+      </div>
+      <div id="town-actor" class="town-actor sloth">
+        <button id="town-player" class="town-player sloth-character" type="button" aria-label="拖动树懒左右移动，也可使用方向键">
               <svg viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg">
         <defs><radialGradient id="board-glow"><stop stop-color="#ffd486" stop-opacity=".7"/><stop offset="1" stop-color="#ffd486" stop-opacity="0"/></radialGradient><linearGradient id="sloth-fur" x2=".8" y2="1"><stop stop-color="#b7a48e"/><stop offset="1" stop-color="#8e7969"/></linearGradient></defs>
         <ellipse class="sloth-shadow" cx="91" cy="193" rx="67" ry="8" fill="#4a5648" opacity=".14"/>
@@ -62,21 +82,26 @@
         <g stroke="#62544c" stroke-width="2.5"><path d="M29 176q5 7 15 7h93q12-1 17-9" fill="#b5a0d8" stroke-linecap="round"/><path d="M43 180h95" stroke="#eee0b8" stroke-width="4"/><path d="M57 183v6m66-6v6"/><circle cx="58" cy="190" r="5.5" fill="#706477"/><circle cx="124" cy="190" r="5.5" fill="#706477"/><circle cx="58" cy="190" r="1.5" fill="#ded2e3" stroke="none"/><circle cx="124" cy="190" r="1.5" fill="#ded2e3" stroke="none"/><path class="board-lamp" d="M76 185h29" stroke="#ffd081" stroke-width="3" stroke-linecap="round"/></g>
       </svg>
             </button>
-        </div>
+        <div class="skate-controls"><button id="walk-left" class="move-button" type="button" aria-label="向左走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><button id="walk-right" class="move-button" type="button" aria-label="向右走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></div>
       </div>
     </div>
-    </div>
-    <nav class="town-controls" aria-label="小镇移动和目的地">
-      <button id="walk-left" class="round-button" type="button" aria-label="向左走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
-      <div class="quest-nav">
-        <button class="round-button" type="button" data-walk="follow" aria-label="走到关注小摊"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 4m5-4-3 4M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 12v3m8-3v3"/></svg></button>
-        <button class="round-button" type="button" data-walk="message" aria-label="走到请吃饭邮局"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3Zm0 0 9 8 9-8"/></svg></button>
+    <div class="park-tools town-tools" role="group" aria-label="小镇控制">
+      <nav class="quest-nav" aria-label="小镇目的地">
+        <button class="icon-button" type="button" data-walk="follow" aria-label="走到关注小摊"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 3 3 4m5-4-3 4M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM8 12v3m8-3v3"/></svg></button>
+        <button class="icon-button" type="button" data-walk="message" aria-label="走到请吃饭邮局"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3Zm0 0 9 8 9-8"/></svg></button>
+      </nav>
+      <div class="time-controls" role="group" aria-label="昼夜循环设置">
+        <button id="cycle-mode" class="cycle-button" aria-controls="fixed-phase" aria-expanded="false" type="button" aria-label="切换昼夜循环"><span>3</span></button>
+        <button id="fixed-phase" class="icon-button phase-button" type="button" aria-label="切换固定时段" hidden><svg aria-hidden="true"><use href="#i-sun"/></svg></button>
       </div>
-      <button id="walk-right" class="round-button" type="button" aria-label="向右走"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
-    </nav>
+      <button id="replay-boot" class="icon-button" type="button" aria-label="重播开场动画"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg></button>
+    </div>
     <p id="town-status" class="sr-only" role="status" aria-live="polite"></p>
-    <div id="town-toast" class="sr-only" role="status" aria-live="polite"></div>
+    <div id="town-toast" class="toast town-toast" role="status" aria-live="polite"></div>
   </main>
-  <noscript><style>.park-camera{visibility:visible!important}</style></noscript>
+  <noscript>
+    <style>.park-camera{visibility:visible!important}.town-back{opacity:1!important;pointer-events:auto!important}.town-world,.town-canvas{width:100%;height:100%;inset:0}.town-art{width:100%;height:100%;object-fit:cover;object-position:center bottom}.station,.town-actor,.town-tools{display:none}.town-fallback{position:fixed;z-index:12;left:16px;right:16px;bottom:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;padding:18px;background:var(--surface);border:1px solid var(--border);border-radius:12px}.town-fallback a{display:flex;align-items:center;min-height:44px;text-decoration:underline}.town-fallback span{align-self:center;user-select:all}</style>
+    <nav class="town-fallback" aria-label="请我吃饭"><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">关注 B 站</a><span>口令：请吃饭</span><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">去 B 站私信</a><a href="../">返回乐园</a></nav>
+  </noscript>
 </body>
 </html>

@@ -16,6 +16,7 @@ export const publicFiles = Object.freeze([
   'snack-town/index.html',
   'snack-town/styles.css',
   'snack-town/main.js',
+  'snack-town/art.js',
   'snack-town/street.svg',
   'personal-match-site/index.html',
   'personal-match-site/styles.css',

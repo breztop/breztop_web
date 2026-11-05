@@ -201,7 +201,7 @@ try:
         req('/url', {'url':args.url.rstrip('/')+'/snack-town/'})
         time.sleep(.2)
         assert js('return document.documentElement.dataset.intro') == 'ready'
-        assert js('return document.querySelector(".town-art").complete && document.querySelector(".town-art").naturalWidth>0')
+        assert js('return !!document.querySelector("svg.town-art .food-bun") && !!document.querySelector("svg.town-art .food-noodles")')
         for stop in ['follow','message']:
             js('document.querySelector(`[data-walk="${arguments[0]}"]`).click()',stop)
             result=js('''
@@ -221,7 +221,7 @@ try:
         assert js('return !!document.querySelector(".boundary-scene .sloth-bob") && !!document.querySelector(".home")')
         assert js('return document.documentElement.scrollWidth<=innerWidth')
         assert js('return document.querySelector(".home").getBoundingClientRect().right<=innerWidth')
-        assert js('return [...document.querySelectorAll("body a, .boundary-scene text")].map(node=>node.textContent.trim())') == ['微风中的快乐','404','这条小路还未开放','返回乐园']
+        assert js('return [...document.querySelectorAll(".boundary-scene text")].map(node=>node.textContent.trim())') == ['← 返回乐园','404','这条小路还未开放']
         print(f'PASS {width}x{height}: matching town/404 scenes, stall hit testing and clipboard')
 
     size(390,844)
