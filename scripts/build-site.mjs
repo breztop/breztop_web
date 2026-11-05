@@ -1,8 +1,9 @@
-import { cp, lstat, mkdir, realpath, rm } from 'node:fs/promises';
+import { lstat, mkdir, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { publicFiles } from './public-files.mjs';
+import { versionAssets } from './version-assets.mjs';
 
 const root = await realpath(fileURLToPath(new URL('../', import.meta.url)));
 const output = path.join(root, 'dist');
@@ -21,10 +22,11 @@ try {
 }
 await rm(output, { recursive: true, force: true });
 await mkdir(output);
-for (const file of publicFiles) {
+const sources = new Map(await Promise.all(publicFiles.map(async file => [file, await readFile(path.join(root, file))])));
+for (const [file, bytes] of versionAssets(sources)) {
   const destination = path.join(output, file);
   await mkdir(path.dirname(destination), { recursive: true });
-  await cp(path.join(root, file), destination, { dereference: false });
+  await writeFile(destination, bytes);
 }
 const artifactCheck = spawnSync(process.execPath, [path.join(root, 'scripts/check-site.mjs'), output], { cwd: root, stdio: 'inherit' });
 if (artifactCheck.status !== 0) process.exit(artifactCheck.status || 1);

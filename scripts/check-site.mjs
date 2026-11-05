@@ -77,7 +77,8 @@ for (const [file, text] of content) {
   }
   for (const reference of references) {
     if (!reference || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(reference)) continue;
-    const [urlPath, fragment] = reference.split('#');
+    const [url, fragment] = reference.split('#');
+    const urlPath = url.split('?')[0];
     let resolved = urlPath.startsWith('/') ? urlPath.slice(1) : path.posix.join(path.posix.dirname(file), urlPath || path.posix.basename(file));
     if (!urlPath) resolved = file;
     if (resolved === '.' || resolved.endsWith('/') || !path.posix.extname(resolved)) resolved = path.posix.join(resolved, 'index.html');

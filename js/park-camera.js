@@ -1,9 +1,5 @@
 // The camera contains both the SVG world and its HTML character, so they zoom together.
 export function initParkCamera({ root, camera, viewport, world, motionQuery, prepare, onFinish }) {
-  const floor = document.createElement('div');
-  floor.className = 'camera-floor';
-  floor.setAttribute('aria-hidden', 'true');
-  camera.before(floor);
   let frame = 0;
   let playing = false;
   let arrivalScroll = 0;
@@ -29,7 +25,6 @@ export function initParkCamera({ root, camera, viewport, world, motionQuery, pre
     const sceneWidth = world.offsetWidth;
     const sceneHeight = world.offsetHeight;
     const overview = Math.min((width - 24) / sceneWidth, height * .65 / sceneHeight, 1);
-    const sceneCenterY = height - sceneHeight / 2;
     const started = performance.now();
     playing = true;
     root.dataset.intro = 'playing';
@@ -39,11 +34,9 @@ export function initParkCamera({ root, camera, viewport, world, motionQuery, pre
       const eased = t * t * t * (10 + t * (-15 + t * 6));
       const zoom = Math.pow(overview, 1 - eased);
       const focusX = sceneWidth / 2 + (arrivalScroll + width / 2 - sceneWidth / 2) * eased;
-      const focusY = sceneCenterY + (height / 2 - sceneCenterY) * eased;
-      const anchorY = height * (.58 - .08 * eased);
-      const y = anchorY - focusY * zoom;
+      // Keep the actual scene's ground at the screen edge throughout the zoom.
+      const y = height * (1 - zoom);
       camera.style.transform = `translate3d(${width / 2 - focusX * zoom}px,${y}px,0) scale(${zoom})`;
-      floor.style.transform = `translate3d(0,${height * zoom + y - 1}px,0)`;
       if (t < 1) frame = requestAnimationFrame(paint);
       else finish();
     }

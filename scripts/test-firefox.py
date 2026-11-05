@@ -138,7 +138,7 @@ try:
     js('localStorage.clear()')
     req('/refresh', {})
     time.sleep(.2)
-    assert js('return document.querySelector("#cycle-mode span").textContent') == '10 分钟'
+    assert js('return document.querySelector("#cycle-mode span").textContent') == '10'
     go('snackstreet')
     time.sleep(3.9)
     assert js('return document.querySelector("#travel-status").textContent') == '已到达好吃小镇'
@@ -158,7 +158,9 @@ try:
     assert js('return document.documentElement.dataset.intro') == 'playing'
     overview = js('const r=document.querySelector(".park-scene").getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}')
     assert overview['left'] >= -1 and overview['right'] <= 391, overview
+    assert js('return !document.querySelector(".camera-floor") && Math.abs(document.querySelector(".park-scene").getBoundingClientRect().bottom-innerHeight)<1')
     time.sleep(1.1)
+    assert js('return Math.abs(document.querySelector(".park-scene").getBoundingClientRect().bottom-innerHeight)<1')
     assert js('return document.querySelector(".park-scene").getBoundingClientRect().width') > overview['width'] * 1.1
     time.sleep(2.5)
     assert js('return document.documentElement.dataset.intro==="ready" && !document.querySelector("#park-camera").style.transform')

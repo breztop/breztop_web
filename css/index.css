@@ -100,8 +100,6 @@ html[data-light="morning"] {
 .brand-name small { display: block; font-size: 17px; letter-spacing: 4px; font-weight: 500; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .park { position: absolute; inset: 0; overflow: clip; }
 .park-camera { position: absolute; inset: 0; transform-origin: 0 0; }
-.camera-floor { position: absolute; inset: 0; background: var(--path); pointer-events: none; }
-html:not([data-intro="playing"]) .camera-floor { display: none; }
 html[data-intro="pending"] .park-camera { visibility: hidden; }
 html[data-intro="playing"] .park-camera { will-change: transform; }
 html[data-intro="playing"] .park-viewport { overflow: visible; }
@@ -257,7 +255,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .icon-button[aria-pressed="true"] { color: var(--accent); }
 .time-controls .phase-button { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); animation: open-inward-left .2s ease-out; }
 @keyframes open-inward-left { from { opacity: 0; transform: translate(8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
-.cycle-button { display: flex; gap: 6px; width: auto; min-width: 90px; border-radius: 22px; font-family: system-ui, sans-serif; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.cycle-button { width: 38px; border-radius: 50%; font-family: ui-monospace, monospace; font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .cycle-button::before { content: ""; position: absolute; inset: -2px; border-radius: inherit; background: conic-gradient(#a18ac8 calc(var(--cycle-progress, 0) * 1turn), transparent 0); mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0); pointer-events: none; }
 /* Printed park map and perforated day-pass stubs. */
 .park-guide { --guide-paper: #f9f3e3; color-scheme: light; width: min(800px, calc(100vw - 28px)); max-height: calc(100svh - 38px); padding: 27px; border: 2px solid #d5c7a9; border-radius: 23px 11px 22px 12px; background: linear-gradient(90deg, transparent 49.7%, #b5a68310 50%, transparent 50.3%), linear-gradient(#fffcf255, #efe5ca22), var(--guide-paper); color: #5d6757; box-shadow: 0 24px 80px #26382e33, inset 0 0 0 6px #fffbef; overflow-y: auto; }
@@ -362,15 +360,13 @@ html.motion-paused .time-controls .phase-button { animation: none; }
   .sloth-bubble { font-size: 9px; padding: 7px 9px; }
   .park-tools { right: 16px; top: max(164px, calc(env(safe-area-inset-top) + 152px)); gap: 7px; flex-direction: column; align-items: flex-end; }
   .time-controls { margin-right: 0; }
-  .icon-button, .cycle-button { height: 35px; }
-  .icon-button { width: 35px; }
+  .icon-button, .cycle-button { width: 35px; height: 35px; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .site-header { top: 18px; left: 24px; }
   .brand-name { font-size: 44px; }
   .park-tools { top: 70px; right: 18px; }
-  .icon-button, .cycle-button { height: 34px; }
-  .icon-button { width: 34px; }
+  .icon-button, .cycle-button { width: 34px; height: 34px; }
 }
 
 /* Entrance ambience and a small patrol companion; all motion stays within its plaza. */

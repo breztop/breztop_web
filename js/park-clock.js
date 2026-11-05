@@ -69,7 +69,7 @@ export function initParkClock({ root, motionQuery, clamp }) {
   }
   function syncClockControls() {
     const fixed = isFixed();
-    modeLabel.textContent = fixed ? '固定' : `${cycleMode} 分钟`;
+    modeLabel.textContent = fixed ? '∞' : cycleMode;
     const nextMode = motionQuery.matches ? '下一时段' : cycleMode === '3' ? '5 分钟一昼夜' : cycleMode === '5' ? '10 分钟一昼夜' : cycleMode === '10' ? '固定时段' : '3 分钟一昼夜';
     const label = fixed ? '固定时段' : `${cycleMode} 分钟一昼夜`;
     modeButton.setAttribute('aria-label', `当前${label}，点击切换为${nextMode}`);
