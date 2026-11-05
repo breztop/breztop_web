@@ -92,7 +92,7 @@ for (const [file, text] of content) {
 }
 
 // Verify crawler-facing resources against what is actually published.
-for (const [file, width, height] of [['og.png', 1200, 630], ['apple-touch-icon.png', 180, 180]]) {
+for (const [file, width, height] of [['og.png', 120, 63], ['apple-touch-icon.png', 180, 180]]) {
   try {
     const bytes = await readFile(path.join(directory, file));
     if (bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a' || bytes.readUInt32BE(16) !== width || bytes.readUInt32BE(20) !== height) {
