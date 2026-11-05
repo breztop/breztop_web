@@ -69,8 +69,10 @@ for (const [file, text] of content) {
 // Resolve every local HTML reference, including anchors, against the files being published.
 for (const [file, text] of content) {
   if (!file.endsWith('.html')) continue;
-  const references = [...text.matchAll(/\b(?:href|src)=["']([^"']*)["']/g)].map(match => match[1]);
-  for (const match of text.matchAll(/\bsrcset=["']([^"']*)["']/g)) {
+  // Inline scripts can contain assignments such as link.href=; these are not HTML attributes.
+  const markup = text.replace(/<(script|style)\b([^>]*)>[\s\S]*?<\/\1\s*>/gi, '<$1$2>');
+  const references = [...markup.matchAll(/\b(?:href|src)=["']([^"']*)["']/g)].map(match => match[1]);
+  for (const match of markup.matchAll(/\bsrcset=["']([^"']*)["']/g)) {
     references.push(...match[1].split(',').map(candidate => candidate.trim().split(/\s+/)[0]));
   }
   for (const reference of references) {
@@ -86,6 +88,24 @@ for (const [file, text] of content) {
       problems.push(`${file}: missing anchor: ${reference}`);
     }
   }
+}
+
+// Verify crawler-facing resources against what is actually published.
+for (const [file, width, height] of [['og.png', 1200, 630], ['apple-touch-icon.png', 180, 180]]) {
+  try {
+    const bytes = await readFile(path.join(directory, file));
+    if (bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a' || bytes.readUInt32BE(16) !== width || bytes.readUInt32BE(20) !== height) {
+      problems.push(`${file}: incorrect PNG format or dimensions`);
+    }
+  } catch { problems.push(`${file}: missing image`); }
+}
+for (const [, location] of (content.get('sitemap.xml') || '').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+  try {
+    const url = new URL(location);
+    const file = path.posix.join(decodeURIComponent(url.pathname).replace(/^\//, ''), 'index.html');
+    if (url.origin !== 'https://brez.top' || !content.has(file)) problems.push(`Sitemap references an unpublished page: ${location}`);
+    else if (/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/.test(content.get(file))) problems.push(`Sitemap includes a noindex page: ${file}`);
+  } catch { problems.push('Sitemap has an invalid URL'); }
 }
 
 // Artifact directories must contain exactly the allowlist, without leftover files or symlinks.
@@ -107,5 +127,5 @@ if (problems.length) {
   for (const problem of problems) console.error(problem);
   process.exitCode = 1;
 } else {
-  console.log(`PASS: ${publicFiles.length} public files; privacy rules and local HTML references verified.`);
+  console.log(`PASS: ${publicFiles.length} public files; links, image dimensions, sitemap and privacy rules verified.`);
 }

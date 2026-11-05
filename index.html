@@ -3,18 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>brez.top — 微风中的快乐</title>
+  <title>brez.top · 博客、作品集与个人主页 — 微风中的快乐</title>
   <meta name="description" content="欢迎来到 brez.top。跟着滑板上的树懒，慢慢逛逛博客、简历、游戏和更多有趣的地方。" />
   <meta name="keywords" content="brez.top,个人主页,游乐园,简历,博客,游戏" />
   <meta name="author" content="brez" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#edf5f6" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="brez.top — 微风中的快乐" />
+  <meta property="og:title" content="brez.top · 博客、作品集与个人主页 — 微风中的快乐" />
   <meta property="og:description" content="微风中的快乐。在自己的节奏里，发现一点有趣。" />
   <meta property="og:url" content="https://brez.top/" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="brez.top — 微风中的快乐" />
+  <meta property="og:image" content="https://brez.top/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="brez.top 微风游乐园，树懒与摩天轮" />
+  <meta name="twitter:image" content="https://brez.top/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"brez","url":"https://brez.top/","sameAs":["https://github.com/breztop","https://space.bilibili.com/630698674"]}</script>
+  <meta name="twitter:title" content="brez.top · 博客、作品集与个人主页 — 微风中的快乐" />
   <meta name="twitter:description" content="微风中的快乐。在自己的节奏里，发现一点有趣。" />
   <link rel="canonical" href="https://brez.top/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%237c5cff'/%3E%3Ctext x='18' y='47' font-family='sans-serif' font-size='44' font-weight='700' fill='white'%3Eb%3C/text%3E%3C/svg%3E" />
@@ -51,8 +58,8 @@
     <button class="brand" id="home-button" type="button" aria-label="回到游乐园入口"><span class="brand-name">brez<span>.top</span><small>微风中的快乐</small></span></button>
   </header>
   <main id="park" class="park">
-    <h1 class="sr-only">brez.top 游乐园</h1>
-    <div id="park-viewport" class="park-viewport" tabindex="0" role="region" aria-label="游乐园，拖动场景或使用方向键探索。树懒靠近设施时会轻微放大，点击招牌上的入口按钮访问页面，站外网站在新标签页打开。" aria-describedby="explore-hint"><div id="park-world" class="park-world"></div></div>
+    <h1 class="sr-only">brez.top · 博客与作品集</h1><p class="sr-only" id="park-instructions">拖动场景或使用左右方向键探索。点击招牌访问页面，站外网站在新标签页打开。</p>
+    <div id="park-viewport" class="park-viewport" tabindex="0" role="region" aria-label="微风游乐园" aria-describedby="park-instructions explore-hint"><div id="park-world" class="park-world"></div></div>
     <div class="sloth" id="sloth">
       <button class="sloth-character" id="sloth-drag" type="button" aria-label="拖动树懒自由滑行，也可使用左右方向键" aria-describedby="explore-hint">
       <svg viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg">
@@ -91,21 +98,24 @@
       </div>
     </div>
     <p id="travel-status" class="sr-only" role="status" aria-live="polite"></p>
-    <noscript><nav class="fallback-nav" aria-label="页面入口"><p>开启 JavaScript 即可漫游游乐园，也可以通过以下入口访问：</p><a href="https://blog.brez.top" target="_blank" rel="noopener noreferrer">Blog 博客 →</a><a href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">CardChess 游戏 →</a><span>旋转木马 · 简历入口暂未开放</span><a href="./project-show/">Project 作品集 →</a><a href="https://account.brez.top" target="_blank" rel="noopener noreferrer">Account 账号 →</a><a href="https://download.brez.top" target="_blank" rel="noopener noreferrer">Download 下载 →</a><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">bilibili B 站 →</a><a href="./personal-match-site/">交友 · 双人模式，还缺一位玩家 →</a><a href="./snack-town/">好吃小镇 · 请我吃饭 →</a></nav></noscript>
+    <noscript><nav class="fallback-nav" aria-label="页面入口"><p>开启 JavaScript 即可漫游游乐园，也可以通过以下入口访问：</p><a href="https://blog.brez.top" target="_blank" rel="noopener noreferrer">Blog 博客 →</a><a href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">益智汇 / CardChess 游戏 →</a><a href="https://resume.brez.top" target="_blank" rel="noopener noreferrer">Resume 简历 →</a><a href="./project-show/">Project 作品集 →</a><a href="https://account.brez.top" target="_blank" rel="noopener noreferrer">Account 账号 →</a><span>Download 下载 · 暂未开放</span><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">bilibili B 站 →</a><a href="./personal-match-site/">交友 · 双人模式，还缺一位玩家 →</a><a href="./snack-town/">好吃小镇 · 请我吃饭 →</a></nav></noscript><nav class="text-nav sr-only" aria-label="页面入口"><p>网站入口：</p><a href="https://blog.brez.top" target="_blank" rel="noopener noreferrer">Blog 博客 →</a><a href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">益智汇 / CardChess 游戏 →</a><a href="https://resume.brez.top" target="_blank" rel="noopener noreferrer">Resume 简历 →</a><a href="./project-show/">Project 作品集 →</a><a href="https://account.brez.top" target="_blank" rel="noopener noreferrer">Account 账号 →</a><span>Download 下载 · 暂未开放</span><a href="https://space.bilibili.com/630698674" target="_blank" rel="noopener noreferrer">bilibili B 站 →</a><a href="./personal-match-site/">交友 · 双人模式，还缺一位玩家 →</a><a href="./snack-town/">好吃小镇 · 请我吃饭 →</a></nav>
   </main>
+  <button class="guide-fixed" id="guide-fixed" type="button" aria-haspopup="dialog" aria-controls="park-guide"><svg aria-hidden="true"><use href="#i-map"/></svg>园区导览</button>
+  <div id="first-hint" class="first-hint" hidden><span>向右探索，还有更多入口 →</span><button id="hint-close" type="button" aria-label="关闭探索提示">×</button></div>
+  <nav class="park-route" id="park-route" aria-label="园区路线"></nav>
   <div class="park-tools" role="group" aria-label="园区控制">
     <div class="time-controls" role="group" aria-label="昼夜循环设置">
-      <button id="cycle-mode" class="cycle-button" aria-controls="fixed-phase" aria-expanded="false" type="button" aria-label="当前 3 分钟一昼夜，点击切换为 5 分钟" title="3 分钟一昼夜 · 点击切换"><span>3</span></button>
+      <button id="cycle-mode" class="cycle-button" aria-controls="fixed-phase" aria-expanded="false" type="button" aria-label="当前 3 分钟一昼夜，点击切换为 5 分钟" title="3 分钟一昼夜 · 点击切换"><svg aria-hidden="true"><use href="#i-dusk"/></svg><span>3 分钟</span></button>
       <button id="fixed-phase" class="icon-button phase-button" type="button" aria-label="固定白天，点击切换黄昏" title="固定白天 · 点击切换黄昏" hidden><svg><use href="#i-sun"/></svg></button>
     </div>
-    <button id="share-btn" class="icon-button" type="button" aria-label="复制主页链接" data-hint="复制主页链接"><svg><use href="#i-share"/></svg></button>
+    <button id="share-btn" class="icon-button" type="button" aria-label="分享主页" data-hint="分享主页"><svg><use href="#i-share"/></svg></button>
     <button id="fs-toggle" class="icon-button" type="button" aria-pressed="false" aria-label="进入全屏" data-hint="全屏"><svg><use href="#i-fullscreen"/></svg></button>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>
   <dialog id="park-guide" class="park-guide" aria-labelledby="guide-title">
-    <div class="guide-heading"><div><p class="eyebrow">BREEZE PARK · YOUR DAY PASS</p><h2 id="guide-title">园区导览</h2></div><button id="guide-close" class="icon-button" type="button" aria-label="关闭园区导览"><svg><use href="#i-close"/></svg></button></div>
-    <div id="guide-map" class="guide-map" role="group" aria-label="游乐园路线图"></div>
-    <div id="guide-list" class="guide-list"></div>
+    <div class="guide-heading"><div><p class="eyebrow">brez.top · 微风中的快乐</p><h2 id="guide-title">园区导览</h2></div><button id="guide-close" class="icon-button" type="button" aria-label="关闭园区导览"><svg><use href="#i-close"/></svg></button></div>
+    <div class="guide-scroll" id="guide-scroll" tabindex="0" aria-label="园区地图与入口列表"><div id="guide-map" class="guide-map" role="group" aria-label="游乐园路线图"></div>
+    <ol id="guide-list" class="guide-list"></ol></div><p class="guide-more" id="guide-more" hidden>向下滚动，查看全部入口 ↓</p>
   </dialog>
 </body>
 </html>

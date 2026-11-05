@@ -27,6 +27,7 @@ jobs:
 
       - name: Build dist folder
         run: |
+          node --test scripts/check-site.test.mjs
           node scripts/build-site.mjs
           while IFS= read -r -d '' script; do
             terser "$script" --compress --mangle --output "$script"

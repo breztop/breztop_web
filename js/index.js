@@ -7,11 +7,11 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   // Attractions without a destination stay as scenery.
   const rides = [
     { id: 'ferris', size: 1.2, base: 520, name: '摩天轮', title: 'Blog', subtitle: '博客 · 记录技术与生活', href: 'https://blog.brez.top', color: '#ab98cb', x: 572 },
-    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: '旋转木马', subtitle: '简历入口暂未开放', closed: true, entryLabel: '暂未开放', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
-    { id: 'coaster', size: 1.3, base: 538, name: '过山车', title: 'CardChess', subtitle: '游戏 · 下一步，出奇制胜', href: 'https://cardchess.brez.top', color: '#90afb0', x: 1270, signX: 138, signY: 360 },
+    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: 'Resume', subtitle: '简历 · 认识一下我', href: 'https://resume.brez.top', entryLabel: '查看我的简历 ↗', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
+    { id: 'coaster', size: 1.3, base: 538, name: '过山车', title: '益智汇', subtitle: 'CardChess · 下一步，出奇制胜', entryLabel: '进入益智汇 ↗', href: 'https://cardchess.brez.top', color: '#90afb0', x: 1270, signX: 138, signY: 360 },
     { id: 'haunted', size: 0.78, base: 475, name: '幽灵小屋', color: '#a09bb8', x: 1750 },
     { id: 'pirate', size: 1, base: 566, name: '海盗船', title: 'Account', subtitle: '账号 · 欢迎回来', href: 'https://account.brez.top', color: '#bca17e', x: 2070 },
-    { id: 'teacups', size: 0.93, base: 626, name: '旋转茶杯', title: 'Download', subtitle: '下载 · 带走一点灵感', href: 'https://download.brez.top', color: '#b4a1cc', x: 2480, signX: -130, signY: 326 },
+    { id: 'teacups', size: 0.93, base: 626, name: '旋转茶杯', title: 'Download', subtitle: '下载 · 暂未开放', closed: true, entryLabel: '暂未开放', color: '#b4a1cc', x: 2480, signX: -130, signY: 326 },
     { id: 'windmill', size: 0.86, base: 450, name: '风车塔', title: 'Project', subtitle: '作品集 · 想法落地的地方', href: './project-show/', local: true, entryLabel: '浏览我的作品 →', color: '#a0bdba', x: 2770 },
     { id: 'bumper', size: 1, base: 610, name: '碰碰车', title: '交友', subtitle: '双人模式 · 还缺一位玩家', href: './personal-match-site/', local: true, entryLabel: '认识另一位玩家 →', color: '#bc8c9a', x: 3170 },
     { id: 'waterslide', size: 1, base: 493, name: '激流勇进', color: '#91bfc6', x: 3650 },
@@ -90,7 +90,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     </g>`;
   }
   function sign(ride, x, y, width = 170, classes = '') {
-    const scenic = !ride.href;
+    const scenic = !ride.href && !ride.closed;
     const height = scenic ? 64 : 94;
     return `<g transform="translate(${x} ${y})"><g class="${scenic ? 'scenic-sign' : ''} ${classes}">
       ${classes.includes('hanging-sign') ? `<g fill="none" stroke="var(--metal-dark)" stroke-width="2"><path d="M${-width / 2 - 6}-5h${width + 12}m${-width + 20}-1v-24m${width - 40} 24v-24"/><circle cx="${-width / 2 + 14}" cy="-2" r="4"/><circle cx="${width / 2 - 14}" cy="-2" r="4"/></g>` : ''}
@@ -519,7 +519,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     ${gardenGroups()}
     <g aria-hidden="true" class="vegetation">${balloons(1620, 560)}${balloons(2915, 517)}${balloons(4350, 518)}</g>
     ${foregroundDetail(WORLD_WIDTH)}
-    <rect id="park-walkway" x="0" y="652" width="${WORLD_WIDTH}" height="108" fill="transparent" style="cursor:crosshair"><title>点击道路，让树懒滑过去</title></rect>
+    <rect id="park-walkway" x="0" y="652" width="${WORLD_WIDTH}" height="108" fill="transparent" style="cursor:pointer"><title>点击道路，让树懒滑过去</title></rect>
   </svg>`;
 
   // Rejection sampling gives the sky natural gaps without the former diagonal lattice.
@@ -545,12 +545,41 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   })].sort((a, b) => a.x - b.x);
   const guide = document.getElementById('park-guide');
   const entries = [bilibili, ...rides].sort((a, b) => a.x - b.x);
-  document.getElementById('guide-list').innerHTML = entries.map((ride, i) => `<div class="guide-row guide-ticket" style="--ride-color:${ride.color}">
+  document.getElementById('guide-list').innerHTML = entries.map((ride, i) => `<li class="guide-row guide-ticket" style="--ride-color:${ride.color}">
     <${ride.href ? 'a' : 'div'} class="guide-destination" ${ride.href ? destinationAttributes(ride) : ''}>
       <span class="guide-number">${String(i + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.closed || ride.local ? ride.subtitle : ride.title ? `${ride.name} · 打开页面` : '游乐设施'}</small></span>${ride.href ? '<span class="guide-arrow" aria-hidden="true">↗</span>' : ''}
     </${ride.href ? 'a' : 'div'}>
     <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>滑板前往</span></button>
-  </div>`).join('');
+  </li>`).join('');
+
+  const route = document.getElementById('park-route');
+  route.innerHTML = stops.map(stop => `<button type="button" data-stop="${stop.id}" aria-label="前往${stop.title || stop.name}"><span aria-hidden="true">●</span><small>${stop.title || stop.name}</small></button>`).join('');
+  route.addEventListener('click', event => {
+    const button = event.target.closest('[data-stop]');
+    if (button) { dismissHint(); goTo(button.dataset.stop); }
+  });
+  const firstHint = document.getElementById('first-hint');
+  try { firstHint.hidden = localStorage.getItem('breeze-visited') === '1'; } catch { firstHint.hidden = false; }
+  function dismissHint() {
+    firstHint.hidden = true;
+    try { localStorage.setItem('breeze-visited', '1'); } catch { /* Optional preference. */ }
+  }
+  document.getElementById('hint-close').addEventListener('click', dismissHint);
+  viewport.addEventListener('pointerdown', dismissHint, { once: true });
+  viewport.addEventListener('keydown', dismissHint, { once: true });
+  viewport.addEventListener('wheel', dismissHint, { once: true, passive: true });
+  let currentStop = '';
+  function updateRoute() {
+    const nearest = stops.reduce((a, b) => Math.abs(a.x - actor.x) < Math.abs(b.x - actor.x) ? a : b);
+    if (currentStop === nearest.id) return;
+    currentStop = nearest.id;
+    route.querySelectorAll('[data-stop]').forEach(button => {
+      if (button.dataset.stop === currentStop) {
+        button.setAttribute('aria-current', 'location');
+        route.scrollLeft = button.offsetLeft - route.clientWidth / 2 + button.offsetWidth / 2;
+      } else button.removeAttribute('aria-current');
+    });
+  }
 
   function mapIcon(id, color) {
     const artwork = {
@@ -578,12 +607,12 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     mapCompact = compact;
     const tour = [{ id: 'entrance', title: '园区入口', color: '#92a582' }, ...entries];
     const columns = compact ? 4 : 6;
-    const width = compact ? 408 : 760;
-    const height = (compact ? 30 : 12) + Math.ceil(tour.length / columns) * (compact ? 112 : 128);
+    const width = compact ? 456 : 800;
+    const height = (compact ? 56 : 40) + Math.ceil(tour.length / columns) * (compact ? 112 : 128);
     const points = tour.map((stop, i) => {
       const row = Math.floor(i / columns);
       const column = row % 2 ? columns - 1 - i % columns : i % columns;
-      return { ...stop, x: compact ? 51 + column * 102 : 65 + column * 126, y: compact ? 64 + row * 112 : 68 + row * 128 };
+      return { ...stop, x: compact ? 75 + column * 102 : 85 + column * 126, y: compact ? 64 + row * 112 : 68 + row * 128 };
     });
     const road = points.map((point, i) => {
       if (!i) return `M${point.x} ${point.y}`;
@@ -688,7 +717,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     }
     actorScreenX = actor.x * scale - viewport.scrollLeft;
     sloth.classList.toggle('near-destination', stops.some(stop => (stop.href || stop.closed) && Math.abs(actor.x - stop.x) < 180));
-    const top = layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
+    const top = viewport.getBoundingClientRect().top + layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
     const transform = `translate3d(${actorScreenX.toFixed(2)}px,${top.toFixed(2)}px,0) translate(-50%,-90.5%)`;
     if (transform !== lastActorTransform) { sloth.style.transform = transform; lastActorTransform = transform; }
     tools.classList.toggle('dock-left', layoutMetrics.compact && actorScreenX >= layoutMetrics.width / 2 - .5);
@@ -704,8 +733,10 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
       if (item.proximity !== value) { item.node.style.setProperty('--proximity-scale', value); item.proximity = value; }
     });
     updatePosition();
+    updateRoute();
   }
   function layout() {
+    const oldWidth = layoutMetrics.width;
     renderGuideMap();
     layoutMetrics = { width: viewport.clientWidth, height: viewport.clientHeight, half: sloth.offsetWidth / 2, compact: innerWidth <= 600 };
     if (compactScene !== layoutMetrics.compact) {
@@ -719,15 +750,21 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
       document.getElementById('access-fill-ferris').setAttribute('d', path);
       root.dataset.scene = compactScene ? 'compact' : 'wide';
     }
+    viewport.style.bottom = innerWidth <= 600 && innerHeight > 600 ? `${Math.min(140, innerHeight * .16)}px` : '96px';
+    layoutMetrics.height = viewport.clientHeight;
     scale = Math.min((viewport.clientHeight - 76) / WORLD_HEIGHT, innerWidth <= 600 ? Math.min(.9, viewport.clientWidth / 480) : 1.3);
     scale = Math.max(.36, scale);
     world.style.width = `${WORLD_WIDTH * scale}px`;
     world.style.height = `${WORLD_HEIGHT * scale}px`;
     if (!initialized) { viewport.scrollLeft = 0; initialized = true; }
+    const wheelStop = stops.find(stop => stop.id === 'ferris');
+    wheelStop.x = rides[0].x;
+    stops.sort((a, b) => a.x - b.x);
     const bounds = actorBounds();
     actor.x = clamp(actor.x, bounds.min, bounds.max);
     updateVisibility(true);
     renderActor(true);
+    if (oldWidth && currentStop) fitDestination(currentStop);
   }
   function stopTravel() {
     cancelAnimationFrame(travelFrame);
@@ -740,6 +777,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     cameraUntil = performance.now() + 120;
     viewport.scrollLeft = clamp(x * scale - layoutMetrics.width / 2, 0, Math.max(0, viewport.scrollWidth - layoutMetrics.width));
     renderActor();
+    fitDestination(currentStop);
   }
   function travelTo(x, y = actor.y, label = '', frameX = null) {
     stopTravel();
@@ -772,9 +810,19 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     }
     travelFrame = requestAnimationFrame(skate);
   }
+  function fitDestination(id) {
+    const entry = id === 'bilibili' ? document.querySelector('#entrance-scene .page-entry') : document.querySelector(`#ride-${id} .page-entry`);
+    if (!entry) return;
+    const rect = entry.closest('.destination-sign')?.getBoundingClientRect() || entry.getBoundingClientRect();
+    const shift = rect.left < 16 ? rect.left - 16 : rect.right > innerWidth - 16 ? rect.right - innerWidth + 16 : 0;
+    if (shift) { viewport.scrollLeft += shift; renderActor(); }
+  }
   function goTo(id) {
     const stop = stops.find(item => item.id === id);
-    if (stop) travelTo(stop.x, 710, stop.title || stop.name, stop.frameOnArrival ? stop.x : null);
+    if (stop) {
+      dismissHint();
+      travelTo(stop.x, 710, stop.title || stop.name, stop.x);
+    }
   }
   function move(direction) {
     const x = travel ? travel.toX : actor.x;
@@ -826,7 +874,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     const keys = { ArrowLeft: -1, ArrowRight: 1, PageUp: -1, PageDown: 1 };
     if (event.key in keys) { event.preventDefault(); move(keys[event.key]); }
     if (event.key === 'Home' || event.key === 'End') {
-      event.preventDefault(); goTo(event.key === 'Home' ? 'entrance' : 'airplanes');
+      event.preventDefault(); goTo(event.key === 'Home' ? 'entrance' : stops[stops.length - 1].id);
     }
   }
   viewport.addEventListener('keydown', onNavigationKey);
@@ -889,7 +937,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   document.getElementById('park-walkway').addEventListener('click', event => {
     if (suppressClick) return;
     const x = (event.clientX + viewport.scrollLeft) / scale;
-    const y = WORLD_HEIGHT - (viewport.clientHeight - event.clientY) / scale;
+    const y = WORLD_HEIGHT - (viewport.clientHeight - (event.clientY - viewport.getBoundingClientRect().top)) / scale;
     travelTo(x, y);
   });
   viewport.addEventListener('focusin', event => {
@@ -1036,8 +1084,8 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     getRobotDestination: () => ROBOT_CONFIG.href,
   });
 
-  // A full loop is 3 or 5 minutes: day → dusk → night → morning → day.
-  // In fixed mode the adjacent icon chooses a single phase. No text is needed on it.
+  // A full loop is 3, 5 or 10 minutes: day → dusk → night → morning → day.
+  // Fixed mode and reduced motion use the adjacent phase selector.
   const phases = [
     { id: 'day', name: '白天', icon: 'sun', sun: 16, moon: 0 },
     { id: 'dusk', name: '黄昏', icon: 'dusk', sun: 43, moon: .15 },
@@ -1059,13 +1107,14 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
       brightness: parseFloat(styles.getPropertyValue('--art-brightness')),
     };
   });
-  let cycleMode = '3';
+  const defaultCycle = innerWidth <= 600 ? '10' : '3';
+  let cycleMode = defaultCycle;
   let fixedPhase = 'day';
   try {
-    cycleMode = localStorage.getItem('breeze-cycle-mode') || '3';
+    cycleMode = localStorage.getItem('breeze-cycle-mode') || defaultCycle;
     fixedPhase = localStorage.getItem('breeze-fixed-phase') || 'day';
   } catch { /* Preferences are optional when storage is unavailable. */ }
-  if (!['3', '5', 'infinity'].includes(cycleMode)) cycleMode = '3';
+  if (!['3', '5', '10', 'infinity'].includes(cycleMode)) cycleMode = defaultCycle;
   if (!phases.some(phase => phase.id === fixedPhase)) fixedPhase = 'day';
   let cycleEpoch = performance.now();
   const modeButton = document.getElementById('cycle-mode');
@@ -1078,10 +1127,10 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     paintedLight.set(name, value); root.style.setProperty(name, value);
   }
   function paintLight(now = performance.now()) {
-    const progress = cycleMode === 'infinity' ? 0 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
-    const phase = cycleMode === 'infinity' ? phases.findIndex(item => item.id === fixedPhase) : Math.floor(progress * 4);
+    const progress = (cycleMode === 'infinity' || motionQuery.matches) ? 0 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
+    const phase = (cycleMode === 'infinity' || motionQuery.matches) ? phases.findIndex(item => item.id === fixedPhase) : Math.floor(progress * 4);
     const next = (phase + 1) % 4;
-    let blend = cycleMode === 'infinity' ? 0 : clamp((progress * 4 % 1 - .55) / .45, 0, 1);
+    let blend = (cycleMode === 'infinity' || motionQuery.matches) ? 0 : clamp((progress * 4 % 1 - .55) / .45, 0, 1);
     blend = blend * blend * (3 - 2 * blend);
     const a = palettes[phase]; const b = palettes[next];
     const light = phases[blend > .5 ? next : phase].id;
@@ -1092,14 +1141,14 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     lightProperty('--art-brightness', mix(a.brightness, b.brightness, blend).toFixed(3));
     lightProperty('--moon-opacity', mix(phases[phase].moon, phases[next].moon, blend).toFixed(3));
     lightProperty('--sun-top', `${mix(phases[phase].sun, phases[next].sun, blend)}%`);
-    modeButton.style.setProperty('--cycle-progress', String(cycleMode === 'infinity' ? 0 : progress));
+    modeButton.style.setProperty('--cycle-progress', String((cycleMode === 'infinity' || motionQuery.matches) ? 0 : progress));
     const skyColor = paintedLight.get('--sky-top');
     if (document.querySelector('meta[name="theme-color"]').content !== skyColor) document.querySelector('meta[name="theme-color"]').content = skyColor;
   }
   function syncClockControls() {
-    const fixed = cycleMode === 'infinity';
-    modeButton.querySelector('span').textContent = fixed ? '♾' : cycleMode;
-    const nextMode = cycleMode === '3' ? '5 分钟一昼夜' : cycleMode === '5' ? '固定时段' : '3 分钟一昼夜';
+    const fixed = (cycleMode === 'infinity' || motionQuery.matches);
+    modeButton.querySelector('span').textContent = fixed ? '固定' : `${cycleMode} 分钟`;
+    const nextMode = motionQuery.matches ? '下一时段' : cycleMode === '3' ? '5 分钟一昼夜' : cycleMode === '5' ? '10 分钟一昼夜' : cycleMode === '10' ? '固定时段' : '3 分钟一昼夜';
     const label = fixed ? '固定时段' : `${cycleMode} 分钟一昼夜`;
     modeButton.dataset.hint = `${label} · 点击切换为${nextMode}`;
     modeButton.removeAttribute('title');
@@ -1116,12 +1165,14 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
       localStorage.setItem('breeze-fixed-phase', fixedPhase);
     } catch { /* The clock continues without persistence. */ }
     paintLight();
+    scheduleLight();
   }
   modeButton.addEventListener('click', () => {
+    if (motionQuery.matches) { phaseButton.click(); return; }
     const now = performance.now();
-    const progress = cycleMode === 'infinity' ? phases.findIndex(phase => phase.id === fixedPhase) / 4 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
+    const progress = (cycleMode === 'infinity' || motionQuery.matches) ? phases.findIndex(phase => phase.id === fixedPhase) / 4 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
     fixedPhase = root.dataset.light;
-    cycleMode = cycleMode === '3' ? '5' : cycleMode === '5' ? 'infinity' : '3';
+    cycleMode = cycleMode === '3' ? '5' : cycleMode === '5' ? '10' : cycleMode === '10' ? 'infinity' : '3';
     if (cycleMode !== 'infinity') cycleEpoch = now - progress * duration();
     syncClockControls();
   });
@@ -1130,12 +1181,25 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     fixedPhase = phases[(index + 1) % 4].id;
     syncClockControls();
   });
+  let lightTimer;
+  function scheduleLight() {
+    clearTimeout(lightTimer);
+    if (document.hidden || motionQuery.matches || cycleMode === 'infinity') return;
+    lightTimer = setTimeout(() => { paintLight(); scheduleLight(); }, 1000);
+  }
   syncClockControls();
-  setInterval(() => { if (!document.hidden && cycleMode !== 'infinity') paintLight(); }, 200);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) paintLight(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) paintLight(); scheduleLight(); });
+  motionQuery.addEventListener('change', syncClockControls);
 
   const guideOpen = document.getElementById('guide-open');
-  function openGuide() { guide.showModal(); renderGuideMap(); }
+  const guideScroll = document.getElementById('guide-scroll');
+  function updateGuideOverflow() {
+    document.getElementById('guide-more').hidden = guideScroll.scrollTop + guideScroll.clientHeight >= guideScroll.scrollHeight - 4;
+  }
+  guideScroll.addEventListener('scroll', updateGuideOverflow, { passive: true });
+  new ResizeObserver(updateGuideOverflow).observe(guideScroll);
+  document.getElementById('guide-fixed').addEventListener('click', openGuide);
+  function openGuide() { dismissHint(); guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
   guideOpen.addEventListener('click', openGuide);
   guideOpen.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openGuide(); }
@@ -1156,12 +1220,17 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     toastTimer = setTimeout(() => element.classList.remove('show'), 2600);
   }
   document.getElementById('share-btn').addEventListener('click', async () => {
+    const url = document.querySelector('link[rel="canonical"]').href;
+    if (navigator.share) {
+      try { await navigator.share({ title: document.title, url }); return; }
+      catch (error) { if (error.name === 'AbortError') return; }
+    }
     try {
-      await navigator.clipboard.writeText(location.href);
+      await navigator.clipboard.writeText(url);
       toast('微风已打包，链接已复制。');
     } catch {
       const input = document.createElement('textarea');
-      input.value = location.href;
+      input.value = url;
       input.style.cssText = 'position:fixed;left:-9999px;top:0';
       document.body.appendChild(input);
       input.select();
