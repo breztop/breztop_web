@@ -95,9 +95,9 @@ html[data-light="morning"] {
 }
 .site-header { position: absolute; z-index: 10; top: max(28px, env(safe-area-inset-top)); left: 3.5%; pointer-events: none; }
 .brand { display: block; padding: 0; background: transparent; text-align: left; pointer-events: auto; }
-.brand-name { font-size: 50px; letter-spacing: -1.8px; font-weight: 700; line-height: 1.1; }
+.brand-name { color: var(--ink); font-size: 50px; letter-spacing: -2.5px; font-weight: 700; line-height: 1.1; }
 .brand-name > span { font-weight: 400; }
-.brand-name small { display: block; font-size: 20px; letter-spacing: 3px; font-weight: 500; color: var(--ink); margin-top: 10px; line-height: 1.5; }
+.brand-name small { display: block; font-size: 17px; letter-spacing: 4px; font-weight: 500; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .park { position: absolute; inset: 0; overflow: clip; }
 .park-viewport { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; cursor: grab; touch-action: pan-x; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .park-viewport::-webkit-scrollbar { display: none; }
@@ -106,35 +106,27 @@ html[data-light="morning"] {
 .park-world { position: absolute; left: 0; bottom: 0; }
 .park-scene { display: block; width: 100%; height: 100%; overflow: hidden; }
 .park-scene text { stroke: none; font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", sans-serif; }
-.land-hill-back { fill: var(--hill-back); }
-.land-hill { fill: var(--hill); }
 .grass-back { fill: var(--grass-back); }
-.grass { fill: var(--grass); }
 .park-path { fill: var(--path); stroke: var(--path-line); stroke-width: 1; }
 .tree-crown { fill: var(--tree); }
 .mountain-layer { pointer-events: none; }
 .park-ground { pointer-events: none; }
 .ride-placement { isolation: isolate; }
 .tree-crown-dark { fill: var(--tree-dark); }
-.tree-trunk { stroke: #8f8d77; stroke-width: 5; fill: none; stroke-linecap: round; }
 .tree-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 7s ease-in-out infinite alternate; }
 .ride { --ride-color: #ab96cf; color: var(--ride-color); }
 .ride-body { transform: scale(var(--proximity-scale, 1)); transform-box: fill-box; transform-origin: 50% 100%; transition: transform .3s ease-out, filter .25s; }
 .ride:focus-within .ride-body { filter: drop-shadow(0 0 4px #b6a0d473); }
-.ride-shadow { fill: #5e786c; opacity: .14; filter: blur(2px); }
-.ride-outline { stroke: #6f8483; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
-.metal { fill: url(#steel); }
-.sign-board { fill: url(#sign-face); stroke: var(--ride-color); stroke-width: 2; }
+.ride-shadow { fill: var(--shadow); opacity: .23; filter: none; }
+.ride-outline { stroke: var(--metal-dark); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; filter: brightness(var(--art-brightness)); }
+.sign-board { fill: url(#sign-face); stroke: var(--ride-color); stroke-width: 1.7; }
 .sign-title { fill: #4e5260; font-size: 20px; font-weight: 600; letter-spacing: .4px; }
-.sign-subtitle { fill: #8b8990; font-size: 10px; letter-spacing: .5px; }
-.sign-prompt { fill: #776b89; font-size: 11px; letter-spacing: .2px; }
+.sign-subtitle { fill: #717568; font-size: 10px; letter-spacing: .5px; }
 .scenic-sign .sign-title { font-size: 19px; }
 .scenic-sign .sign-subtitle { fill: #887f7c; font-size: 9px; }
-.tower-sign { stroke: #fff9e9; stroke-width: 3; }
-.scenic-sign .tower-sign ~ .sign-subtitle { font-size: 8px; letter-spacing: .3px; }
 .page-entry { cursor: pointer; outline: none; }
 .entry-button { fill: #faf4e6; stroke: var(--ride-color); stroke-width: 1.1; transition: fill .15s, stroke .15s; }
-.entry-button-label { font-size: 12px; fill: #77618f; font-weight: 600; letter-spacing: .4px; pointer-events: none; }
+.entry-button-label { font-size: 12px; fill: #645479; font-weight: 600; letter-spacing: .4px; pointer-events: none; }
 .entry-unavailable rect { fill: #e6e5d9; stroke: #b1b5a0; stroke-width: 1; }
 .entry-unavailable text { fill: #747c6a; font-size: 12px; letter-spacing: 2px; }
 .snack-sign .sign-board { fill: #fff2d7; stroke: #b78365; }
@@ -151,8 +143,9 @@ html[data-light="morning"] {
 .destination-sign .sign-title { font-size: 24px; font-weight: 700; letter-spacing: .2px; }
 .destination-sign .sign-subtitle { fill: #756b75; font-size: 10.5px; letter-spacing: .3px; }
 .destination-sign .entry-button-label { font-size: 12px; letter-spacing: .5px; }
-.resume-ticket .sign-board { fill: #fff9eb; stroke: #b29bb7; }
+.resume-ticket .sign-board { fill: #fff9eb; stroke: #a58bac; }
 .resume-ticket .sign-title { fill: #66506e; }
+.resume-ticket .destination-post { stroke: var(--metal-dark); }
 .resume-ticket .entry-button { fill: #ede1ee; stroke: #b39abc; }
 .resume-ticket .entry-button-label { fill: #66506e; }
 .ticket-perforation { fill: none; stroke: #cebdc6; stroke-width: .8; stroke-dasharray: 2 4; }
@@ -161,7 +154,7 @@ html[data-light="morning"] {
 .game-ticket .sign-subtitle { fill: #828879; }
 .game-ticket .destination-eyebrow, .game-ticket .destination-number { fill: #718579; }
 .game-ticket .destination-shadow { fill: #75836b15; }
-.game-ticket .destination-post { stroke: #b2c1ae; stroke-width: 3; }
+.game-ticket .destination-post { stroke: var(--metal-dark); stroke-width: 3; }
 .game-ticket .entry-button { fill: #e3eada; stroke: #a9bcae; }
 .game-ticket .entry-button-label { fill: #60776c; font-weight: 600; }
 .game-ticket .page-entry:hover .entry-button, .game-ticket .page-entry:focus-visible .entry-button { fill: #d4e2cd; stroke: #8da58e; stroke-width: 1.6; }
@@ -170,29 +163,27 @@ html[data-light="morning"] {
 .hanging-sign { transform-box: fill-box; transform-origin: top center; animation: sign-sway 5s ease-in-out infinite alternate; }
 .ride-bulb { fill: #fff0b9; stroke: #cbbd8d; stroke-width: .7; }
 .night-light { opacity: var(--night-opacity); transition: opacity 1s; }
-.night-light .ride-bulb, .light-dot { filter: drop-shadow(0 0 3px #ffe09d); }
-.night-light .ride-bulb:nth-child(3n), .light-dot:nth-child(3n) { animation: twinkle 1.5s ease-in-out infinite alternate; }
-.night-light .ride-bulb:nth-child(3n + 1), .light-dot:nth-child(3n + 1) { animation: twinkle 1.5s -.7s ease-in-out infinite alternate; }
+.night-light .ride-bulb { filter: drop-shadow(0 0 3px #ffe09d); }
+.night-light .ride-bulb:nth-child(3n) { animation: twinkle 1.5s ease-in-out infinite alternate; }
+.night-light .ride-bulb:nth-child(3n + 1) { animation: twinkle 1.5s -.7s ease-in-out infinite alternate; }
 html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5px #ffd48455); }
 .wheel-spin { transform-origin: 0 0; animation: wheel-turn 48s linear infinite; }
 .cabin-upright { transform-origin: 0 0; animation: cabin-turn 48s linear infinite; }
 .rim-shimmer { stroke-dasharray: 55 1100; animation: rim-flow 14s linear infinite; opacity: var(--day-opacity); }
 .hub-lights { stroke-dasharray: 5 18; animation: rim-flow 7s linear infinite; }
 .coaster-air { animation: airflow .7s ease-in-out infinite alternate; }
-.track-lights { stroke-dasharray: 2 24; animation: track-flow 3s linear infinite; }
 .coaster-station.is-passing .sign-board { filter: drop-shadow(0 0 5px #e7c8ff); }
 .carousel-canopy { transform-box: fill-box; transform-origin: center; animation: canopy-turn 12s ease-in-out infinite; }
 .carousel-horse { animation: horse-bob 3s ease-in-out infinite alternate; }
 .carousel-horse.horse-two { animation-delay: -2s; }
 .carousel-horse.horse-three { animation-delay: -1s; }
-.carousel-sign { animation: carousel-sign 12s ease-in-out infinite; transform-box: fill-box; transform-origin: top center; }
 .carousel-trim { stroke-dasharray: 2 16; animation: track-flow 2s linear infinite; }
 .carousel-base-turn { animation: track-flow 12s linear infinite; }
 .ship-swing { transform-origin: 0 120px; animation: ship-swing 7s ease-in-out infinite; }
 .ship-lights { animation: ship-glow 7s ease-in-out infinite; }
 .wood-sign .sign-board { fill: #d9ba8d; stroke: #977555; }
 .wood-sign .sign-title { fill: #594a3e; }
-.wood-sign .sign-prompt, .wood-sign .sign-subtitle { fill: #77604c; }
+.wood-sign .sign-subtitle { fill: #77604c; }
 .cup-orbit { transform-origin: 0 0; }
 .cup-wobble { transform-box: fill-box; transform-origin: 50% 65%; animation: cup-spin 5s ease-in-out infinite; }
 .cup-rim-light { animation: breathe 3s ease-in-out infinite; }
@@ -222,7 +213,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 
 /* The character has a world position; its controls travel at skateboard height. */
 .sloth { position: absolute; z-index: 5; left: 0; top: 0; width: clamp(118px, 12vw, 162px); transform: translate(-50%, -90.5%); pointer-events: none; }
-.sloth-character { display: block; width: 100%; padding: 0; background: transparent; border-radius: 40%; touch-action: none; cursor: grab; pointer-events: auto; }
+.sloth-character { filter: brightness(var(--art-brightness)); display: block; width: 100%; padding: 0; background: transparent; border-radius: 40%; touch-action: none; cursor: grab; pointer-events: auto; }
 .sloth-character:active { cursor: grabbing; }
 .sloth-character svg { width: 100%; height: auto; overflow: visible; pointer-events: none; }
 .sloth-character > svg { stroke: none; }
@@ -236,7 +227,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .sloth.is-moving .sloth-bubble { opacity: 1; }
 .sloth.near-destination .sloth-bubble { opacity: 0; transition: none; }
 .skate-controls { position: absolute; top: calc(100% - 36px); left: -52px; right: -52px; height: 40px; display: grid; place-items: center; pointer-events: none; }
-.skate-hint { color: var(--muted); font-size: 9px; letter-spacing: .5px; text-shadow: 0 1px 3px var(--path); padding-top: 37px; white-space: nowrap; }
+.skate-hint { color: #354637; background: #fff9eb; border-radius: 10px; font-size: 12px; letter-spacing: .5px; padding: 5px 9px; margin-top: 62px; white-space: nowrap; }
 .move-button { position: absolute; top: 0; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: var(--glass); backdrop-filter: blur(8px); pointer-events: auto; transition: background .2s, transform .2s; }
 .move-button:hover { background: var(--surface); transform: scale(1.08); }
 .move-left { left: 0; }
@@ -251,7 +242,8 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .flower-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 4s ease-in-out infinite alternate; }
 .park-tools { position: absolute; z-index: 9; bottom: max(18px, env(safe-area-inset-bottom)); right: 24px; display: flex; align-items: center; gap: 9px; }
 .time-controls { position: relative; display: flex; align-items: center; gap: 7px; margin-right: 4px; }
-.icon-button, .cycle-button { position: relative; display: grid; place-items: center; width: 38px; height: 38px; padding: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--ink); border-radius: 50%; backdrop-filter: blur(10px); }
+.icon-button, .cycle-button { position: relative; display: grid; place-items: center; height: 38px; padding: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--ink); border-radius: 50%; backdrop-filter: blur(10px); }
+.icon-button { width: 38px; }
 .icon-button svg { width: 17px; height: 17px; }
 .icon-button:hover, .cycle-button:hover { background: var(--surface); color: var(--accent); }
 .icon-button[aria-pressed="true"] { color: var(--accent); }
@@ -259,17 +251,12 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 @media (max-width: 600px) { .park-tools.dock-left .phase-button { right: auto; left: calc(100% + 10px); animation-name: open-inward-right; } }
 @keyframes open-inward-left { from { opacity: 0; transform: translate(8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
 @keyframes open-inward-right { from { opacity: 0; transform: translate(-8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
-.cycle-button { font-family: system-ui, sans-serif; font-size: 16px; font-weight: 500; }
+.cycle-button { display: flex; gap: 6px; width: auto; min-width: 90px; border-radius: 22px; font-family: system-ui, sans-serif; font-size: 12px; font-weight: 500; white-space: nowrap; }
 .cycle-button::before { content: ""; position: absolute; inset: -2px; border-radius: inherit; background: conic-gradient(#a18ac8 calc(var(--cycle-progress, 0) * 1turn), transparent 0); mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0); pointer-events: none; }
-.park-tools [data-hint]::after { content: attr(data-hint); position: absolute; z-index: 2; right: calc(100% + 12px); top: 50%; width: max-content; max-width: min(230px, calc(100vw - 100px)); padding: 8px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--ink); box-shadow: 0 5px 18px #25334612; font: 11px/1.7 system-ui, sans-serif; text-align: left; opacity: 0; transform: translate(7px, -50%); transition: opacity .15s, transform .15s; pointer-events: none; }
-@media (max-width: 600px) { .park-tools.dock-left [data-hint]::after { right: auto; left: calc(100% + 12px); transform: translate(-7px, -50%); } }
-.time-controls .phase-button[data-hint]::after { max-width: min(220px, calc(100vw - 120px)); }
-.park-tools [data-hint]:focus-visible::after { opacity: 1; transform: translate(0, -50%); }
-@media (hover: hover) { .park-tools [data-hint]:hover::after { opacity: 1; transform: translate(0, -50%); } }
 /* Printed park map and perforated day-pass stubs. */
 .park-guide { --guide-paper: #f9f3e3; color-scheme: light; width: min(800px, calc(100vw - 28px)); max-height: calc(100svh - 38px); padding: 27px; border: 2px solid #d5c7a9; border-radius: 23px 11px 22px 12px; background: linear-gradient(90deg, transparent 49.7%, #b5a68310 50%, transparent 50.3%), linear-gradient(#fffcf255, #efe5ca22), var(--guide-paper); color: #5d6757; box-shadow: 0 24px 80px #26382e33, inset 0 0 0 6px #fffbef; overflow-y: auto; }
 .park-guide::backdrop { background: #26382d59; backdrop-filter: blur(7px); }
-.guide-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.guide-heading { display: flex; flex-shrink: 0; justify-content: space-between; align-items: flex-start; gap: 18px; padding-bottom: 8px; }
 .eyebrow { color: #8c947a; font-size: 8px; font-weight: 500; letter-spacing: 2px; margin: 0 0 11px; }
 .guide-heading h2 { position: relative; display: inline-block; padding: 9px 25px; margin: 0; border: 1px solid #c7b99b; border-radius: 6px 9px 7px 5px; background: linear-gradient(130deg, #eee2c5, #e0d3b0); box-shadow: 0 3px 0 #ccbc9740; font-size: 25px; font-weight: 500; letter-spacing: 5px; transform: rotate(-1.5deg); }
 .guide-heading h2::before, .guide-heading h2::after { content: ""; position: absolute; top: 48%; width: 4px; height: 4px; background: #a89979; border-radius: 50%; box-shadow: inset 0 1px 1px #fff6d6; }
@@ -282,7 +269,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .map-stop > circle:nth-of-type(1) { transition: fill .15s, filter .15s; }
 .map-stop:hover > circle:nth-of-type(1), .map-stop:focus-visible > circle:nth-of-type(1) { fill: #fffdf4; filter: drop-shadow(0 2px 3px #7d85623a); }
 .map-stop:focus-visible > rect { stroke: #a58db7; stroke-width: 1.4; stroke-dasharray: 3 4; }
-.guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 14px; }
+.guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 14px; list-style: none; margin: 0; padding: 0 3px 10px; }
 .guide-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 89px; min-width: 0; border: 1px solid color-mix(in srgb, var(--ride-color), #bcb495 35%); border-radius: 8px; background: linear-gradient(90deg, color-mix(in srgb, var(--ride-color), transparent 91%) 0 35px, #fffaf0 35px); box-shadow: 1px 3px 0 #c5b99016; transition: transform .2s; }
 .guide-row:hover { transform: translateY(-2px); }
 .guide-row::before, .guide-row::after { content: ""; position: absolute; right: 84px; width: 8px; height: 8px; z-index: 1; border: 1px solid #d0c7ad; border-radius: 50%; background: var(--guide-paper); pointer-events: none; }
@@ -292,9 +279,9 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
 .guide-number { width: 16px; flex-shrink: 0; text-align: center; color: var(--ride-color); font-size: 11px; font-family: ui-monospace, monospace; font-variant-numeric: tabular-nums; }
 .guide-destination strong { display: block; font-size: 13px; letter-spacing: .2px; font-weight: 600; color: #596457; }
-.guide-destination small { display: block; margin-top: 5px; font-size: 9px; color: #97917a; }
+.guide-destination small { display: block; margin-top: 5px; font-size: 12px; color: #665f4d; }
 .guide-destination .guide-arrow { margin-left: auto; color: var(--ride-color); font-size: 15px; }
-.guide-skate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; padding: 8px; border-left: 1px dashed #c9bda6; border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--ride-color), transparent 90%); font-size: 9px; color: #7d8772; letter-spacing: .4px; }
+.guide-skate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; padding: 8px; border-left: 1px dashed #c9bda6; border-radius: 0 8px 8px 0; background: color-mix(in srgb, var(--ride-color), transparent 90%); font-size: 12px; color: #505c47; letter-spacing: .4px; }
 .guide-skate svg { width: 21px; height: 21px; color: var(--ride-color); }
 @media (max-width: 600px) {
   .park-guide { padding: 22px 15px; border-radius: 18px 10px 18px 10px; }
@@ -326,13 +313,10 @@ a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
 @keyframes cloud-drift { from { translate: -45px 0; } to { translate: 60px 0; } }
 @keyframes track-flow { to { stroke-dashoffset: -156; } }
 @keyframes airflow { from { opacity: .25; transform: translateX(3px); } to { opacity: .9; transform: translateX(-5px); } }
-@keyframes station-flash { 0%,76%,86%,100% { filter: none; } 80% { filter: drop-shadow(0 0 9px #d8b2ff); } }
 @keyframes canopy-turn { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(.985); } }
 @keyframes horse-bob { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
-@keyframes carousel-sign { 0%,100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
 @keyframes ship-swing { 0%,100% { transform: rotate(-18deg); } 25% { transform: rotate(18deg); } 50% { transform: rotate(-21deg); } 75% { transform: rotate(21deg); } }
 @keyframes ship-glow { 0%,50%,75%,100% { opacity: 1; } 12.5%,37.5%,62.5%,87.5% { opacity: .3; } }
-@keyframes cup-orbit { 0%,100% { transform: translate(-98px,0); } 25% { transform: translate(0,-25px) scale(.86); } 50% { transform: translate(98px,0); } 75% { transform: translate(0,19px); } }
 @keyframes cup-spin { 0%,100% { transform: scaleX(1) rotate(-3deg); } 50% { transform: scaleX(.86) rotate(3deg); } }
 @keyframes breathe { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
 @keyframes haunted-flicker { 0%,16%,19%,78%,83%,100% { fill: #f2d894; } 17%,80% { fill: #8b9f80; } 30%,70% { fill: #b7d5a3; } }
@@ -348,7 +332,6 @@ a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
 @keyframes splash { 0%,70%,99%,100% { transform: scale(.05); opacity: 0; } 76% { transform: scale(1); opacity: .85; } 87% { transform: scale(1.02,.5); opacity: .2; } }
 @keyframes ripple { 0%,73%,100% { transform: scale(.1); opacity: 0; } 77% { transform: scale(.6); opacity: .8; } 96% { transform: scale(1.7); opacity: 0; } }
 @keyframes ripple-sign { 0%,73%,100% { opacity: 0; } 80% { opacity: .7; } 92% { opacity: 0; } }
-@keyframes airplane-orbit { 0%,100% { transform: translate(-122px,5px) scale(1); } 25% { transform: translate(0,-27px) scale(.78); } 50% { transform: translate(122px,5px) scale(1); } 75% { transform: translate(0,40px) scale(1.12); } }
 @keyframes plane-float { from { transform: translateY(-3px) rotate(-1.5deg); } to { transform: translateY(3px) rotate(1.5deg); } }
 @keyframes propeller { to { transform: rotate(180deg); } }
 @keyframes flag-wave { from { transform: scaleX(.9) skewY(-4deg); } to { transform: scaleX(1) skewY(4deg); } }
@@ -362,8 +345,7 @@ html.motion-paused .time-controls .phase-button { animation: none; }
 }
 @media (max-width: 600px) {
   .site-header { top: max(23px, env(safe-area-inset-top)); left: 24px; }
-  .brand-name { font-size: 46px; }
-  .brand-name small { font-size: 18px; }
+  .brand-name small { letter-spacing: 3px; }
   .sun { width: 66px; height: 66px; right: 13%; }
   .moon { width: 45px; height: 45px; right: 14%; }
   .moon::after { width: 41px; height: 41px; }
@@ -372,19 +354,19 @@ html.motion-paused .time-controls .phase-button { animation: none; }
   .sloth { width: 118px; }
   .skate-controls { left: -39px; right: -39px; }
   .move-button { width: 36px; height: 36px; }
-  .skate-hint { font-size: 8px; }
   .sloth-bubble { font-size: 9px; padding: 7px 9px; }
   .park-tools { right: 16px; bottom: max(15px, env(safe-area-inset-bottom)); gap: 7px; flex-direction: column; align-items: flex-end; }
   .park-tools.dock-left { left: 16px; right: auto; align-items: flex-start; }
   .time-controls { margin-right: 0; }
-  .icon-button, .cycle-button { width: 35px; height: 35px; }
+  .icon-button, .cycle-button { height: 35px; }
+  .icon-button { width: 35px; }
 }
 @media (max-height: 500px) and (min-width: 601px) {
   .site-header { top: 18px; left: 24px; }
   .brand-name { font-size: 44px; }
-  .sloth { width: 76px; }
   .park-tools { bottom: 12px; right: 18px; }
-  .icon-button, .cycle-button { width: 34px; height: 34px; }
+  .icon-button, .cycle-button { height: 34px; }
+  .icon-button { width: 34px; }
 }
 
 /* Entrance ambience and a small patrol companion; all motion stays within its plaza. */
@@ -431,27 +413,14 @@ html[data-light="day"] .night-light *, html[data-light="day"] .star { animation-
 .sky-wisps > path:first-child { stroke: #fffdf1; stroke-width: 2; opacity: .8; }
 html[data-light="night"] .sky-sketch { opacity: .15; }
 .park-detail, .park-gardens, .garden-lighting, .woodland-layer { pointer-events: none; }
-.ride-shadow { fill: var(--shadow); opacity: .23; filter: none; }
-.ride-outline { stroke: var(--metal-dark); filter: brightness(var(--art-brightness)); }
 .ride-outline .night-light { filter: brightness(1.35); }
 .entrance-garden, .entrance-balloons, .snack-kiosk { filter: brightness(var(--art-brightness)); }
 .garden-tree .tree-sway { animation-duration: 9s; }
-.garden-tree .tree-sway { transform-origin: bottom center; }
-.sign-board { stroke-width: 1.7; }
-.sign-subtitle { fill: #717568; }
-.entry-button-label { fill: #645479; }
-.resume-ticket .destination-post, .game-ticket .destination-post { stroke: var(--metal-dark); }
-.resume-ticket .sign-board { stroke: #a58bac; }
 .scenic-sign.wood-grain .sign-board, .wood-grain .sign-board { fill: url(#garden-timber); stroke: var(--wood-dark); }
 .wood-grain .sign-title, .wood-grain .sign-subtitle { fill: #4b5142; }
-.brand-name { color: var(--ink); letter-spacing: -2.5px; }
-.brand-name small { font-size: 17px; letter-spacing: 4px; }
-.sloth-character { filter: brightness(var(--art-brightness)); }
 .sloth-shadow { opacity: .25; }
 .park-tools .icon-button, .park-tools .cycle-button { box-shadow: 0 2px 6px #3048330a; }
 @media (max-width: 600px) {
-  .brand-name { font-size: 43px; }
-  .brand-name small { font-size: 15px; letter-spacing: 3px; }
   .sky-sketch { width: 185%; left: -45%; }
   #ride-ferris .hanging-sign { scale: 1.12; }
   .balloon-near { left: 55%; top: 21%; width: 39px; }
@@ -461,23 +430,18 @@ html[data-light="night"] .sky-sketch { opacity: .15; }
 /* Persistent navigation stays in viewport coordinates. */
 .guide-fixed { position: fixed; z-index: 12; top: max(28px, env(safe-area-inset-top)); right: 24px; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 24px; background: var(--surface); color: var(--ink); font-size: 14px; }
 .guide-fixed svg { width: 19px; height: 19px; }
-.cycle-button { width: auto !important; min-width: 90px; border-radius: 22px; display: flex; gap: 6px; font-size: 12px; white-space: nowrap; }
-.skate-hint { font-size: 12px; color: #354637; background: #fff9eb; border-radius: 10px; padding: 5px 9px; margin-top: 62px; text-shadow: none; }
 .park-guide[open] { display: flex; flex-direction: column; overflow: hidden; padding-bottom: 12px; }
-.guide-heading { flex-shrink: 0; padding-bottom: 8px; }
 .guide-scroll { overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #8b7c60 #f9f3e3; }
-.guide-list { list-style: none; margin: 0; padding: 0 3px 10px; }
 .guide-more { flex-shrink: 0; margin: 0; padding: 12px 0 0; font-size: 12px; text-align: center; color: #596457; background: linear-gradient(#f9f3e380, #f9f3e3 70%); }
-.guide-destination small { font-size: 12px; color: #665f4d; }
-.guide-skate { font-size: 12px; color: #505c47; }
 .text-nav:focus-within { position: fixed; clip-path: none; white-space: normal; width: min(600px, calc(100vw - 32px)); height: auto; max-height: 80svh; overflow: auto; top: 100px; left: 16px; z-index: 60; padding: 20px; background: var(--surface); border: 2px solid var(--accent); border-radius: 12px; }
 .text-nav a { display: inline-block; padding: 12px; }
 @media (max-width: 1024px) { .brand-name { font-size: 34px; } .brand-name small { font-size: 14px; } }
 @media (max-width: 600px) {
   .guide-fixed { top: 110px; right: 16px; padding: 10px 12px; }
-  .skate-hint { font-size: 12px; }
 }
-@media (max-height: 500px) { .guide-fixed { top: 14px; } }
 
 /* Short screens leave enough room above the actor for destination buttons. */
-@media (max-height: 500px) { .sloth { width: clamp(44px, 10svh, 64px); } }
+@media (max-height: 500px) {
+  .guide-fixed { top: 14px; }
+  .sloth { width: clamp(44px, 10svh, 64px); }
+}

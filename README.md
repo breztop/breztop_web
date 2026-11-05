@@ -2,6 +2,8 @@
 
 主站、`personal-match-site/` 和 `project-show/` 均使用原生 HTML、CSS 和 JavaScript。构建脚本仅做文件校验和白名单复制，无需安装项目依赖。
 
+首页代码按职责拆分：`js/index.js` 负责场景和漫游交互，`js/park-art.js` 生成园林插画，`js/park-clock.js` 管理昼夜切换，`js/park-tools.js` 处理分享与全屏。样式集中在 `css/index.css`，修改组件时直接维护其基础规则及对应的媒体查询。
+
 ## 构建与预览
 
 使用 Node.js 24：

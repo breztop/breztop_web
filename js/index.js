@@ -1,4 +1,6 @@
 import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLights, gardenGroups, entranceDetails, foregroundDetail, snackStreet } from './park-art.js';
+import { initParkClock } from './park-clock.js';
+import { initParkTools } from './park-tools.js';
 
 (() => {
   'use strict';
@@ -374,7 +376,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   // Set href later to activate a destination. A null href keeps the robot in this park.
   const ROBOT_CONFIG = { href: null, onActivate: null, cuteMs: 10000, evilMs: 1000 };
   function parkRobot() {
-    return `<g id="park-robot" class="park-robot decor-cluster" data-left="270" data-right="430" data-world-x="350" role="button" tabindex="0" aria-label="入口巡逻机器人" transform="translate(350 640) scale(.76)">
+    return `<g id="park-robot" class="park-robot decor-cluster" data-left="270" data-right="430" role="button" tabindex="0" aria-label="入口巡逻机器人" transform="translate(350 640) scale(.76)">
       <title>入口巡逻机器人</title>
       <g class="robot-patrol"><ellipse cx="0" cy="1" rx="34" ry="7" fill="#698c7b" opacity=".14"/>
         <g class="robot-walk" stroke="#829795" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -550,7 +552,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
   }).join('') + range(3, i => `<i class="shooting-star" style="left:${40 + i * 23}%;top:${10 + i * 7}%;--meteor-time:${23 + i * 13}s;animation-delay:-${i * 7}s"></i>`);
   const bilibili = { id: 'bilibili', name: 'B 站', title: 'bilibili', href: 'https://space.bilibili.com/630698674', color: '#cf9fb9', x: 352 };
   const stops = [{ id: 'entrance', name: '园区入口', x: 190 }, bilibili, ...rides.map(ride => ride.signX === undefined ? ride : {
-    ...ride, x: ride.x + ride.signX * ride.size, frameOnArrival: true,
+    ...ride, x: ride.x + ride.signX * ride.size,
   })].sort((a, b) => a.x - b.x);
   const guide = document.getElementById('park-guide');
   const entries = [bilibili, ...rides].sort((a, b) => a.x - b.x);
@@ -627,7 +629,6 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     </svg>`;
   }
 
-  renderGuideMap();
   const proximityNodes = rides.map(ride => ({ ride, node: document.getElementById(`ride-${ride.id}`), visible: true, proximity: '' }));
   const tools = document.querySelector('.park-tools');
   const mountainLayer = document.getElementById('mountain-layer');
@@ -1069,112 +1070,7 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     getRobotDestination: () => ROBOT_CONFIG.href,
   });
 
-  // A full loop is 3, 5 or 10 minutes: day → dusk → night → morning → day.
-  // Fixed mode and reduced motion use the adjacent phase selector.
-  const phases = [
-    { id: 'day', name: '白天', icon: 'sun', sun: 16, moon: 0 },
-    { id: 'dusk', name: '黄昏', icon: 'dusk', sun: 43, moon: .15 },
-    { id: 'night', name: '夜晚', icon: 'moon', sun: 55, moon: 1 },
-    { id: 'morning', name: '早晨', icon: 'dawn', sun: 29, moon: .2 },
-  ];
-  const colorNames = ['ink', 'muted', 'sky-top', 'sky-bottom', 'surface', 'line', 'grass', 'grass-back', 'path', 'path-line', 'hill', 'hill-back', 'tree', 'tree-dark', 'mountain-far', 'mountain-near', 'mountain-shadow', 'leaf-light', 'bark', 'wood-light', 'wood-dark', 'stone-light', 'stone-dark', 'joint', 'forest', 'forest-back', 'water', 'water-dark', 'water-shine', 'bank', 'canvas', 'canvas-shadow', 'metal-light', 'metal-mid', 'metal-dark', 'paint-rose', 'paint-lilac', 'paint-sage', 'shadow'];
-  const rgb = value => {
-    const hex = value.trim().replace('#', '');
-    return [0, 2, 4].map(index => parseInt(hex.slice(index, index + 2), 16));
-  };
-  const palettes = phases.map(phase => {
-    root.dataset.light = phase.id;
-    const styles = getComputedStyle(root);
-    return {
-      colors: colorNames.map(name => rgb(styles.getPropertyValue(`--${name}`))),
-      night: parseFloat(styles.getPropertyValue('--night-opacity')),
-      day: parseFloat(styles.getPropertyValue('--day-opacity')),
-      brightness: parseFloat(styles.getPropertyValue('--art-brightness')),
-    };
-  });
-  const defaultCycle = innerWidth <= 600 ? '10' : '3';
-  let cycleMode = defaultCycle;
-  let fixedPhase = 'day';
-  try {
-    cycleMode = localStorage.getItem('breeze-cycle-mode') || defaultCycle;
-    fixedPhase = localStorage.getItem('breeze-fixed-phase') || 'day';
-  } catch { /* Preferences are optional when storage is unavailable. */ }
-  if (!['3', '5', '10', 'infinity'].includes(cycleMode)) cycleMode = defaultCycle;
-  if (!phases.some(phase => phase.id === fixedPhase)) fixedPhase = 'day';
-  let cycleEpoch = performance.now();
-  const modeButton = document.getElementById('cycle-mode');
-  const phaseButton = document.getElementById('fixed-phase');
-  const mix = (a, b, t) => a + (b - a) * t;
-  const duration = () => Number(cycleMode) * 60000;
-  const paintedLight = new Map();
-  function lightProperty(name, value) {
-    if (paintedLight.get(name) === value) return;
-    paintedLight.set(name, value); root.style.setProperty(name, value);
-  }
-  function paintLight(now = performance.now()) {
-    const progress = (cycleMode === 'infinity' || motionQuery.matches) ? 0 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
-    const phase = (cycleMode === 'infinity' || motionQuery.matches) ? phases.findIndex(item => item.id === fixedPhase) : Math.floor(progress * 4);
-    const next = (phase + 1) % 4;
-    let blend = (cycleMode === 'infinity' || motionQuery.matches) ? 0 : clamp((progress * 4 % 1 - .55) / .45, 0, 1);
-    blend = blend * blend * (3 - 2 * blend);
-    const a = palettes[phase]; const b = palettes[next];
-    const light = phases[blend > .5 ? next : phase].id;
-    if (root.dataset.light !== light) root.dataset.light = light;
-    colorNames.forEach((name, i) => lightProperty(`--${name}`, `rgb(${a.colors[i].map((value, channel) => Math.round(mix(value, b.colors[i][channel], blend))).join(',')})`));
-    lightProperty('--night-opacity', mix(a.night, b.night, blend).toFixed(3));
-    lightProperty('--day-opacity', mix(a.day, b.day, blend).toFixed(3));
-    lightProperty('--art-brightness', mix(a.brightness, b.brightness, blend).toFixed(3));
-    lightProperty('--moon-opacity', mix(phases[phase].moon, phases[next].moon, blend).toFixed(3));
-    lightProperty('--sun-top', `${mix(phases[phase].sun, phases[next].sun, blend)}%`);
-    modeButton.style.setProperty('--cycle-progress', String((cycleMode === 'infinity' || motionQuery.matches) ? 0 : progress));
-    const skyColor = paintedLight.get('--sky-top');
-    if (document.querySelector('meta[name="theme-color"]').content !== skyColor) document.querySelector('meta[name="theme-color"]').content = skyColor;
-  }
-  function syncClockControls() {
-    const fixed = (cycleMode === 'infinity' || motionQuery.matches);
-    modeButton.querySelector('span').textContent = fixed ? '固定' : `${cycleMode} 分钟`;
-    const nextMode = motionQuery.matches ? '下一时段' : cycleMode === '3' ? '5 分钟一昼夜' : cycleMode === '5' ? '10 分钟一昼夜' : cycleMode === '10' ? '固定时段' : '3 分钟一昼夜';
-    const label = fixed ? '固定时段' : `${cycleMode} 分钟一昼夜`;
-    modeButton.dataset.hint = `${label} · 点击切换为${nextMode}`;
-    modeButton.removeAttribute('title');
-    modeButton.setAttribute('aria-label', `当前${label}，点击切换为${nextMode}`);
-    phaseButton.hidden = !fixed;
-    modeButton.setAttribute('aria-expanded', String(fixed));
-    const index = phases.findIndex(phase => phase.id === fixedPhase);
-    phaseButton.querySelector('use').setAttribute('href', `#i-${phases[index].icon}`);
-    phaseButton.dataset.hint = `固定${phases[index].name} · 点击切换${phases[(index + 1) % 4].name}`;
-    phaseButton.removeAttribute('title');
-    phaseButton.setAttribute('aria-label', phaseButton.dataset.hint);
-    try {
-      localStorage.setItem('breeze-cycle-mode', cycleMode);
-      localStorage.setItem('breeze-fixed-phase', fixedPhase);
-    } catch { /* The clock continues without persistence. */ }
-    paintLight();
-    scheduleLight();
-  }
-  modeButton.addEventListener('click', () => {
-    if (motionQuery.matches) { phaseButton.click(); return; }
-    const now = performance.now();
-    const progress = (cycleMode === 'infinity' || motionQuery.matches) ? phases.findIndex(phase => phase.id === fixedPhase) / 4 : ((now - cycleEpoch) / duration() % 1 + 1) % 1;
-    fixedPhase = root.dataset.light;
-    cycleMode = cycleMode === '3' ? '5' : cycleMode === '5' ? '10' : cycleMode === '10' ? 'infinity' : '3';
-    if (cycleMode !== 'infinity') cycleEpoch = now - progress * duration();
-    syncClockControls();
-  });
-  phaseButton.addEventListener('click', () => {
-    const index = phases.findIndex(phase => phase.id === fixedPhase);
-    fixedPhase = phases[(index + 1) % 4].id;
-    syncClockControls();
-  });
-  let lightTimer;
-  function scheduleLight() {
-    clearTimeout(lightTimer);
-    if (document.hidden || motionQuery.matches || cycleMode === 'infinity') return;
-    lightTimer = setTimeout(() => { paintLight(); scheduleLight(); }, 1000);
-  }
-  syncClockControls();
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) paintLight(); scheduleLight(); });
-  motionQuery.addEventListener('change', syncClockControls);
+  initParkClock({ root, motionQuery, clamp });
 
   const guideOpen = document.getElementById('guide-open');
   const guideScroll = document.getElementById('guide-scroll');
@@ -1196,48 +1092,6 @@ import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLigh
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) guide.close();
   });
 
-  let toastTimer;
-  function toast(message) {
-    const element = document.getElementById('toast');
-    element.textContent = message;
-    element.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => element.classList.remove('show'), 2600);
-  }
-  document.getElementById('share-btn').addEventListener('click', async () => {
-    const url = document.querySelector('link[rel="canonical"]').href;
-    if (navigator.share) {
-      try { await navigator.share({ title: document.title, url }); return; }
-      catch (error) { if (error.name === 'AbortError') return; }
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      toast('微风已打包，链接已复制。');
-    } catch {
-      const input = document.createElement('textarea');
-      input.value = url;
-      input.style.cssText = 'position:fixed;left:-9999px;top:0';
-      document.body.appendChild(input);
-      input.select();
-      try { toast(document.execCommand('copy') ? '微风已打包，链接已复制。' : '请从地址栏复制主页链接。'); }
-      catch { toast('请从地址栏复制主页链接。'); }
-      input.remove();
-      document.getElementById('share-btn').focus();
-    }
-  });
-  const fullscreenButton = document.getElementById('fs-toggle');
-  if (!document.fullscreenEnabled) fullscreenButton.hidden = true;
-  fullscreenButton.addEventListener('click', async () => {
-    try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else await root.requestFullscreen();
-    } catch { toast('当前浏览器暂时无法进入全屏。'); }
-  });
-  document.addEventListener('fullscreenchange', () => {
-    const full = Boolean(document.fullscreenElement);
-    fullscreenButton.setAttribute('aria-pressed', String(full));
-    fullscreenButton.setAttribute('aria-label', full ? '退出全屏' : '进入全屏');
-    fullscreenButton.dataset.hint = full ? '退出全屏' : '全屏';
-  });
+  initParkTools(root);
 
 })();

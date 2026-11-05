@@ -10,6 +10,8 @@ export const publicFiles = Object.freeze([
   'css/index.css',
   'js/index.js',
   'js/park-art.js',
+  'js/park-clock.js',
+  'js/park-tools.js',
   'snack-town/index.html',
   'snack-town/styles.css',
   'snack-town/main.js',
