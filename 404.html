@@ -25,59 +25,62 @@
   font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   color: var(--ink); background: var(--sky-top); font-synthesis: none; -webkit-font-smoothing: antialiased;}
     * { box-sizing: border-box; }
-    body { margin: 0; min-width: 280px; min-height: 100svh; background: var(--sky-top); color: var(--ink); }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+    body { min-width: 280px; background: var(--sky-top); color: var(--ink); }
     a { color: inherit; text-decoration: none; }
-    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
-    .brand { position: absolute; z-index: 2; top: max(28px, env(safe-area-inset-top)); left: 3.5%; font-size: 50px; font-weight: 700; line-height: 1.1; letter-spacing: -2.5px; }
-    .brand-name em { font-style: normal; font-weight: 400; }
-    .brand small { display: block; margin-top: 10px; font-size: 17px; font-weight: 500; letter-spacing: 4px; }
-    main { position: relative; min-height: 100svh; overflow: hidden; }
-    .boundary-scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+    a:focus-visible, .boundary-scene:focus-visible { outline: 3px solid var(--accent); outline-offset: -4px; }
+    main { position: fixed; inset: 0; overflow: hidden; }
+    .boundary-scene { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; user-select: none; }
+    .boundary-scene.is-dragging { cursor: grabbing; }
     .boundary-scene text { font-family: inherit; stroke: none; }
-    .night-light { display: none; }
-    .copy { position: relative; z-index: 1; padding: clamp(150px, 19svh, 200px) 24px 0; text-align: center; }
-    .eyebrow { margin: 0 0 15px; font-size: 12px; letter-spacing: 4px; color: var(--wood-dark); }
-    h1 { margin: 0; font-size: clamp(26px, 3vw, 40px); font-weight: 600; line-height: 1.5; }
-    .description { margin: 12px auto 0; max-width: 27em; color: var(--muted); font-size: 15px; line-height: 1.9; }
-    .home { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 24px; padding: 10px 20px; border: 1px solid #b6a4c5; border-radius: 24px; background: #fffdf5d9; color: #665479; font-size: 14px; transition: background .2s, transform .2s; }
-    .home:hover { background: #fffdf5; transform: translateY(-2px); }
+    .brand, .home { position: fixed; z-index: 2; top: max(26px, env(safe-area-inset-top)); }
+    .brand { left: max(28px, env(safe-area-inset-left)); padding: 12px 0; font-size: 17px; letter-spacing: 3px; }
+    .home { right: max(28px, env(safe-area-inset-right)); display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 10px 18px; border: 1px solid #b6a4c5; border-radius: 24px; background: #fffdf5d9; color: #665479; font-size: 14px; transition: background .2s, transform .2s; }
+    .home:hover { background: var(--surface); transform: translateY(-2px); }
     .home svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .tree-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 9s ease-in-out infinite alternate; }
+    #boundary-player { cursor: grab; }
+    #boundary-player[data-direction="left"] > svg { scale: -1 1; transform-box: fill-box; transform-origin: center; }
+    .tree-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 8s ease-in-out infinite alternate; }
     .sloth-bob { transform-origin: 90px 175px; animation: bob 3.5s ease-in-out infinite; }
-    @keyframes sway { from { transform: rotate(-1deg); } to { transform: rotate(1deg); } }
+    .is-moving .sloth-bob { animation: skate .45s ease-in-out infinite alternate; }
+    .boundary-cloud { animation: cloud-drift 32s ease-in-out infinite alternate; }
+    .boundary-balloon { animation: float 14s ease-in-out infinite alternate; }
+    .boundary-birds { animation: glide 24s ease-in-out infinite alternate; }
+    .boundary-sun { animation: glow 9s ease-in-out infinite alternate; }
+    .page-hidden *, .page-hidden *::before, .page-hidden *::after { animation-play-state: paused !important; }
+    @keyframes sway { from { transform: rotate(-1.5deg); } to { transform: rotate(1.5deg); } }
     @keyframes bob { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(2px) rotate(1deg); } }
-    @media (max-width: 600px) {
-      .brand { top: max(23px, env(safe-area-inset-top)); left: 24px; font-size: 34px; }
-      .brand small { font-size: 14px; letter-spacing: 3px; }
-      .copy { padding-top: 150px; }
-      .description { max-width: 21em; font-size: 14px; }
-    }
-    @media (max-height: 550px) { main { min-height: 680px; } .copy { padding-top: 115px; } .boundary-scene { top: auto; bottom: 0; height: 420px; } }
+    @keyframes skate { from { transform: translateY(-1px) rotate(-2deg); } to { transform: translateY(2px) rotate(2deg); } }
+    @keyframes cloud-drift { from { transform: translateX(-45px); } to { transform: translateX(65px); } }
+    @keyframes float { from { transform: translate(-8px,10px) rotate(-3deg); } to { transform: translate(14px,-15px) rotate(3deg); } }
+    @keyframes glide { from { transform: translate(-50px,5px); } to { transform: translate(90px,-10px); } }
+    @keyframes glow { from { opacity: .7; } to { opacity: 1; } }
+    @media (max-width: 600px) { .brand, .home { top: max(20px, env(safe-area-inset-top)); } .brand { left: 20px; font-size: 14px; letter-spacing: 2px; } .home { right: 20px; padding-inline: 14px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
 <body>
-  <header><a class="brand" href="https://brez.top/" data-home aria-label="返回 brez.top 游乐园"><span class="brand-name">brez<em>.top</em></span><small>微风中的快乐</small></a></header>
-  <main>
-<svg class="boundary-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="robot-shell" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--metal-light)"/><stop offset="1" stop-color="var(--metal-mid)"/></linearGradient><linearGradient id="plaza-paving" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--stone-light)"/><stop offset="1" stop-color="var(--stone-dark)"/></linearGradient><linearGradient id="entry-hedge" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--leaf-light)"/><stop offset="0.5" stop-color="var(--tree)"/><stop offset="1" stop-color="var(--tree-dark)"/></linearGradient><linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="20%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.3333333333333333" stop-color="var(--metal-mid)"/><stop offset="0.6666666666666666" stop-color="var(--metal-light)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
-      <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="20%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.3333333333333333" stop-color="var(--wood-light)"/><stop offset="0.6666666666666666" stop-color="var(--canvas)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
-      <linearGradient id="glass" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
-      <linearGradient id="lavender-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--paint-lilac)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
-      <linearGradient id="sage-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--paint-sage)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
-      <linearGradient id="rose-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--paint-rose)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
-      <linearGradient id="ivory-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--stone-light)"/><stop offset="1" stop-color="var(--canvas-shadow)"/></linearGradient>
-      <linearGradient id="wood-hull" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--wood-light)"/><stop offset="0.5" stop-color="var(--wood-dark)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
-      <linearGradient id="stone" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--stone-light)"/><stop offset="0.5" stop-color="var(--stone-dark)"/><stop offset="1" stop-color="var(--joint)"/></linearGradient>
-      <linearGradient id="slate-roof" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-mid)"/><stop offset="0.5" stop-color="var(--metal-dark)"/><stop offset="1" stop-color="var(--shadow)"/></linearGradient>
-      <linearGradient id="arena-floor" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--metal-mid)"/><stop offset="1" stop-color="var(--paint-sage)"/></linearGradient>
-      <linearGradient id="flume-water" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--water-shine)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
-      <clipPath id="ride-envelope" clipPathUnits="userSpaceOnUse"><rect x="-310" y="0" width="620" height="555" rx="8"/></clipPath>
-      <linearGradient id="pool-water" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--water-shine)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
-      <linearGradient id="mountain-wash" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--mountain-far)"/><stop offset="1" stop-color="var(--mountain-near)"/></linearGradient>
-      <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".42"/></linearGradient>
-      <linearGradient id="sign-face" x2="0" y2="1"><stop stop-color="#fffbed"/><stop offset="1" stop-color="#eee4cc"/></linearGradient>
-      <radialGradient id="lamp-glow"><stop stop-color="#ffe4a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe4a0" stop-opacity="0"/></radialGradient>
-      <pattern id="sign-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="m0 0 8 8m0-8-8 8m16-8-8 8" stroke="#a4aca0" stroke-width=".5" opacity=".3"/></pattern><linearGradient id="leaf-canopy" x1="1" y1="0" x2="0" y2="1"><stop stop-color="var(--leaf-light)"/><stop offset=".48" stop-color="var(--tree)"/><stop offset="1" stop-color="var(--tree-dark)"/></linearGradient>
+  <header><a class="brand" href="https://brez.top/" data-home>微风中的快乐</a></header>
+  <main><svg id="boundary-scene" class="boundary-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" role="region" tabindex="0" aria-label="园区边境，拖动树懒、滑动场景或使用左右方向键漫游" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="robot-shell" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--metal-light)"/><stop offset="1" stop-color="var(--metal-mid)"/></linearGradient><linearGradient id="plaza-paving" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--stone-light)"/><stop offset="1" stop-color="var(--stone-dark)"/></linearGradient><linearGradient id="entry-hedge" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--leaf-light)"/><stop offset="0.5" stop-color="var(--tree)"/><stop offset="1" stop-color="var(--tree-dark)"/></linearGradient><linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="20%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.3333333333333333" stop-color="var(--metal-mid)"/><stop offset="0.6666666666666666" stop-color="var(--metal-light)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="20%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.3333333333333333" stop-color="var(--wood-light)"/><stop offset="0.6666666666666666" stop-color="var(--canvas)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
+    <linearGradient id="lavender-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--paint-lilac)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
+    <linearGradient id="sage-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--paint-sage)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
+    <linearGradient id="rose-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--paint-rose)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
+    <linearGradient id="ivory-paint" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--canvas)"/><stop offset="0.5" stop-color="var(--stone-light)"/><stop offset="1" stop-color="var(--canvas-shadow)"/></linearGradient>
+    <linearGradient id="wood-hull" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--wood-light)"/><stop offset="0.5" stop-color="var(--wood-dark)"/><stop offset="1" stop-color="var(--metal-dark)"/></linearGradient>
+    <linearGradient id="stone" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--stone-light)"/><stop offset="0.5" stop-color="var(--stone-dark)"/><stop offset="1" stop-color="var(--joint)"/></linearGradient>
+    <linearGradient id="slate-roof" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-mid)"/><stop offset="0.5" stop-color="var(--metal-dark)"/><stop offset="1" stop-color="var(--shadow)"/></linearGradient>
+    <linearGradient id="arena-floor" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--metal-light)"/><stop offset="0.5" stop-color="var(--metal-mid)"/><stop offset="1" stop-color="var(--paint-sage)"/></linearGradient>
+    <linearGradient id="flume-water" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--water-shine)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
+    <clipPath id="ride-envelope" clipPathUnits="userSpaceOnUse"><rect x="-310" y="0" width="620" height="555" rx="8"/></clipPath>
+    <linearGradient id="pool-water" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--water-shine)"/><stop offset="0.5" stop-color="var(--water)"/><stop offset="1" stop-color="var(--water-dark)"/></linearGradient>
+    <linearGradient id="mountain-wash" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0" stop-color="var(--mountain-far)"/><stop offset="1" stop-color="var(--mountain-near)"/></linearGradient>
+    <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".42"/></linearGradient>
+    <linearGradient id="sign-face" x2="0" y2="1"><stop stop-color="#fffbed"/><stop offset="1" stop-color="#eee4cc"/></linearGradient>
+    <radialGradient id="lamp-glow"><stop stop-color="#ffe4a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe4a0" stop-opacity="0"/></radialGradient>
+    <pattern id="sign-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="m0 0 8 8m0-8-8 8m16-8-8 8" stroke="#a4aca0" stroke-width=".5" opacity=".3"/></pattern><linearGradient id="leaf-canopy" x1="1" y1="0" x2="0" y2="1"><stop stop-color="var(--leaf-light)"/><stop offset=".48" stop-color="var(--tree)"/><stop offset="1" stop-color="var(--tree-dark)"/></linearGradient>
     <linearGradient id="garden-timber" x2="0" y2="1"><stop stop-color="var(--wood-light)"/><stop offset="1" stop-color="var(--wood-dark)"/></linearGradient>
     <linearGradient id="garden-water" x2="0" y2="1"><stop stop-color="var(--water-dark)"/><stop offset="1" stop-color="var(--water)"/></linearGradient>
     <linearGradient id="meadow-wash" x2="0" y2="1"><stop stop-color="var(--grass)"/><stop offset="1" stop-color="var(--grass-back)"/></linearGradient>
@@ -85,12 +88,12 @@
     <radialGradient id="ground-lantern"><stop stop-color="#ffcf83" stop-opacity=".48"/><stop offset=".45" stop-color="#efba70" stop-opacity=".2"/><stop offset="1" stop-color="#efba70" stop-opacity="0"/></radialGradient>
     <pattern id="garden-paving" width="44" height="22" patternUnits="userSpaceOnUse"><path d="M0 0h44v22H0Z" fill="var(--stone-light)"/><path d="M0 1h44M0 21h44M22 0v21M0 0v21m44-21v21" fill="none" stroke="var(--joint)" stroke-width=".7" opacity=".58"/><path d="M3 4h15m8 0h14" stroke="var(--canvas)" stroke-width=".7" opacity=".5"/></pattern>
     <pattern id="path-grain" width="69" height="41" patternUnits="userSpaceOnUse"><g fill="var(--wood-dark)" opacity=".13"><circle cx="5" cy="11" r=".8"/><circle cx="41" cy="6" r=".55"/><circle cx="24" cy="32" r=".65"/><circle cx="61" cy="25" r=".8"/><ellipse cx="47" cy="35" rx="1.6" ry=".55"/></g></pattern>
-    <pattern id="roof-tiles" width="17" height="11" patternUnits="userSpaceOnUse"><path d="M0 10h17M8 0v10" fill="none" stroke="var(--canvas)" stroke-width=".6" opacity=".32"/></pattern><linearGradient id="page-sky" x2="0" y2="1"><stop stop-color="var(--sky-top)"/><stop offset="1" stop-color="var(--sky-bottom)"/></linearGradient></defs><rect width="1440" height="900" fill="url(#page-sky)"/>
-<circle cx="1123.2" cy="174" r="42" fill="#f8d995" opacity=".85"/>
-<g fill="#fffdf1" opacity=".7"><path d="M112 176q-12-19 10-24 9-30 35-13 28-9 33 17 24-2 28 20Z"/><path d="M864 112q-12-19 10-24 9-30 35-13 28-9 33 17 24-2 28 20Z"/></g>
-<path d="M0 480V387Q130 220 285 388T600 365T930 395T1240 340T1590 390T1880 365V650H0Z" fill="var(--mountain-far)"/>
-<path d="M0 490Q160 354 320 429T670 401T1000 424T1340 405T1880 411V650H0Z" fill="var(--mountain-near)" opacity=".65"/>
-<g id="woodland-layer" class="woodland-layer" aria-hidden="true">
+    <pattern id="roof-tiles" width="17" height="11" patternUnits="userSpaceOnUse"><path d="M0 10h17M8 0v10" fill="none" stroke="var(--canvas)" stroke-width=".6" opacity=".32"/></pattern><linearGradient id="boundary-sky" x2="0" y2="1"><stop stop-color="var(--sky-top)"/><stop offset="1" stop-color="var(--sky-bottom)"/></linearGradient></defs>
+<g aria-hidden="true"><rect width="3200" height="900" fill="url(#boundary-sky)"/>
+<g id="boundary-sky"><circle class="boundary-sun" cx="1120" cy="175" r="42" fill="#f8d995"/><g class="boundary-cloud" style="animation-delay:-0s"><path transform="translate(180 170) scale(1)" d="M-75 0q-15-25 15-32 9-37 42-18 35-15 42 20 30-3 40 30Z" fill="#fffdf1" opacity=".68"/></g><g class="boundary-cloud" style="animation-delay:-9s"><path transform="translate(1000 115) scale(0.8)" d="M-75 0q-15-25 15-32 9-37 42-18 35-15 42 20 30-3 40 30Z" fill="#fffdf1" opacity=".68"/></g><g class="boundary-cloud" style="animation-delay:-18s"><path transform="translate(1860 190) scale(1.1)" d="M-75 0q-15-25 15-32 9-37 42-18 35-15 42 20 30-3 40 30Z" fill="#fffdf1" opacity=".68"/></g><g class="boundary-cloud" style="animation-delay:-27s"><path transform="translate(2710 120) scale(0.9)" d="M-75 0q-15-25 15-32 9-37 42-18 35-15 42 20 30-3 40 30Z" fill="#fffdf1" opacity=".68"/></g><g transform="translate(690 150) scale(0.65)"><g class="boundary-balloon" style="animation-delay:-0s"><path d="M-30 36C-60-42 60-42 30 36L9 78H-9Z" fill="var(--canvas)" stroke="var(--metal-dark)" stroke-width="1.5"/><path d="M0-22C-31-16-29 26-9 76H0C-13 25-15-10 0-22Zm0 0C31-16 29 26 9 76H0C13 25 15-10 0-22Z" fill="var(--paint-lilac)"/><path d="M-30 34q30 13 60 0M-9 78l1 17m17-17-1 17" fill="none" stroke="var(--metal-dark)" stroke-width="1.2"/><path d="M-11 95h22l-3 15H-8Z" fill="url(#garden-timber)" stroke="var(--wood-dark)"/></g></g><g transform="translate(1475 130) scale(0.55)"><g class="boundary-balloon" style="animation-delay:-7s"><path d="M-30 36C-60-42 60-42 30 36L9 78H-9Z" fill="var(--canvas)" stroke="var(--metal-dark)" stroke-width="1.5"/><path d="M0-22C-31-16-29 26-9 76H0C-13 25-15-10 0-22Zm0 0C31-16 29 26 9 76H0C13 25 15-10 0-22Z" fill="var(--paint-lilac)"/><path d="M-30 34q30 13 60 0M-9 78l1 17m17-17-1 17" fill="none" stroke="var(--metal-dark)" stroke-width="1.2"/><path d="M-11 95h22l-3 15H-8Z" fill="url(#garden-timber)" stroke="var(--wood-dark)"/></g></g><g transform="translate(2350 215) scale(0.9)"><g class="boundary-balloon" style="animation-delay:-14s"><path d="M-30 36C-60-42 60-42 30 36L9 78H-9Z" fill="var(--canvas)" stroke="var(--metal-dark)" stroke-width="1.5"/><path d="M0-22C-31-16-29 26-9 76H0C-13 25-15-10 0-22Zm0 0C31-16 29 26 9 76H0C13 25 15-10 0-22Z" fill="var(--paint-lilac)"/><path d="M-30 34q30 13 60 0M-9 78l1 17m17-17-1 17" fill="none" stroke="var(--metal-dark)" stroke-width="1.2"/><path d="M-11 95h22l-3 15H-8Z" fill="url(#garden-timber)" stroke="var(--wood-dark)"/></g></g>
+<g class="boundary-birds" fill="none" stroke="var(--metal-dark)" stroke-width="1.7" stroke-linecap="round" opacity=".55"><path d="m665 226 9-5 10 5m18-17 9-5 10 5m19 19 9-5 10 5"/></g></g>
+<g id="boundary-mountains"><path d="M0 520V390Q130 220 285 388T600 365T930 395T1240 340T1590 390T1880 365T2220 389T2560 355T2900 389T3200 360V650H0Z" fill="var(--mountain-far)"/><path d="M0 540V490Q160 354 320 429T670 401T1000 424T1340 405T1700 411T2020 400T2360 428T2700 412T3200 425V650H0Z" fill="var(--mountain-near)" opacity=".65"/></g>
+<g id="boundary-woods"><g id="woodland-layer" class="woodland-layer" aria-hidden="true">
     <path d="M-650 447Q-300 388 40 423T650 415T1270 430T1930 414T2580 431T3230 412T3890 427T4500 413T5220 429T6000 416V504H-650Z" fill="var(--forest-back)"/>
     <g transform="translate(-220 448) scale(1)" fill="var(--forest)">
       <path d="M-145 29q-27-33 8-47-14-33 20-39-2-30 30-31 16-28 40-6 28-16 45 12 32-4 37 27 32 5 22 33 27 12 18 40Z"/>
@@ -142,11 +145,11 @@
       <path d="M-105 25v-43m-10 14 10 8 12-13m61 36v-31m-9 8 9 9 11-13" fill="none" stroke="var(--forest-back)" stroke-width="2" opacity=".45"/>
     </g>
     <g fill="var(--forest)" opacity=".65"><path d="m-250 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m-43 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m164 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m299 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m506 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m713 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m848 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m1055 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m1262 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m1397 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m1604 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m1811 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m1946 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m2153 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m2360 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m2495 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m2702 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m2909 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m3044 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m3251 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m3458 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m3593 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m3800 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m4007 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m4142 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m4349 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m4556 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m4691 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m4898 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m5105 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/><path d="m5240 462-29.25 0 14.4-20.25h-7.65l22.5-40.5 22.5 40.5h-7.65l14.4 20.25Z"/><path d="m5447 462-35.1 0 17.28-24.3h-9.180000000000001l27-48.6 27 48.6h-9.180000000000001l17.28 24.3Z"/><path d="m5654 462-17.55 0 8.64-12.15h-4.590000000000001l13.5-24.3 13.5 24.3h-4.590000000000001l8.64 12.15Z"/><path d="m5789 462-23.400000000000002 0 11.52-16.2h-6.12l18-32.4 18 32.4h-6.12l11.52 16.2Z"/></g>
-  </g>
-<path d="M0 532Q340 498 670 535T1300 526T1880 538V900H0Z" fill="url(#meadow-wash)"/>
-<path d="M0 749Q340 707 670 747T1300 737T1880 749V900H0Z" fill="var(--path)"/>
-<path d="M0 749Q340 707 670 747T1300 737T1880 749" fill="none" stroke="var(--path-line)" stroke-width="2"/>
-<path d="M0 749Q340 707 670 747T1300 737T1880 749V900H0Z" fill="url(#path-grain)"/>
+  </g></g>
+<path d="M0 532Q340 498 670 535T1300 526T1880 538T2500 526T3200 535V900H0Z" fill="url(#meadow-wash)"/>
+<path d="M0 749Q340 707 670 747T1300 737T1880 749T2500 739T3200 748V900H0Z" fill="var(--path)"/>
+<path d="M0 749Q340 707 670 747T1300 737T1880 749T2500 739T3200 748" fill="none" stroke="var(--path-line)" stroke-width="2"/>
+<path d="M0 749Q340 707 670 747T1300 737T1880 749T2500 739T3200 748V900H0Z" fill="url(#path-grain)"/>
 <g class="decor-cluster park-detail garden-tree" data-left="16.000000000000014" data-right="254" transform="translate(135 720) scale(1.4)" aria-hidden="true">
     <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
     <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
@@ -179,16 +182,58 @@
        <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
        <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/></g>
     <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
+  </g><g class="decor-cluster park-detail garden-tree" data-left="1693.5" data-right="1846.5" transform="translate(1770 690) scale(0.9)" aria-hidden="true">
+    <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
+    <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
+    <g class="tree-sway" style="animation-delay:-6s"><path d="M-7-47q-41 14-50-14-25-8-12-32-15-27 14-40 0-30 33-29 21-25 43-4 32-7 39 24 30 6 22 34 18 27-8 42-9 28-43 14Z" fill="var(--tree-dark)"/>
+       <path d="M-50-84q-12-18 8-32-3-26 23-28 17-24 36-8 28-7 33 22 21 5 16 26 13 22-9 35-13 20-38 5-28 17-43-4-22 4-26-16Z" fill="url(#leaf-canopy)"/>
+       <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+       <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/></g>
+    <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
+  </g><g class="decor-cluster park-detail garden-tree" data-left="2046.5" data-right="2233.5" transform="translate(2140 715) scale(1.1)" aria-hidden="true">
+    <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
+    <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
+    <g class="tree-sway" style="animation-delay:-5s"><path d="M-7-47q-41 14-50-14-25-8-12-32-15-27 14-40 0-30 33-29 21-25 43-4 32-7 39 24 30 6 22 34 18 27-8 42-9 28-43 14Z" fill="var(--tree-dark)"/>
+       <path d="M-50-84q-12-18 8-32-3-26 23-28 17-24 36-8 28-7 33 22 21 5 16 26 13 22-9 35-13 20-38 5-28 17-43-4-22 4-26-16Z" fill="url(#leaf-canopy)"/>
+       <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+       <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/></g>
+    <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
+  </g><g class="decor-cluster park-detail garden-tree" data-left="2505" data-right="2675" transform="translate(2590 685) scale(1)" aria-hidden="true">
+    <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
+    <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
+    <g class="tree-sway" style="animation-delay:-0s"><path d="M-7-47q-41 14-50-14-25-8-12-32-15-27 14-40 0-30 33-29 21-25 43-4 32-7 39 24 30 6 22 34 18 27-8 42-9 28-43 14Z" fill="var(--tree-dark)"/>
+       <path d="M-50-84q-12-18 8-32-3-26 23-28 17-24 36-8 28-7 33 22 21 5 16 26 13 22-9 35-13 20-38 5-28 17-43-4-22 4-26-16Z" fill="url(#leaf-canopy)"/>
+       <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+       <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/></g>
+    <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
+  </g><g class="decor-cluster park-detail garden-tree" data-left="2931" data-right="3169" transform="translate(3050 730) scale(1.4)" aria-hidden="true">
+    <ellipse cy="2" rx="68" ry="13" fill="url(#contact-shadow)"/>
+    <path d="m-7 0 4-99h9L8 0Z" fill="var(--bark)"/><path d="M0-15v-93m0 39-22-25m23 9 24-28" fill="none" stroke="var(--wood-dark)" stroke-width="3" stroke-linecap="round"/>
+    <g class="tree-sway" style="animation-delay:-5s"><path d="M-7-47q-41 14-50-14-25-8-12-32-15-27 14-40 0-30 33-29 21-25 43-4 32-7 39 24 30 6 22 34 18 27-8 42-9 28-43 14Z" fill="var(--tree-dark)"/>
+       <path d="M-50-84q-12-18 8-32-3-26 23-28 17-24 36-8 28-7 33 22 21 5 16 26 13 22-9 35-13 20-38 5-28 17-43-4-22 4-26-16Z" fill="url(#leaf-canopy)"/>
+       <path d="M-33-118q7-16 24-12m22-13q18-7 26 12m-14 28q18-6 25 9" fill="none" stroke="var(--leaf-light)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+       <path d="m-24-94 7-9m-26 3 8-7m53-20 5-7m10 39 8-4m-29 29 6-8" fill="none" stroke="var(--leaf-light)" stroke-width="1.4" opacity=".6"/></g>
+    <path d="M-11 0h26m-18-14 1 11" stroke="var(--wood-dark)" stroke-width="1.4" opacity=".7"/>
   </g>
 <g class="decor-cluster park-detail garden-bench" data-left="265" data-right="395" transform="translate(330 735)" aria-hidden="true"><ellipse cy="6" rx="54" ry="10" fill="url(#contact-shadow)"/>
     <g stroke="var(--metal-dark)" stroke-width="2" stroke-linejoin="round"><path d="M-28-20v32m56-32v32m-64-20v-11m72 11v-11" fill="none" stroke-width="3"/>
     <path d="M-34-36h68v8h-68Zm0 10h68v8h-68Zm-3 17h74l5 7h-84Z" fill="url(#garden-timber)"/>
     <path d="M-28 6h56m-59-37h12m24 9h17" fill="none" stroke-width="1"/>
     <path d="M-37-13h10m10 0h-9m63 0h-10" fill="none" stroke-width="3"/></g>
+    </g><g class="decor-cluster park-detail garden-bench" data-left="1615" data-right="1745" transform="translate(1680 735)" aria-hidden="true"><ellipse cy="6" rx="54" ry="10" fill="url(#contact-shadow)"/>
+    <g stroke="var(--metal-dark)" stroke-width="2" stroke-linejoin="round"><path d="M-28-20v32m56-32v32m-64-20v-11m72 11v-11" fill="none" stroke-width="3"/>
+    <path d="M-34-36h68v8h-68Zm0 10h68v8h-68Zm-3 17h74l5 7h-84Z" fill="url(#garden-timber)"/>
+    <path d="M-28 6h56m-59-37h12m24 9h17" fill="none" stroke-width="1"/>
+    <path d="M-37-13h10m10 0h-9m63 0h-10" fill="none" stroke-width="3"/></g>
+    </g><g class="decor-cluster park-detail garden-bench" data-left="2715" data-right="2845" transform="translate(2780 742)" aria-hidden="true"><ellipse cy="6" rx="54" ry="10" fill="url(#contact-shadow)"/>
+    <g stroke="var(--metal-dark)" stroke-width="2" stroke-linejoin="round"><path d="M-28-20v32m56-32v32m-64-20v-11m72 11v-11" fill="none" stroke-width="3"/>
+    <path d="M-34-36h68v8h-68Zm0 10h68v8h-68Zm-3 17h74l5 7h-84Z" fill="url(#garden-timber)"/>
+    <path d="M-28 6h56m-59-37h12m24 9h17" fill="none" stroke-width="1"/>
+    <path d="M-37-13h10m10 0h-9m63 0h-10" fill="none" stroke-width="3"/></g>
     </g>
-<g stroke="var(--wood-dark)" stroke-linecap="round" stroke-linejoin="round"><path d="M900 673v67m78-74v72m80-70v75m-174-55 188-4m-188 26 188-4" stroke-width="5" fill="none"/><path d="m912 681 24 18 25-19 25 18 26-18 26 18" stroke="var(--paint-lilac)" stroke-width="5" fill="none"/></g>
-<g transform="translate(824 580)"><ellipse cy="164" rx="64" ry="10" fill="url(#contact-shadow)"/><path d="M0 41v115" stroke="var(--wood-dark)" stroke-width="10" stroke-linecap="round"/><rect x="-82" y="-34" width="164" height="115" rx="8" fill="url(#garden-timber)" stroke="var(--wood-dark)" stroke-width="2"/><rect x="-75" y="-27" width="150" height="101" rx="5" fill="url(#sign-face)" stroke="#d3c6a8"/><text y="28" text-anchor="middle" font-size="54" font-weight="700" fill="var(--ink)">404</text><text y="55" text-anchor="middle" font-size="12" letter-spacing="2" fill="var(--wood-dark)">这条小路还没开放</text><circle cx="-68" cy="-18" r="2" fill="var(--wood-dark)"/><circle cx="68" cy="-18" r="2" fill="var(--wood-dark)"/></g>
-<svg x="552" y="554" width="180" height="210" viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg">
+<g stroke="var(--wood-dark)" stroke-linecap="round" stroke-linejoin="round"><path d="M900 673v67m78-74v72m80-70v75m-174-55 188-4m-188 26 188-4" stroke-width="5" fill="none"/><path d="m912 681 24 18 25-19 25 18 26-18 26 18" stroke="var(--paint-lilac)" stroke-width="5" fill="none"/></g></g>
+<g id="boundary-sign" transform="translate(824 580)" role="img" aria-label="404，这条小路还未开放"><ellipse cy="164" rx="64" ry="10" fill="url(#contact-shadow)"/><path d="M0 41v115" stroke="var(--wood-dark)" stroke-width="10" stroke-linecap="round"/><rect x="-82" y="-34" width="164" height="115" rx="8" fill="url(#garden-timber)" stroke="var(--wood-dark)" stroke-width="2"/><rect x="-75" y="-27" width="150" height="101" rx="5" fill="url(#sign-face)" stroke="#d3c6a8"/><text y="28" text-anchor="middle" font-size="54" font-weight="700" fill="var(--ink)">404</text><text y="55" text-anchor="middle" font-size="12" letter-spacing="1" fill="var(--wood-dark)">这条小路还未开放</text><circle cx="-68" cy="-18" r="2" fill="var(--wood-dark)"/><circle cx="68" cy="-18" r="2" fill="var(--wood-dark)"/></g>
+<g id="boundary-player" transform="translate(642 744)" role="img" aria-label="滑板树懒"><svg x="-90" y="-190" width="180" height="210" viewBox="0 0 180 210" xmlns="http://www.w3.org/2000/svg">
         <defs><radialGradient id="board-glow"><stop stop-color="#ffd486" stop-opacity=".7"/><stop offset="1" stop-color="#ffd486" stop-opacity="0"/></radialGradient><linearGradient id="sloth-fur" x2=".8" y2="1"><stop stop-color="#b7a48e"/><stop offset="1" stop-color="#8e7969"/></linearGradient></defs>
         <ellipse class="sloth-shadow" cx="91" cy="193" rx="67" ry="8" fill="#4a5648" opacity=".14"/>
         <ellipse class="board-glow" cx="92" cy="190" rx="83" ry="17" fill="url(#board-glow)"/>
@@ -214,27 +259,146 @@
           <path d="M85 123q7 8 13 0m-13 6q7 7 13 0" fill="none" stroke="#ece5fb" stroke-width="2"/>
         </g>
         <g stroke="#62544c" stroke-width="2.5"><path d="M29 176q5 7 15 7h93q12-1 17-9" fill="#b5a0d8" stroke-linecap="round"/><path d="M43 180h95" stroke="#eee0b8" stroke-width="4"/><path d="M57 183v6m66-6v6"/><circle cx="58" cy="190" r="5.5" fill="#706477"/><circle cx="124" cy="190" r="5.5" fill="#706477"/><circle cx="58" cy="190" r="1.5" fill="#ded2e3" stroke="none"/><circle cx="124" cy="190" r="1.5" fill="#ded2e3" stroke="none"/><path class="board-lamp" d="M76 185h29" stroke="#ffd081" stroke-width="3" stroke-linecap="round"/></g>
-      </svg>
-<g class="park-detail foreground-detail" aria-hidden="true">
-
-
-
-    <text x="392" y="714" fill="var(--wood-dark)" opacity=".45" font-size="8" letter-spacing="3">B R E E Z E  P A R K</text>
-    <g transform="translate(80 756) scale(1.1)" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g><g transform="translate(1060 762) scale(0.8)" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g><g transform="translate(2260 764) scale(1)" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g><g transform="translate(3130 761) scale(0.9)" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g><g transform="translate(4590 759) scale(1.2)" fill="var(--tree-dark)" opacity=".85"><path d="M-104 19q-5-23 18-27-4-26 24-27 17-25 36-3 33-7 32 22 31 0 35 27Z"/><path d="M-20 16q-2-25 20-22 1-29 27-23 25-16 36 9 33-1 34 30Z" fill="var(--tree)"/><path d="m-57-15 6 12m67-4 5 8m28-18-6 14" stroke="var(--leaf-light)" stroke-width="1.5"/></g>
-  </g></svg>
-    <div class="copy">
-      <p class="eyebrow">微风游乐园 · 园区边境</p>
-      <h1>滑板滑到园区尽头啦</h1>
-      <p class="description">这条路暂时不通。你要找的页面可能已经搬走，回到正门继续逛逛吧。</p>
-      <a class="home" href="https://brez.top/" data-home><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7M5 12h14"/></svg>返回游乐园正门</a>
-    </div>
-  </main>
+      </svg></g>
+</svg></main>
+  <a class="home" href="https://brez.top/" data-home><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7M5 12h14"/></svg>返回乐园</a>
   <script>
     if (location.hostname.endsWith('.github.io')) {
       document.querySelectorAll('[data-home]').forEach(link => { link.href = '/breztop_web/'; });
     } else if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
       document.querySelectorAll('[data-home]').forEach(link => { link.href = '/'; });
     }
+    (() => {
+      const scene = document.getElementById('boundary-scene');
+      const player = document.getElementById('boundary-player');
+      const sky = document.getElementById('boundary-sky');
+      const mountains = document.getElementById('boundary-mountains');
+      const woods = document.getElementById('boundary-woods');
+      const motion = matchMedia('(prefers-reduced-motion: reduce)');
+      const keys = new Set();
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+      let x = 642;
+      let target = x;
+      let camera = 0;
+      let cameraTarget = 0;
+      let viewWidth = 1440;
+      let viewHeight = 900;
+      let initialized = false;
+      let cameraOrigin = 0;
+      let frame = 0;
+      let lastTick = 0;
+      let drag = null;
+
+      function follow() {
+        if (x < camera + viewWidth * .28) cameraTarget = x - viewWidth * .28;
+        else if (x > camera + viewWidth * .67) cameraTarget = x - viewWidth * .67;
+        cameraTarget = clamp(cameraTarget, 0, Math.max(0, 3200 - viewWidth));
+      }
+      function render() {
+        scene.setAttribute('viewBox', `${camera.toFixed(2)} ${900 - viewHeight} ${viewWidth} ${viewHeight}`);
+        player.setAttribute('transform', `translate(${x.toFixed(2)} 744)`);
+        const offset = camera - cameraOrigin;
+        sky.setAttribute('transform', `translate(${(offset * .88).toFixed(2)} 0)`);
+        mountains.setAttribute('transform', `translate(${(offset * .28).toFixed(2)} 0)`);
+        woods.setAttribute('transform', `translate(${(offset * .12).toFixed(2)} 0)`);
+      }
+      function tick(now) {
+        frame = 0;
+        const dt = Math.min((now - (lastTick || now)) / 1000, .04);
+        lastTick = now;
+        const direction = Number(keys.has('ArrowRight')) - Number(keys.has('ArrowLeft'));
+        if (direction) target = clamp(target + direction * 330 * dt, 100, 3100);
+        const before = x;
+        const blend = motion.matches || drag?.onPlayer ? 1 : 1 - Math.exp(-dt * 16);
+        x += (target - x) * blend;
+        if (Math.abs(target - x) < .1) x = target;
+        if (Math.abs(x - before) > .02) player.dataset.direction = x < before ? 'left' : 'right';
+        follow();
+        camera += (cameraTarget - camera) * (motion.matches ? 1 : 1 - Math.exp(-dt * 12));
+        if (Math.abs(cameraTarget - camera) < .1) camera = cameraTarget;
+        render();
+        const moving = Math.abs(x - before) > .02 || direction !== 0;
+        player.classList.toggle('is-moving', moving);
+        if (direction || Math.abs(target - x) > .1 || Math.abs(cameraTarget - camera) > .1) schedule();
+        else { lastTick = 0; player.classList.remove('is-moving'); }
+      }
+      function schedule() { if (!frame && !document.hidden) frame = requestAnimationFrame(tick); }
+      function layout() {
+        const rect = scene.getBoundingClientRect();
+        viewHeight = Math.min(900, 3200 * rect.height / rect.width);
+        viewWidth = viewHeight * rect.width / rect.height;
+        const maximum = Math.max(0, 3200 - viewWidth);
+        camera = clamp(initialized ? camera : 730 - viewWidth / 2, 0, maximum);
+        cameraTarget = camera;
+        if (!initialized) cameraOrigin = camera;
+        initialized = true;
+        follow();
+        render();
+        schedule();
+      }
+      function worldX(clientX) {
+        const rect = scene.getBoundingClientRect();
+        return camera + (clientX - rect.left) / rect.width * viewWidth;
+      }
+      function stop() {
+        cancelAnimationFrame(frame); frame = 0; lastTick = 0;
+        keys.clear(); drag = null; target = x; cameraTarget = camera;
+        scene.classList.remove('is-dragging');
+        player.classList.remove('is-moving');
+      }
+      scene.addEventListener('pointerdown', event => {
+        if (event.button !== 0) return;
+        stop();
+        scene.focus({ preventScroll: true });
+        drag = { id: event.pointerId, start: event.clientX, from: x,
+          offset: worldX(event.clientX) - x, onPlayer: !!event.target.closest('#boundary-player'), moved: false };
+        scene.setPointerCapture(event.pointerId);
+        scene.classList.add('is-dragging');
+      });
+      scene.addEventListener('pointermove', event => {
+        if (!drag || drag.id !== event.pointerId) return;
+        if (Math.abs(event.clientX - drag.start) > 5) drag.moved = true;
+        if (!drag.moved) return;
+        event.preventDefault();
+        const next = drag.onPlayer ? worldX(event.clientX) - drag.offset
+          : drag.from - (event.clientX - drag.start) * viewWidth / scene.clientWidth;
+        target = clamp(next, 100, 3100);
+        schedule();
+      });
+      function release(event) {
+        if (!drag || drag.id !== event.pointerId) return;
+        const previous = drag;
+        drag = null;
+        if (scene.hasPointerCapture(event.pointerId)) scene.releasePointerCapture(event.pointerId);
+        scene.classList.remove('is-dragging');
+        if (event.type === 'pointerup' && !previous.moved && !previous.onPlayer) target = clamp(worldX(event.clientX), 100, 3100);
+        schedule();
+      }
+      ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => scene.addEventListener(type, release));
+      scene.addEventListener('wheel', event => {
+        if (event.ctrlKey || event.metaKey) return;
+        event.preventDefault();
+        const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+        const multiplier = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? scene.clientWidth : 1;
+        target = clamp(target + delta * multiplier * viewWidth / scene.clientWidth, 100, 3100);
+        schedule();
+      }, { passive: false });
+      window.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault(); keys.add(event.key); schedule();
+        }
+      });
+      window.addEventListener('keyup', event => { keys.delete(event.key); });
+      window.addEventListener('blur', stop);
+      window.addEventListener('resize', layout);
+      document.addEventListener('visibilitychange', () => {
+        document.documentElement.classList.toggle('page-hidden', document.hidden);
+        if (document.hidden) stop();
+      });
+      motion.addEventListener('change', () => { stop(); layout(); });
+      layout();
+    })();
     window.goatcounter = { path: function () { return '/' + location.host + location.pathname; }, title: document.title };
   </script>
   <script data-goatcounter="https://stats.brez.top/count" async src="https://stats.brez.top/count.js"></script>

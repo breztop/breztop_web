@@ -204,6 +204,35 @@ try:
         assert js('return !!document.querySelector(".boundary-scene .sloth-bob") && !!document.querySelector(".home")')
         assert js('return document.documentElement.scrollWidth<=innerWidth')
         assert js('return document.querySelector(".home").getBoundingClientRect().right<=innerWidth')
+        assert js('return [...document.querySelectorAll("body a, .boundary-scene text")].map(node=>node.textContent.trim())') == ['微风中的快乐','404','这条小路还未开放','返回乐园']
         print(f'PASS {width}x{height}: matching town/404 scenes, stall hit testing and clipboard')
+
+    size(390,844)
+    req('/url',{'url':args.url.rstrip('/')+'/404.html'})
+    time.sleep(.1)
+    position=lambda:js('return {player:document.querySelector("#boundary-player").transform.baseVal.getItem(0).matrix.e,camera:document.querySelector("#boundary-scene").viewBox.baseVal.x}')
+    before=position()
+    req('/actions',{'actions':[{'type':'key','id':'keyboard','actions':[{'type':'keyDown','value':'\ue012'},{'type':'pause','duration':700},{'type':'keyUp','value':'\ue012'}]}]})
+    time.sleep(.1)
+    after=position()
+    assert after['player']<before['player']-100 and after['camera']<before['camera']-50,(before,after)
+    req('/refresh',{})
+    time.sleep(.1)
+    before=position()
+    req('/actions',{'actions':[{'type':'pointer','id':'mouse','parameters':{'pointerType':'mouse'},'actions':[{'type':'pointerMove','duration':0,'x':350,'y':440},{'type':'pointerDown','button':0},{'type':'pointerMove','duration':500,'x':60,'y':440},{'type':'pointerUp','button':0}]}]})
+    time.sleep(.1)
+    after=position()
+    assert after['player']>before['player']+200 and after['camera']>before['camera']+50,(before,after)
+    assert js('const r=document.querySelector("#boundary-player").getBoundingClientRect();return r.left>=0 && r.right<=innerWidth')
+    assert js('return getComputedStyle(document.querySelector(".boundary-cloud")).animationName')=='none'
+    chrome("Services.prefs.setIntPref('ui.prefersReducedMotion',0)")
+    assert js('return getComputedStyle(document.querySelector(".boundary-cloud")).animationName')=='cloud-drift'
+    cloud=js('return getComputedStyle(document.querySelector(".boundary-cloud")).transform')
+    time.sleep(.15)
+    assert js('return getComputedStyle(document.querySelector(".boundary-cloud")).transform')!=cloud
+    js('Object.defineProperty(document,"hidden",{configurable:true,value:true});document.dispatchEvent(new Event("visibilitychange"))')
+    assert js('return getComputedStyle(document.querySelector(".boundary-cloud")).animationPlayState')=='paused'
+    print('PASS minimal 404 copy, keyboard/drag camera following, background motion and reduced-motion pause')
+
 finally:
     req('', method='DELETE')
