@@ -73,6 +73,14 @@ try:
     assert js('return !document.querySelector("a[href*=download]") && !!document.querySelector("#ride-carousel a[href*=resume]")')
     for width, height in [(320, 740), (390, 844), (768, 900), (1024, 768), (1440, 900), (844, 390)]:
         size(width, height)
+        js('document.querySelector("#home-button").click()')
+        assert js('return Math.abs(document.querySelector("#park-viewport").getBoundingClientRect().bottom-innerHeight)<1')
+        assert js('''
+            const label=document.querySelector('#park-direction text').getBoundingClientRect();
+            const clear=selector=>{const r=document.querySelector(selector).getBoundingClientRect();
+                return label.right<=r.left || label.left>=r.right || label.bottom<=r.top || label.top>=r.bottom;};
+            return label.left>=0 && label.right<=innerWidth && ['#sloth-drag','#park-robot','#move-right','.park-tools'].every(clear);
+        ''')
         for stop in ['bilibili', 'ferris', 'carousel', 'coaster', 'pirate', 'windmill', 'bumper', 'snackstreet']:
             go(stop)
             result = js('''
@@ -143,5 +151,59 @@ try:
     time.sleep(1.1)
     assert js('return window.progress!==document.querySelector("#cycle-mode").style.cssText')
     print('PASS hidden clock suspension and resume')
+
+    # Every entrance starts with the entire SVG in view, then approaches the character.
+    req('/refresh', {})
+    time.sleep(.2)
+    assert js('return document.documentElement.dataset.intro') == 'playing'
+    overview = js('const r=document.querySelector(".park-scene").getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}')
+    assert overview['left'] >= -1 and overview['right'] <= 391, overview
+    time.sleep(1.1)
+    assert js('return document.querySelector(".park-scene").getBoundingClientRect().width') > overview['width'] * 1.1
+    time.sleep(2.5)
+    assert js('return document.documentElement.dataset.intro==="ready" && !document.querySelector("#park-camera").style.transform')
+    assert js('return document.querySelector("#sloth-drag").getBoundingClientRect().bottom<=innerHeight')
+    req('/refresh', {})
+    time.sleep(.2)
+    assert js('return document.documentElement.dataset.intro') == 'playing'
+    js('window.dispatchEvent(new WheelEvent("wheel"))')
+    assert js('return document.documentElement.dataset.intro') == 'ready'
+    print('PASS overview-to-character camera, repeat on entry, and user interruption')
+
+    req('/url', {'url': args.url.rstrip('/') + '/project-show/'})
+    req('/back', {})
+    time.sleep(.2)
+    assert js('return document.documentElement.dataset.intro') == 'playing'
+    js('window.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape"}))')
+    assert js('return document.documentElement.dataset.intro') == 'ready'
+    print('PASS browser Back replays the entrance camera')
+
+    chrome("Services.prefs.setIntPref('ui.prefersReducedMotion',1)")
+    for width, height in [(320,740),(390,844),(768,900),(1440,900),(844,390)]:
+        size(width,height)
+        req('/url', {'url':args.url.rstrip('/')+'/snack-town/'})
+        time.sleep(.2)
+        assert js('return document.documentElement.dataset.intro') == 'ready'
+        assert js('return document.querySelector(".town-art").complete && document.querySelector(".town-art").naturalWidth>0')
+        for stop in ['follow','message']:
+            js('document.querySelector(`[data-walk="${arguments[0]}"]`).click()',stop)
+            result=js('''
+                const station=document.querySelector(`.station-${arguments[0]}`);
+                return [...station.querySelectorAll('a,button')].every(node=>{
+                    const r=node.getBoundingClientRect();
+                    const hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+                    return r.left>=0 && r.right<=innerWidth && r.top>=0 && r.bottom<=innerHeight && node.contains(hit);
+                });
+            ''',stop)
+            assert result,(width,height,stop)
+        js('window.invite=null;Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:value=>{window.invite=value;return Promise.resolve()}}});document.querySelector("#copy-invite").click()')
+        time.sleep(.05)
+        assert js('return window.invite')=='请吃饭'
+        req('/url', {'url':args.url.rstrip('/')+'/404.html'})
+        time.sleep(.1)
+        assert js('return !!document.querySelector(".boundary-scene .sloth-bob") && !!document.querySelector(".home")')
+        assert js('return document.documentElement.scrollWidth<=innerWidth')
+        assert js('return document.querySelector(".home").getBoundingClientRect().right<=innerWidth')
+        print(f'PASS {width}x{height}: matching town/404 scenes, stall hit testing and clipboard')
 finally:
     req('', method='DELETE')

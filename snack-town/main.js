@@ -1,7 +1,7 @@
+import { initParkCamera } from '../js/park-camera.js';
+
 (() => {
   'use strict';
-  const boot = document.getElementById('town-boot');
-  const shell = document.getElementById('town-shell');
   const viewport = document.getElementById('town-viewport');
   const world = document.getElementById('town-world');
   const canvas = document.getElementById('town-canvas');
@@ -12,13 +12,6 @@
     follow: { x: 650, label: '到了关注小摊。在 B 站关注「微风中的快乐」。' },
     message: { x: 1220, label: '到了请吃饭邮局。复制「请吃饭」，去 B 站主页点「发消息」。' },
   };
-  const bootScenes = [
-    { title: '欢迎来到<br>好吃小镇', duration: 1600 },
-    { title: '我有一个<br>吃遍世界的梦。', duration: 2000 },
-    { title: '今天，<br>请我吃饭。', duration: 1800 },
-  ];
-  let booting = true;
-  let bootTimer = 0;
   const worldWidth = 1880;
   const worldHeight = 900;
   let sceneScale = 1;
@@ -41,7 +34,7 @@
   }
   function paintPlayer(follow = true) {
     x = clamp(x, 55, worldWidth - 55);
-    player.style.transform = `translateX(${(x - 40).toFixed(2)}px)`;
+    player.style.transform = `translateX(${(x - 54).toFixed(2)}px)`;
     if (follow) viewport.scrollLeft = clamp(x * sceneScale - viewport.clientWidth * .48, 0, world.clientWidth - viewport.clientWidth);
     let nearby = null;
     for (const [id, destination] of Object.entries(destinations)) {
@@ -60,7 +53,7 @@
   }
   function tick(now) {
     frame = 0;
-    if (booting || document.hidden) { stopWalking(); return; }
+    if (document.hidden) { stopWalking(); return; }
     const dt = Math.min((now - (lastTick || now)) / 1000, .05);
     lastTick = now;
     const direction = (keys.has('right') ? 1 : 0) - (keys.has('left') ? 1 : 0);
@@ -76,9 +69,10 @@
     player.classList.toggle('is-walking', walking);
     if (walking) frame = requestAnimationFrame(tick); else lastTick = 0;
   }
-  function requestWalk() { if (!frame && !booting) frame = requestAnimationFrame(tick); }
+  function requestWalk() { if (!frame) frame = requestAnimationFrame(tick); }
   function walkTo(id) {
-    if (booting || !destinations[id]) return;
+    if (!destinations[id]) return;
+    entrance.finish();
     const target = destinations[id].x;
     stopWalking();
     player.dataset.direction = target < x ? 'left' : 'right';
@@ -86,36 +80,11 @@
     travel = { from: x, to: target, start: performance.now(), duration: clamp(Math.abs(target - x) * 1.7, 550, 1700) };
     player.classList.add('is-walking'); requestWalk();
   }
-  function finishBoot() {
-    clearTimeout(bootTimer); booting = false;
-    boot.hidden = true; shell.hidden = false;
-    document.body.classList.remove('is-booting');
-    x = viewport.clientWidth <= 600 ? destinations.follow.x : 940;
-    layout(); viewport.focus({ preventScroll: true });
-  }
-  function showBootPhase(index) {
-    clearTimeout(bootTimer);
-    if (index >= bootScenes.length) { finishBoot(); return; }
-    const scene = bootScenes[index];
-    boot.dataset.phase = String(index + 1);
-    document.getElementById('boot-title').innerHTML = scene.title;
-    const center = document.querySelector('.boot-center');
-    center.classList.remove('is-changing'); void center.offsetWidth; center.classList.add('is-changing');
-    bootTimer = setTimeout(() => showBootPhase(index + 1), scene.duration);
-  }
-  function startBoot() {
-    stopWalking(); booting = true; shell.hidden = true; boot.hidden = false;
-    document.body.classList.add('is-booting');
-    if (reducedMotion.matches) { finishBoot(); return; }
-    showBootPhase(0); document.getElementById('skip-boot').focus({ preventScroll: true });
-  }
-  document.getElementById('skip-boot').addEventListener('click', finishBoot);
-  document.getElementById('replay-boot').addEventListener('click', startBoot);
   document.querySelectorAll('[data-walk]').forEach(button => button.addEventListener('click', () => walkTo(button.dataset.walk)));
   for (const direction of ['left', 'right']) {
     const button = document.getElementById(`walk-${direction}`);
     button.addEventListener('pointerdown', event => {
-      if (booting || (event.pointerType === 'mouse' && event.button !== 0)) return;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
       event.preventDefault(); button.setPointerCapture(event.pointerId);
       player.dataset.direction = direction;
       x += direction === 'left' ? -12 : 12; paintPlayer();
@@ -128,7 +97,7 @@
     });
   }
   window.addEventListener('keydown', event => {
-    if (booting || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
     event.preventDefault(); keys.add(event.key === 'ArrowLeft' ? 'left' : 'right'); requestWalk();
   });
   window.addEventListener('keyup', event => {
@@ -139,7 +108,7 @@
   window.addEventListener('blur', stopWalking);
   document.addEventListener('visibilitychange', () => { if (document.hidden) stopWalking(); });
   player.addEventListener('pointerdown', event => {
-    if (booting || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
     stopWalking(); dragging = { id: event.pointerId, pointerX: event.clientX, from: x };
     player.setPointerCapture(event.pointerId); event.preventDefault();
   });
@@ -151,8 +120,8 @@
   });
   const releasePlayer = () => { dragging = null; player.classList.remove('is-walking'); };
   for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) player.addEventListener(event, releasePlayer);
-  window.addEventListener('resize', () => { if (!booting) layout(); });
-  reducedMotion.addEventListener('change', () => { stopWalking(); if (reducedMotion.matches && booting) finishBoot(); });
+  window.addEventListener('resize', layout);
+  reducedMotion.addEventListener('change', stopWalking);
   function toast(message, copied) {
     const element = document.getElementById('town-toast');
     element.textContent = message;
@@ -172,5 +141,15 @@
     }
     toast(copied ? '已复制「请吃饭」。去 B 站主页点「发消息」，粘贴发送就好。' : '可以直接选中「请吃饭」复制，再去 B 站发送私信。', copied);
   });
-  startBoot();
+  const entrance = initParkCamera({
+    root: document.documentElement, camera: document.getElementById('town-camera'),
+    viewport, world, motionQuery: reducedMotion,
+    prepare() {
+      stopWalking();
+      x = viewport.clientWidth <= 600 ? destinations.follow.x : 940;
+      layout();
+    },
+    onFinish() { paintPlayer(); },
+  });
+  document.getElementById('replay-boot').addEventListener('click', entrance.play);
 })();

@@ -1,6 +1,7 @@
-import { sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLights, gardenGroups, entranceDetails, foregroundDetail, snackStreet } from './park-art.js';
+import { materialDefs, sceneryDefs, gardenTree, woodland, gardenWater, rideFooting, gardenLights, gardenGroups, entranceDetails, foregroundDetail, snackStreet } from './park-art.js';
 import { initParkClock } from './park-clock.js';
 import { initParkTools } from './park-tools.js';
+import { initParkCamera } from './park-camera.js';
 
 (() => {
   'use strict';
@@ -376,7 +377,7 @@ import { initParkTools } from './park-tools.js';
   // Set href later to activate a destination. A null href keeps the robot in this park.
   const ROBOT_CONFIG = { href: null, onActivate: null, cuteMs: 10000, evilMs: 1000 };
   function parkRobot() {
-    return `<g id="park-robot" class="park-robot decor-cluster" data-left="270" data-right="430" role="button" tabindex="0" aria-label="入口巡逻机器人" transform="translate(350 640) scale(.76)">
+    return `<g id="park-robot" class="park-robot decor-cluster" data-left="480" data-right="650" role="button" tabindex="0" aria-label="入口巡逻机器人" transform="translate(565 625) scale(.76)">
       <title>入口巡逻机器人</title>
       <g class="robot-patrol"><ellipse cx="0" cy="1" rx="34" ry="7" fill="#698c7b" opacity=".14"/>
         <g class="robot-walk" stroke="#829795" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -448,7 +449,7 @@ import { initParkTools } from './park-tools.js';
         <text class="sign-title" y="25" text-anchor="middle" style="fill:#af809b">bilibili</text><text class="sign-subtitle" y="42" text-anchor="middle">B 站 · 微风放映室</text>${entryButton({title: 'bilibili', href: 'https://space.bilibili.com/630698674'}, 0, 51, 136)}
         <g class="night-light">${bulbRow(-66, 79, 9)}</g>
       </g>
-      <g id="park-direction" transform="translate(372 680)" aria-label="乐园方向，向右探索">
+      <g id="park-direction" transform="translate(372 600)" aria-label="乐园方向，向右探索">
         <ellipse cx="-12" cy="69" rx="39" ry="6" fill="var(--shadow)" opacity=".15"/>
         <path d="M-12 5v61" fill="none" stroke="var(--wood-dark)" stroke-width="10" stroke-linecap="round"/>
         <path d="M-102-31H78l26 25L78 19H-102Z" fill="url(#garden-timber)" stroke="var(--wood-dark)" stroke-width="2" stroke-linejoin="round"/>
@@ -463,28 +464,6 @@ import { initParkTools } from './park-tools.js';
     </g>`;
   }
 
-  function materialDefs() {
-    const gradient = (id, colors, horizontal = false) => `<linearGradient id="${id}" x1="0%" y1="0%" x2="${horizontal ? '100%' : '20%'}" y2="${horizontal ? '20%' : '100%'}">${colors.map((color, i) => `<stop offset="${i / (colors.length - 1)}" stop-color="${color}"/>`).join('')}</linearGradient>`;
-    return `${gradient('robot-shell', ['var(--canvas)', 'var(--metal-light)', 'var(--metal-mid)'])}${gradient('plaza-paving', ['var(--canvas)', 'var(--stone-light)', 'var(--stone-dark)'])}${gradient('entry-hedge', ['var(--leaf-light)', 'var(--tree)', 'var(--tree-dark)'])}${gradient('steel', ['var(--metal-light)', 'var(--metal-mid)', 'var(--metal-light)', 'var(--metal-dark)'], true)}
-      ${gradient('brass', ['var(--canvas)', 'var(--wood-light)', 'var(--canvas)', 'var(--wood-dark)'], true)}
-      ${gradient('glass', ['var(--metal-light)', 'var(--water)', 'var(--water-dark)'])}
-      ${gradient('lavender-paint', ['var(--canvas)', 'var(--paint-lilac)', 'var(--metal-dark)'])}
-      ${gradient('sage-paint', ['var(--metal-light)', 'var(--paint-sage)', 'var(--metal-dark)'])}
-      ${gradient('rose-paint', ['var(--canvas)', 'var(--paint-rose)', 'var(--wood-dark)'])}
-      ${gradient('ivory-paint', ['var(--canvas)', 'var(--stone-light)', 'var(--canvas-shadow)'])}
-      ${gradient('wood-hull', ['var(--wood-light)', 'var(--wood-dark)', 'var(--metal-dark)'])}
-      ${gradient('stone', ['var(--stone-light)', 'var(--stone-dark)', 'var(--joint)'])}
-      ${gradient('slate-roof', ['var(--metal-mid)', 'var(--metal-dark)', 'var(--shadow)'])}
-      ${gradient('arena-floor', ['var(--metal-light)', 'var(--metal-mid)', 'var(--paint-sage)'])}
-      ${gradient('flume-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
-      <clipPath id="ride-envelope" clipPathUnits="userSpaceOnUse"><rect x="-310" y="0" width="620" height="555" rx="8"/></clipPath>
-      ${gradient('pool-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
-      ${gradient('mountain-wash', ['var(--mountain-far)', 'var(--mountain-near)'])}
-      <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".42"/></linearGradient>
-      <linearGradient id="sign-face" x2="0" y2="1"><stop stop-color="#fffbed"/><stop offset="1" stop-color="#eee4cc"/></linearGradient>
-      <radialGradient id="lamp-glow"><stop stop-color="#ffe4a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe4a0" stop-opacity="0"/></radialGradient>
-      <pattern id="sign-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="m0 0 8 8m0-8-8 8m16-8-8 8" stroke="#a4aca0" stroke-width=".5" opacity=".3"/></pattern>`;
-  }
   function landscape() {
     const peaks = [225, 168, 268, 201, 252, 156, 232, 185, 267, 149, 218, 176, 244, 195];
     const ridge = range(peaks.length, i => { const x = -650 + i * 600; const h = peaks[i]; return `Q${x - 175} ${h + 74} ${x} ${h}Q${x + 93} ${h + 97} ${x + 255} 357`; });
@@ -630,7 +609,6 @@ import { initParkTools } from './park-tools.js';
   }
 
   const proximityNodes = rides.map(ride => ({ ride, node: document.getElementById(`ride-${ride.id}`), visible: true, proximity: '' }));
-  const tools = document.querySelector('.park-tools');
   const mountainLayer = document.getElementById('mountain-layer');
   const woodlandLayer = document.getElementById('woodland-layer');
   const status = document.getElementById('travel-status');
@@ -676,6 +654,7 @@ import { initParkTools } from './park-tools.js';
   let animationFrame = 0;
   const character = document.getElementById('sloth-drag');
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  let entranceCamera = null;
 
   function actorBounds() {
     const padding = (layoutMetrics.half + (layoutMetrics.compact ? 39 : 52) + 10) / scale;
@@ -704,10 +683,9 @@ import { initParkTools } from './park-tools.js';
     }
     actorScreenX = actor.x * scale - viewport.scrollLeft;
     sloth.classList.toggle('near-destination', stops.some(stop => (stop.href || stop.closed) && Math.abs(actor.x - stop.x) < 180));
-    const top = viewport.getBoundingClientRect().top + layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
+    const top = layoutMetrics.height - (WORLD_HEIGHT - actor.y) * scale;
     const transform = `translate3d(${actorScreenX.toFixed(2)}px,${top.toFixed(2)}px,0) translate(-50%,-90.5%)`;
     if (transform !== lastActorTransform) { sloth.style.transform = transform; lastActorTransform = transform; }
-    tools.classList.toggle('dock-left', layoutMetrics.compact && actorScreenX >= layoutMetrics.width / 2 - .5);
     const mountainOffset = motionQuery.matches ? 0 : viewport.scrollLeft / scale * .84;
     mountainLayer.setAttribute('transform', `translate(${mountainOffset.toFixed(2)} 0)`);
     woodlandLayer.setAttribute('transform', `translate(${(motionQuery.matches ? 0 : viewport.scrollLeft / scale * .35).toFixed(2)} 0)`);
@@ -737,8 +715,6 @@ import { initParkTools } from './park-tools.js';
       document.getElementById('access-fill-ferris').setAttribute('d', path);
       root.dataset.scene = compactScene ? 'compact' : 'wide';
     }
-    viewport.style.bottom = innerWidth <= 600 && innerHeight > 600 ? `${Math.min(140, innerHeight * .16)}px` : '96px';
-    layoutMetrics.height = viewport.clientHeight;
     scale = Math.min((viewport.clientHeight - 76) / WORLD_HEIGHT, innerWidth <= 600 ? Math.min(.9, viewport.clientWidth / 480) : 1.3);
     scale = Math.max(.36, scale);
     world.style.width = `${WORLD_WIDTH * scale}px`;
@@ -767,6 +743,7 @@ import { initParkTools } from './park-tools.js';
     fitDestination(currentStop);
   }
   function travelTo(x, y = actor.y, label = '', frameX = null) {
+    entranceCamera?.finish();
     stopTravel();
     const bounds = actorBounds();
     x = clamp(x, bounds.min, bounds.max);
@@ -1080,7 +1057,7 @@ import { initParkTools } from './park-tools.js';
   guideScroll.addEventListener('scroll', updateGuideOverflow, { passive: true });
   new ResizeObserver(updateGuideOverflow).observe(guideScroll);
   document.getElementById('guide-fixed').addEventListener('click', openGuide);
-  function openGuide() { guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
+  function openGuide() { entranceCamera?.finish(); guide.showModal(); renderGuideMap(); requestAnimationFrame(updateGuideOverflow); }
   guideOpen.addEventListener('click', openGuide);
   guideOpen.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openGuide(); }
@@ -1093,5 +1070,16 @@ import { initParkTools } from './park-tools.js';
   });
 
   initParkTools(root);
+
+  entranceCamera = initParkCamera({
+    root, camera: document.getElementById('park-camera'), viewport, world, motionQuery,
+    prepare() {
+      stopTravel();
+      actor.x = 190; actor.y = 710;
+      viewport.scrollLeft = 0;
+      layout();
+    },
+    onFinish() { updateVisibility(true); renderActor(); },
+  });
 
 })();

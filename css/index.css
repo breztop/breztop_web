@@ -99,6 +99,15 @@ html[data-light="morning"] {
 .brand-name > span { font-weight: 400; }
 .brand-name small { display: block; font-size: 17px; letter-spacing: 4px; font-weight: 500; color: var(--ink); margin-top: 10px; line-height: 1.5; }
 .park { position: absolute; inset: 0; overflow: clip; }
+.park-camera { position: absolute; inset: 0; transform-origin: 0 0; }
+.camera-floor { position: absolute; inset: 0; background: var(--path); pointer-events: none; }
+html:not([data-intro="playing"]) .camera-floor { display: none; }
+html[data-intro="pending"] .park-camera { visibility: hidden; }
+html[data-intro="playing"] .park-camera { will-change: transform; }
+html[data-intro="playing"] .park-viewport { overflow: visible; }
+html[data-intro="playing"] .is-offscreen { display: inline !important; }
+html[data-intro="pending"] :is(.park-tools, .guide-fixed, .skate-controls),
+html[data-intro="playing"] :is(.park-tools, .guide-fixed, .skate-controls) { opacity: 0; pointer-events: none; }
 .park-viewport { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; cursor: grab; touch-action: pan-x; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
 .park-viewport::-webkit-scrollbar { display: none; }
 .park-viewport.is-dragging { cursor: grabbing; user-select: none; }
@@ -227,7 +236,6 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .sloth.is-moving .sloth-bubble { opacity: 1; }
 .sloth.near-destination .sloth-bubble { opacity: 0; transition: none; }
 .skate-controls { position: absolute; top: calc(100% - 36px); left: -52px; right: -52px; height: 40px; display: grid; place-items: center; pointer-events: none; }
-.skate-hint { color: #354637; background: #fff9eb; border-radius: 10px; font-size: 12px; letter-spacing: .5px; padding: 5px 9px; margin-top: 62px; white-space: nowrap; }
 .move-button { position: absolute; top: 0; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; background: var(--glass); backdrop-filter: blur(8px); pointer-events: auto; transition: background .2s, transform .2s; }
 .move-button:hover { background: var(--surface); transform: scale(1.08); }
 .move-left { left: 0; }
@@ -240,7 +248,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .vegetation { pointer-events: none; }
 .shrub-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 5s ease-in-out infinite alternate; }
 .flower-sway { transform-box: fill-box; transform-origin: bottom center; animation: sway 4s ease-in-out infinite alternate; }
-.park-tools { position: absolute; z-index: 9; bottom: max(18px, env(safe-area-inset-bottom)); right: 24px; display: flex; align-items: center; gap: 9px; }
+.park-tools { position: absolute; z-index: 9; top: max(96px, calc(env(safe-area-inset-top) + 84px)); right: 24px; display: flex; align-items: center; gap: 9px; }
 .time-controls { position: relative; display: flex; align-items: center; gap: 7px; margin-right: 4px; }
 .icon-button, .cycle-button { position: relative; display: grid; place-items: center; height: 38px; padding: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--ink); border-radius: 50%; backdrop-filter: blur(10px); }
 .icon-button { width: 38px; }
@@ -248,9 +256,7 @@ html[data-light="night"] .sign-board { fill: #f0e4cc; filter: drop-shadow(0 0 5p
 .icon-button:hover, .cycle-button:hover { background: var(--surface); color: var(--accent); }
 .icon-button[aria-pressed="true"] { color: var(--accent); }
 .time-controls .phase-button { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); animation: open-inward-left .2s ease-out; }
-@media (max-width: 600px) { .park-tools.dock-left .phase-button { right: auto; left: calc(100% + 10px); animation-name: open-inward-right; } }
 @keyframes open-inward-left { from { opacity: 0; transform: translate(8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
-@keyframes open-inward-right { from { opacity: 0; transform: translate(-8px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
 .cycle-button { display: flex; gap: 6px; width: auto; min-width: 90px; border-radius: 22px; font-family: system-ui, sans-serif; font-size: 12px; font-weight: 500; white-space: nowrap; }
 .cycle-button::before { content: ""; position: absolute; inset: -2px; border-radius: inherit; background: conic-gradient(#a18ac8 calc(var(--cycle-progress, 0) * 1turn), transparent 0); mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0); pointer-events: none; }
 /* Printed park map and perforated day-pass stubs. */
@@ -294,7 +300,6 @@ a.guide-destination:hover, .guide-skate:hover { background: #d8c9e41a; }
   .guide-destination strong { font-size: 13px; }
 }
 .toast { position: absolute; z-index: 30; top: 50%; right: calc(100% + 14px); width: max-content; max-width: min(240px, calc(100vw - 100px)); transform: translate(8px, -50%); padding: 11px 15px; color: var(--ink); background: var(--surface); border: 1px solid var(--border); box-shadow: 0 5px 25px #19233315; border-radius: 11px; font-size: 11px; line-height: 1.7; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
-@media (max-width: 600px) { .park-tools.dock-left .toast { right: auto; left: calc(100% + 14px); transform: translate(-8px, -50%); } }
 .park-tools .toast.show { opacity: 1; transform: translate(0, -50%); }
 .fallback-nav { position: absolute; top: 35%; left: 8%; right: 8%; z-index: 8; padding: 24px; border-radius: 16px; background: var(--surface); font-size: 14px; }
 .fallback-nav a { display: inline-block; margin: 8px; text-decoration: underline; }
@@ -355,8 +360,7 @@ html.motion-paused .time-controls .phase-button { animation: none; }
   .skate-controls { left: -39px; right: -39px; }
   .move-button { width: 36px; height: 36px; }
   .sloth-bubble { font-size: 9px; padding: 7px 9px; }
-  .park-tools { right: 16px; bottom: max(15px, env(safe-area-inset-bottom)); gap: 7px; flex-direction: column; align-items: flex-end; }
-  .park-tools.dock-left { left: 16px; right: auto; align-items: flex-start; }
+  .park-tools { right: 16px; top: max(164px, calc(env(safe-area-inset-top) + 152px)); gap: 7px; flex-direction: column; align-items: flex-end; }
   .time-controls { margin-right: 0; }
   .icon-button, .cycle-button { height: 35px; }
   .icon-button { width: 35px; }
@@ -364,7 +368,7 @@ html.motion-paused .time-controls .phase-button { animation: none; }
 @media (max-height: 500px) and (min-width: 601px) {
   .site-header { top: 18px; left: 24px; }
   .brand-name { font-size: 44px; }
-  .park-tools { bottom: 12px; right: 18px; }
+  .park-tools { top: 70px; right: 18px; }
   .icon-button, .cycle-button { height: 34px; }
   .icon-button { width: 34px; }
 }

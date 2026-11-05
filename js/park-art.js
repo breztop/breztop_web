@@ -193,3 +193,26 @@ export function snackStreet(signMarkup) {
     ${signMarkup}
     <g class="night-light"><ellipse cy="478" rx="235" ry="35" fill="url(#ground-lantern)"/><path d="M-139 248Q0 298 139 248" fill="none" stroke="#ffe0a1" stroke-width="2"/>${[-108, -54, 0, 54, 108].map((x, i) => `<ellipse cx="${x}" cy="${273 + Math.sin((i + 1) / 6 * Math.PI) * 18}" rx="15" ry="22" fill="url(#lamp-glow)"/>`).join('')}</g>`;
 }
+
+export function materialDefs() {
+  const gradient = (id, colors, horizontal = false) => `<linearGradient id="${id}" x1="0%" y1="0%" x2="${horizontal ? '100%' : '20%'}" y2="${horizontal ? '20%' : '100%'}">${colors.map((color, i) => `<stop offset="${i / (colors.length - 1)}" stop-color="${color}"/>`).join('')}</linearGradient>`;
+  return `${gradient('robot-shell', ['var(--canvas)', 'var(--metal-light)', 'var(--metal-mid)'])}${gradient('plaza-paving', ['var(--canvas)', 'var(--stone-light)', 'var(--stone-dark)'])}${gradient('entry-hedge', ['var(--leaf-light)', 'var(--tree)', 'var(--tree-dark)'])}${gradient('steel', ['var(--metal-light)', 'var(--metal-mid)', 'var(--metal-light)', 'var(--metal-dark)'], true)}
+    ${gradient('brass', ['var(--canvas)', 'var(--wood-light)', 'var(--canvas)', 'var(--wood-dark)'], true)}
+    ${gradient('glass', ['var(--metal-light)', 'var(--water)', 'var(--water-dark)'])}
+    ${gradient('lavender-paint', ['var(--canvas)', 'var(--paint-lilac)', 'var(--metal-dark)'])}
+    ${gradient('sage-paint', ['var(--metal-light)', 'var(--paint-sage)', 'var(--metal-dark)'])}
+    ${gradient('rose-paint', ['var(--canvas)', 'var(--paint-rose)', 'var(--wood-dark)'])}
+    ${gradient('ivory-paint', ['var(--canvas)', 'var(--stone-light)', 'var(--canvas-shadow)'])}
+    ${gradient('wood-hull', ['var(--wood-light)', 'var(--wood-dark)', 'var(--metal-dark)'])}
+    ${gradient('stone', ['var(--stone-light)', 'var(--stone-dark)', 'var(--joint)'])}
+    ${gradient('slate-roof', ['var(--metal-mid)', 'var(--metal-dark)', 'var(--shadow)'])}
+    ${gradient('arena-floor', ['var(--metal-light)', 'var(--metal-mid)', 'var(--paint-sage)'])}
+    ${gradient('flume-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
+    <clipPath id="ride-envelope" clipPathUnits="userSpaceOnUse"><rect x="-310" y="0" width="620" height="555" rx="8"/></clipPath>
+    ${gradient('pool-water', ['var(--water-shine)', 'var(--water)', 'var(--water-dark)'])}
+    ${gradient('mountain-wash', ['var(--mountain-far)', 'var(--mountain-near)'])}
+    <linearGradient id="valley-mist" x2="0" y2="1"><stop stop-color="var(--grass-back)" stop-opacity="0"/><stop offset="1" stop-color="var(--grass-back)" stop-opacity=".42"/></linearGradient>
+    <linearGradient id="sign-face" x2="0" y2="1"><stop stop-color="#fffbed"/><stop offset="1" stop-color="#eee4cc"/></linearGradient>
+    <radialGradient id="lamp-glow"><stop stop-color="#ffe4a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe4a0" stop-opacity="0"/></radialGradient>
+    <pattern id="sign-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="m0 0 8 8m0-8-8 8m16-8-8 8" stroke="#a4aca0" stroke-width=".5" opacity=".3"/></pattern>`;
+}
