@@ -9,6 +9,8 @@ const root = await realpath(fileURLToPath(new URL('../', import.meta.url)));
 const output = path.join(root, 'dist');
 const artworkCheck = spawnSync(process.execPath, [path.join(root, 'scripts/render-town-art.mjs'), '--check'], { cwd: root, stdio: 'inherit' });
 if (artworkCheck.status !== 0) process.exit(artworkCheck.status || 1);
+const resumeCheck = spawnSync(process.execPath, [path.join(root, 'scripts/render-resume.mjs'), '--check'], { cwd: root, stdio: 'inherit' });
+if (resumeCheck.status !== 0) process.exit(resumeCheck.status || 1);
 const check = spawnSync(process.execPath, [path.join(root, 'scripts/check-site.mjs')], { cwd: root, stdio: 'inherit' });
 if (check.status !== 0) process.exit(check.status || 1);
 

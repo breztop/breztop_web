@@ -12,6 +12,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url><loc>https://brez.top/resume/</loc><lastmod>2026-11-06</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://brez.top/project-show/</loc><lastmod>2026-11-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://brez.top/project-show/projects/</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://brez.top/project-show/projects/p2p/</loc><lastmod>2026-10-26</lastmod></url>

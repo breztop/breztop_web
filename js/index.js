@@ -10,7 +10,7 @@ import { initParkCamera } from './park-camera.js';
   // Attractions without a destination stay as scenery.
   const rides = [
     { id: 'ferris', size: 1.2, base: 520, name: '摩天轮', title: 'Blog', subtitle: '博客 · 记录技术与生活', href: 'https://blog.brez.top', color: '#ab98cb', x: 572 },
-    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: 'Resume', subtitle: '简历 · 认识一下我', href: 'https://resume.brez.top', entryLabel: '查看我的简历 ↗', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
+    { id: 'carousel', size: 0.94, base: 620, name: '旋转木马', title: 'Resume', subtitle: '简历 · 暂不开放', href: './resume/', local: true, entryLabel: '暂不开放 · 预览 →', color: '#d2a69b', x: 905, signX: 54, signY: 260 },
     { id: 'coaster', size: 1.3, base: 538, name: '过山车', title: '益智汇', subtitle: 'CardChess · 下一步，出奇制胜', entryLabel: '进入益智汇 ↗', href: 'https://cardchess.brez.top', color: '#90afb0', x: 1270, signX: 138, signY: 360 },
     { id: 'haunted', size: 0.78, base: 475, name: '幽灵小屋', color: '#a09bb8', x: 1750 },
     { id: 'pirate', size: 1, base: 566, name: '海盗船', title: 'Account', subtitle: '账号 · 欢迎回来', href: 'https://account.brez.top', color: '#bca17e', x: 2070 },
