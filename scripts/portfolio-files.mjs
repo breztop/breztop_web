@@ -15,12 +15,14 @@ export const portfolioProjectIds = Object.freeze([
   "branching-narrative",
   "conutline",
   "breconn",
-  "breinput"
+  "breinput",
+  "breaccount"
 ]);
 
 export const portfolioPublicFiles = Object.freeze([
   "project-show/404.html",
   "project-show/icon.svg",
+  "project-show/images/projects/breaccount-cover.svg",
   "project-show/images/projects/breconn-cover.svg",
   "project-show/images/projects/breinput-cover.svg",
   "project-show/images/projects/cards-cover-1280.webp",
@@ -50,6 +52,7 @@ export const portfolioPublicFiles = Object.freeze([
   "project-show/index.html",
   "project-show/main.js",
   "project-show/projects/branching-narrative/index.html",
+  "project-show/projects/breaccount/index.html",
   "project-show/projects/breconn/index.html",
   "project-show/projects/breinput/index.html",
   "project-show/projects/cards/index.html",
@@ -69,6 +72,7 @@ export const portfolioPublicFiles = Object.freeze([
   "project-show/styles/archive.css",
   "project-show/styles/base.css",
   "project-show/styles/branching-narrative.css",
+  "project-show/styles/breaccount.css",
   "project-show/styles/breconn.css",
   "project-show/styles/breinput.css",
   "project-show/styles/cards.css",

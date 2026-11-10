@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BreAccount 是面向游戏与软件的统一账号服务。独立完成 OIDC、PKCE、多渠道身份、游戏后端认证、凭据轮换及部署备份工具，连接网页、桌面与微信小程序。">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f8f6ee">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>BreAccount · 统一账号与认证服务 · DEV / WORKS</title>
+  <link rel="canonical" href="https://brez.top/project-show/projects/breaccount/">
+  <link rel="icon" href="../../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../styles/base.css">
+  <link rel="stylesheet" href="../../styles/breaccount.css">
+  <link rel="stylesheet" href="../../styles/native.css">
+  <script src="../../main.js" defer></script>
+</head>
+<body data-page="breaccount" id="top">
+  <a class="skip-link" href="#main-content" data-view-app="">跳到主要内容</a>
+  <div class="park-return-row shell">
+    <a class="park-return" href="../../../" aria-label="返回 brez.top 微风游乐园">← 微风游乐园</a>
+    <span aria-hidden="true">PROJECT / 作品集</span>
+  </div>
+  <header class="site-header shell" data-view-app="">
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <nav aria-label="主导航" data-view-app="">
+      <a href="../../" data-view-app="" data-nav="home">首页</a>
+      <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
+      <a href="../../#about" data-view-app="" data-nav="about">关于我</a>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1" data-view-app="">
+    <article class="account-page shell">
+      <div class="account-kicker"><a href="../">← 全部作品</a><span>ENGINEERING FILE / 017 — 2026</span></div>
+      <header class="account-hero">
+        <div>
+          <p class="account-label">UNIFIED IDENTITY &amp; AUTHENTICATION</p>
+          <h1>BreAccount</h1>
+          <h2>一个身份，<br>连接<span>每一个产品。</span></h2>
+          <p class="account-intro">为游戏与软件构建统一账号底座。从网页、桌面到微信小程序，把登录、身份绑定、应用授权与会话撤销收在一套清晰的认证体系中。</p>
+          <div class="project-byline" data-view-project-byline="">
+            <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>独立开发 / 认证架构 / 协议与身份接入 / Go SDK / 部署与备份</p>
+            <ul aria-label="核心技术" data-view-project-byline=""><li data-view-project-byline="">Go / Gin</li><li data-view-project-byline="">PostgreSQL</li><li data-view-project-byline="">OIDC / PKCE</li><li data-view-project-byline="">RS256</li></ul>
+          </div>
+          <a class="account-jump" href="#architecture">看看身份如何连接产品 <span aria-hidden="true">↘</span></a>
+        </div>
+        <figure><img src="../../images/projects/breaccount-cover.svg" alt="BreAccount 统一身份示意：Bre UID 通过 OIDC、PKCE 和游戏会话连接多个产品" width="960" height="800" fetchpriority="high" decoding="async"><figcaption>IDENTITY PASSPORT / ONE UID, SCOPED ACCESS</figcaption></figure>
+      </header>
+      <dl class="account-facts"><div><dt>SUBJECT / 身份主体</dt><dd>统一 Bre UID</dd></div><div><dt>CLIENT / 接入终端</dt><dd>网页 · 桌面 · 小程序</dd></div><div><dt>BOUNDARY / 授权边界</dt><dd>按产品隔离访问</dd></div></dl>
+      <section class="account-section" id="architecture" aria-labelledby="architecture-title">
+        <header class="account-section-heading"><div><p class="account-label">01 / SYSTEM ARCHITECTURE</p><h2 id="architecture-title">身份在中心，<br>边界在每一次访问。</h2></div><p>我将账号能力组织为模块化单体，分离 HTTP 入口、协议处理、身份渠道与事务持久层。产品共用账号主体，每个客户端保留独立的访问范围与回调配置。</p></header>
+        <div class="account-topology" aria-label="公开入口和内部入口汇入认证服务，连接身份渠道、授权与会话模块，并持久化到 PostgreSQL">
+          <div class="account-entry"><div><span>PUBLIC / BROWSER &amp; APP</span><h3>公开认证入口</h3><p>注册与账号中心 · OIDC · 微信小程序 / 网站扫码</p></div><div><span>INTERNAL / TRUSTED BACKEND</span><h3>游戏后端入口</h3><p>密码直登 · SSO 会话兑换 · Introspection · 健康检查</p></div></div>
+          <div class="account-core"><span>MODULAR MONOLITH / GO + GIN</span><strong>BreAccount · 统一身份服务</strong><p>公开与内部双监听 / 客户端认证 / 请求边界 / 凭据用途校验</p></div>
+          <div class="account-modules"><div><b>IDENTITY</b><h3>身份渠道与解析</h3><p>GitHub / Google / QQ / 微信<br>Provider 验证凭证，Repository 处理身份归属与绑定。</p></div><div><b>AUTHORIZATION</b><h3>协议与产品授权</h3><p>OIDC / PKCE S256 / RS256<br>授权码、资源 audience、刷新轮换与应用登录记录。</p></div><div><b>SESSION</b><h3>会话与账号管理</h3><p>Cookie / Bearer / Game Session<br>近期验证、会话轮换、按产品和单次登录撤销。</p></div></div>
+          <div class="account-db"><strong>PostgreSQL / GORM</strong><span>账号 · 身份 · 会话 · 授权流程 · 凭据哈希<br>事务 / 行锁 / 唯一约束 / 过期清理</span></div>
+        </div>
+        <p class="account-legend">身份渠道通过接口注入；网页登录 OAuth 与短期 code 交换各自适配，共用账号与身份存储。</p>
+      </section>
+      <section class="account-section" aria-labelledby="engineering-title">
+        <header class="account-section-heading"><div><p class="account-label">02 / ENGINEERING DECISIONS</p><h2 id="engineering-title">登录之后，<br>还有这些问题要解决。</h2></div><p>把协议接通只是起点。我围绕重复请求、并发竞争、凭据泄露、身份变化和退出语义设计状态流转，让每一条认证路径都有明确的归属、期限和消费规则。</p></header>
+        <ol class="account-ledger"><li><span class="account-number">01</span><div><h3>统一身份，隔离产品权限</h3><small>IDENTITY / AUDIENCE</small></div><p>以 Bre UID 统一账号主体，通过 Product、Client 和 audience 组织产品与平台。校验 RS256 签名、issuer、有效期和 token_use，拒绝跨产品凭据与 ID Token 访问业务接口。</p></li>
+<li><span class="account-number">02</span><div><h3>授权码只成功兑换一次</h3><small>TRANSACTION / SINGLE USE</small></div><p>将授权码消费与凭据创建放在同一事务。带有效期和未消费条件的更新配合影响行数检查，使并发兑换只有一次成功；授权码签发后保留完整的有效期。</p></li>
+<li><span class="account-number">03</span><div><h3>刷新轮换与重放撤销</h3><small>ROTATION / REPLAY DETECTION</small></div><p>刷新凭据仅存哈希，每次使用即轮换。通过授权记录行锁与条件更新控制并发；发现旧凭据重放，撤销整个刷新家族。刷新不延长原授权的绝对期限。</p></li>
+<li><span class="account-number">04</span><div><h3>并发建号与身份升级</h3><small>UNIQUE INDEX / IDENTITY RESOLUTION</small></div><p>首次第三方登录在事务内创建账号和身份，唯一冲突后完整回滚并重查。微信 OpenID 升级 UnionID 时沿用原 UID；标识指向不同历史账号时明确拒绝合并。</p></li>
+<li><span class="account-number">05</span><div><h3>Cookie 与 Bearer 共用账号体系</h3><small>SESSION / TRUST BOUNDARY</small></div><p>网页使用 Cookie、CSRF 和 Origin 校验；小程序使用独立 audience 与用途的 JWT，并检查数据库会话。无效 Bearer 不回退 Cookie，重新验证时轮换会话，退出后撤销中央状态。</p></li>
+<li><span class="account-number">06</span><div><h3>扫码、绑定与敏感操作</h3><small>STATE / RECENT AUTHENTICATION</small></div><p>扫码状态绑定发起浏览器、渠道和时限，事务保证一次性消费。将登录、绑定和重新验证意图保存在服务端，敏感操作要求近期验证，并保护最后一种可用登录方式。</p></li>
+<li><span class="account-number">07</span><div><h3>从 OIDC 连接到游戏会话</h3><small>SSO / BACKEND CREDENTIAL</small></div><p>游戏后端完成客户端认证后，将 OIDC Access Token 一次性兑换为可撤销的游戏会话；密码直登复用统一账号。游戏凭据仅存哈希，登录记录统一纳入账号中心管理。</p></li>
+<li><span class="account-number">08</span><div><h3>把注册资格做成有界流程</h3><small>CHALLENGE / RATE LIMIT</small></div><p>图形验证码后进入限时数学挑战，首题失败提供一次较易题。答对后签发 30 秒一次性注册许可；缓存容量与令牌桶限流共同控制注册请求和短期状态。</p></li></ol>
+      </section>
+      <section class="account-section" aria-labelledby="flow-title">
+        <header class="account-section-heading"><div><p class="account-label">03 / CONNECTED LOGIN FLOW</p><h2 id="flow-title">从一次登录，<br>到游戏里的同一个人。</h2></div><p>网页与桌面使用统一授权流程，游戏后端通过内部接口兑换会话。产品围绕稳定 UID 建立业务数据，认证与玩法保持独立。</p></header>
+        <ol class="account-flow"><li><span>01 / AUTHORIZE →</span><h3>产品发起授权</h3><p>生成独立 state、nonce 与 PKCE 参数，使用登记的客户端和回调地址。</p></li><li><span>02 / IDENTIFY →</span><h3>统一确认身份</h3><p>复用浏览器会话，或通过密码、第三方授权及微信扫码完成认证。</p></li><li><span>03 / EXCHANGE →</span><h3>后端兑换凭据</h3><p>一次性授权码兑换 Token；游戏后端继续兑换独立的游戏会话。</p></li><li><span>04 / CONNECTED</span><h3>按产品访问</h3><p>保持相同 Bre UID，以客户端和 audience 限定访问，在账号中心管理登录。</p></li></ol>
+        <p class="account-flow-note">撤销语义按凭据类型设计：中央会话检查数据库状态；业务 JWT 本地验签以短有效期限制撤销后的剩余访问窗口。</p>
+      </section>
+      <section class="account-section account-delivery" aria-labelledby="delivery-title">
+        <div><p class="account-label">04 / ENGINEERING DELIVERY</p><h2 id="delivery-title">把认证系统，<br>做成可以接入的服务。</h2><p>我把客户端体验、故障恢复和部署工具纳入同一套工程交付。应用通过 SDK 接入协议，服务通过持久化保存状态，维护通过脚本完成构建、备份和恢复。</p><a class="account-jump" href="../cards/">看看游戏服务端的另一面 <span aria-hidden="true">↗</span></a></div>
+        <dl><div><dt>可复用 SDK 与多端示例</dt><dd>Go SDK 封装 Discovery、PKCE、身份验证、刷新、撤销和游戏会话。桌面凭据进入系统密钥库，网页 OAuth 凭据由后端保管，浏览器持有 HttpOnly Cookie。</dd></div><div><dt>覆盖异常与并发的验证体系</dt><dd>SQLite 快速测试与 PostgreSQL 隔离 schema 回归，覆盖并发消费、刷新重放、跨产品隔离、绑定冲突和重启恢复；CI 集成 race 检查、静态检查与无 CGO 构建。</dd></div><div><dt>单二进制与清晰的部署边界</dt><dd>go:embed 嵌入账号页面，systemd 管理进程，Caddy 代理公开入口。双监听完整绑定后启动，支持超时控制和优雅退出，访问日志省略查询串和凭据。</dd></div><div><dt>持久化与加密备份链路</dt><dd>数据库保存会话和授权流程，服务重启后延续有效状态。备份工具支持快照、历史保留、SHA-256 校验及恢复；通过 SSH 获取归档，在维护机器 GPG 加密后上传私有 R2 并下载核对。</dd></div></dl>
+      </section>
+      <div class="account-signature"><span>DESIGNED &amp; BUILT / 从协议边界到工程交付</span><span>GO · GIN · GORM · POSTGRESQL · OIDC · PKCE</span></div>
+    </article>
+    <div class="project-navigation shell" data-view-project-navigation="">
+      <section class="related" data-view-project-navigation=""><h2 data-view-project-navigation="">连接这些作品的底层能力</h2><div data-view-project-navigation=""><a href="../breconn/" data-view-project-navigation="">breconn · 统一网络库 <span aria-hidden="true">↗</span></a><a href="../p2p-server/" data-view-project-navigation="">通用多人游戏联机服务 <span aria-hidden="true">↗</span></a></div></section>
+      <nav class="project-pagination" aria-label="项目翻页" data-view-project-navigation=""><a href="../breinput/" class="previous" data-view-project-navigation=""><small data-view-project-navigation="">← 上一个项目</small><strong data-view-project-navigation="">breinput</strong></a><a href="../" class="all-projects" data-view-project-navigation="">全部作品 <span aria-hidden="true">▦</span></a><span></span></nav>
+    </div>
+  </main>
+  <footer class="site-footer shell" data-view-app="">
+    <span data-view-app="">© 2026 DEV / WORKS</span>
+    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <a href="#top" data-back-top="">回到顶部 ↑</a>
+  </footer>
+</body>
+</html>

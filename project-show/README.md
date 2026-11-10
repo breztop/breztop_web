@@ -1,6 +1,6 @@
 # DEV / WORKS 原生作品站
 
-从 `G:\1_Code\1web\project_show` 的公开作品站迁入，保留首页、作品库与 16 个项目各自的详情设计。页面直接使用 HTML、CSS 和 JavaScript，日常开发、构建与发布均不依赖 Vue、Vue Router、Vite 或项目级 npm 安装。
+从 `G:\1_Code\1web\project_show` 的公开作品站迁入，保留首页、作品库与 17 个项目各自的详情设计。页面直接使用 HTML、CSS 和 JavaScript，日常开发、构建与发布均不依赖 Vue、Vue Router、Vite 或项目级 npm 安装。
 
 ## 开发位置
 
@@ -23,3 +23,7 @@
 在 `breztop_web` 根目录运行 `node scripts/build-site.mjs`，再以 `dist/` 为静态服务器目录预览。新增页面、样式或图片时，同时更新 `scripts/portfolio-files.mjs` 中的项目 id 与发布文件白名单。更新项目时同步检查作品库卡片、精选展示及相邻项目链接。
 
 原 `project_show` 工程的 Vue 代码、依赖和旧构建文件已清理，原始图片已移至本地 `artwork/`。本站发布白名单只包含公开项目资料与必要资源，原稿不参与发布。
+
+## BreAccount 统一账号服务
+
+`projects/breaccount/` 展示统一身份架构、OIDC 与游戏会话衔接、凭据轮换、并发事务和部署备份能力。使用独立的 `styles/breaccount.css` 与 SVG 封面，已接入首页精选、作品库搜索、项目翻页及发布白名单。

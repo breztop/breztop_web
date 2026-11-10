@@ -1,54 +1,54 @@
-name: Deploy to gh-pages
+# name: Deploy to gh-pages
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write 
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write 
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v5
+#         with:
+#           node-version: '24'
 
-      - name: Install minifier tools
-        run: npm install -g terser clean-css-cli html-minifier-terser
+#       - name: Install minifier tools
+#         run: npm install -g terser clean-css-cli html-minifier-terser
 
-      - name: Build dist folder
-        run: |
-          node --test scripts/*.test.mjs
-          node scripts/build-site.mjs
-          while IFS= read -r -d '' script; do
-            terser "$script" --compress --mangle --output "$script"
-          done < <(find dist -type f -name '*.js' -print0)
-          while IFS= read -r -d '' stylesheet; do
-            cleancss -o "$stylesheet" "$stylesheet"
-          done < <(find dist -type f -name '*.css' -print0)
-          while IFS= read -r -d '' page; do
-            html-minifier-terser \
-              --collapse-whitespace \
-              --remove-comments \
-              --minify-css true \
-              --minify-js true \
-              "$page" -o "$page"
-          done < <(find dist -type f -name '*.html' -print0)
-          node scripts/check-site.mjs dist
+#       - name: Build dist folder
+#         run: |
+#           node --test scripts/*.test.mjs
+#           node scripts/build-site.mjs
+#           while IFS= read -r -d '' script; do
+#             terser "$script" --compress --mangle --output "$script"
+#           done < <(find dist -type f -name '*.js' -print0)
+#           while IFS= read -r -d '' stylesheet; do
+#             cleancss -o "$stylesheet" "$stylesheet"
+#           done < <(find dist -type f -name '*.css' -print0)
+#           while IFS= read -r -d '' page; do
+#             html-minifier-terser \
+#               --collapse-whitespace \
+#               --remove-comments \
+#               --minify-css true \
+#               --minify-js true \
+#               "$page" -o "$page"
+#           done < <(find dist -type f -name '*.html' -print0)
+#           node scripts/check-site.mjs dist
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gp-pages
-          keep_files: false
+#       - name: Deploy to gh-pages branch
+#         uses: peaceiris/actions-gh-pages@v4
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./dist
+#           publish_branch: gp-pages
+#           keep_files: false
