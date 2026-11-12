@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="一款真正以“快”为核心的常驻托盘截图工具：快捷键直接进入上次使用的模式，选完即可复制或保存，不用先打开主窗口，也不让 OCR 阻塞截图主流程。">
+  <meta name="description" content="常驻托盘的截图工具。快捷键直接进入上次使用的模式，支持矩形、窗口和延时截图，可取色、复制到剪贴板或保存为 PNG；OCR 作为可选动作单独执行。">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#f8f6ee">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
@@ -22,7 +22,7 @@
     <span aria-hidden="true">PROJECT / 作品集</span>
   </div>
   <header class="site-header shell" data-view-app="">
-    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">游戏与开发工具</span></a>
     <nav aria-label="主导航" data-view-app="">
       <a href="../../" data-view-app="" data-nav="home">首页</a>
       <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
@@ -49,15 +49,14 @@
             <p data-view-screenshot-tool-page="">05 / OVERLAY / CAPTURE WORKFLOW</p>
             <h1 data-view-screenshot-tool-page="">Screenshot</h1>
             <div class="project-byline" data-view-screenshot-tool-page="" data-view-project-byline="">
-              <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>产品规划 / Qt 客户端 / 跨平台截图链路</p>
               <ul aria-label="核心特点" data-view-project-byline="">
                 <li data-view-project-byline="">breflow</li>
                 <li data-view-project-byline="">Qt 6.11</li>
                 <li data-view-project-byline="">快速截图</li>
               </ul>
             </div>
-            <h2 data-view-screenshot-tool-page="">不打断当前工作的快速截图工具</h2>
-            <p class="summary" data-view-screenshot-tool-page="">一款真正以“快”为核心的常驻托盘截图工具：快捷键直接进入上次使用的模式，选完即可复制或保存，不用先打开主窗口，也不让 OCR 阻塞截图主流程。</p>
+            <h2 data-view-screenshot-tool-page="">快捷键截图，支持窗口选取、延时和取色</h2>
+            <p class="summary" data-view-screenshot-tool-page="">常驻托盘的截图工具。快捷键直接进入上次使用的模式，支持矩形、窗口和延时截图，可取色、复制到剪贴板或保存为 PNG；OCR 作为可选动作单独执行。</p>
           </div>
         </div>
         <div class="floating-tools" aria-label="截图工具" data-view-screenshot-tool-page="">
@@ -74,7 +73,7 @@
         <section class="capture-spec" data-view-screenshot-tool-page="">
           <div class="spec-title" data-view-screenshot-tool-page="">
             <span data-view-screenshot-tool-page="">CAPTURE_001.PNG</span>
-            <h2 data-view-screenshot-tool-page="">选完，立即得到结果。</h2>
+            <h2 data-view-screenshot-tool-page="">截图方式与技术栈</h2>
           </div>
           <div class="spec-meta" data-view-screenshot-tool-page="">
             <div data-view-screenshot-tool-page="">
@@ -98,8 +97,8 @@
               <b data-view-screenshot-tool-page=""></b>
               <b data-view-screenshot-tool-page=""></b>
             </div>
-            <h2 data-view-screenshot-tool-page="">看似只是一个矩形</h2>
-            <p data-view-screenshot-tool-page="">截图看似简单，真正的难点却集中在跨屏边界：DPI 缩放、负坐标、窗口阴影和权限差异都会让选区与最终像素错位。若把 OCR、历史等重功能塞进主路径，还会直接破坏工具最重要的即时反馈。</p>
+            <h2 data-view-screenshot-tool-page="">多屏截图的坐标问题</h2>
+            <p data-view-screenshot-tool-page="">多显示器可能使用不同的 DPI 缩放，屏幕坐标也可能为负值。选区需要换算到正确的像素位置，窗口截图还要处理阴影和系统权限。</p>
           </article>
           <article class="after" data-view-screenshot-tool-page="">
             <header data-view-screenshot-tool-page="">
@@ -132,14 +131,14 @@
               <i data-view-screenshot-tool-page=""></i>
               <i data-view-screenshot-tool-page=""></i>
             </div>
-            <h2 data-view-screenshot-tool-page="">让坐标、像素与动作对齐</h2>
-            <p data-view-screenshot-tool-page="">用 BreFlow 统一显示器与窗口枚举，平台 capture 负责像素获取，PNG 管线负责保存；触发后直接进入遮罩选择，工具条只承载保存、复制与可选动作。OCR 拆到独立后端异步执行，平台能力不足时明确降级而不是静默失败。</p>
+            <h2 data-view-screenshot-tool-page="">截图、保存与 OCR 分开执行</h2>
+            <p data-view-screenshot-tool-page="">BreFlow 枚举显示器和窗口，平台截图接口获取像素，PNG 模块负责保存。快捷键直接打开选区，复制和保存优先完成；OCR 异步执行，权限或平台限制会显示提示。</p>
           </article>
         </section>
         <section class="actions" data-view-screenshot-tool-page="">
           <header data-view-screenshot-tool-page="">
             <p data-view-screenshot-tool-page="">06 QUICK ACTIONS</p>
-            <h2 data-view-screenshot-tool-page="">主路径里，只留下必要动作</h2>
+            <h2 data-view-screenshot-tool-page="">主要功能</h2>
           </header>
           <div class="action-grid" data-view-screenshot-tool-page="">
             <article data-view-screenshot-tool-page="">
@@ -174,83 +173,15 @@
             </article>
           </div>
         </section>
-        <section class="modes" data-view-screenshot-tool-page="">
-          <div class="mode-heading" data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">MODE PALETTE</span>
-            <h2 data-view-screenshot-tool-page="">每种能力都在主流程之外待命</h2>
-          </div>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">01</span>
-            <h3 data-view-screenshot-tool-page="">矩形</h3>
-            <p data-view-screenshot-tool-page="">拖拽选区与像素级边界调整</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">02</span>
-            <h3 data-view-screenshot-tool-page="">窗口</h3>
-            <p data-view-screenshot-tool-page="">悬停识别并包含窗口阴影</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">03</span>
-            <h3 data-view-screenshot-tool-page="">延时</h3>
-            <p data-view-screenshot-tool-page="">3 / 5 / 10 秒倒计时触发</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">04</span>
-            <h3 data-view-screenshot-tool-page="">取色</h3>
-            <p data-view-screenshot-tool-page="">选区过程即时读取屏幕颜色</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">05</span>
-            <h3 data-view-screenshot-tool-page="">保存 / 复制</h3>
-            <p data-view-screenshot-tool-page="">主路径中的两个即时结果</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-          <article data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">06</span>
-            <h3 data-view-screenshot-tool-page="">OCR</h3>
-            <p data-view-screenshot-tool-page="">可选动作，独立后端异步执行</p>
-            <i data-view-screenshot-tool-page="">↗</i>
-          </article>
-        </section>
-        <section class="timer-roadmap" data-view-screenshot-tool-page="">
-          <p class="roadmap-note" data-view-screenshot-tool-page="">后续演进 · 以下为路线图，具体阶段以项目说明为准。</p>
-          <div class="timer-face" data-view-screenshot-tool-page="">
-            <span data-view-screenshot-tool-page="">DELAY</span>
-            <strong data-view-screenshot-tool-page="">03</strong>
-            <small data-view-screenshot-tool-page="">SECONDS</small>
-          </div>
-          <div class="phases" data-view-screenshot-tool-page="">
-            <article data-view-screenshot-tool-page="">
-              <span data-view-screenshot-tool-page="">01:00</span>
-              <div data-view-screenshot-tool-page="">
-                <small data-view-screenshot-tool-page="">MVP</small>
-                <h3 data-view-screenshot-tool-page="">先把每一次截图做快、做准</h3>
-                <p data-view-screenshot-tool-page="">区域与窗口截图 / 复制到剪贴板和 PNG 保存 / 3 / 5 / 10 秒延时 / 屏幕取色</p>
-              </div>
-            </article>
-            <article data-view-screenshot-tool-page="">
-              <span data-view-screenshot-tool-page="">02:00</span>
-              <div data-view-screenshot-tool-page="">
-                <small data-view-screenshot-tool-page="">V1</small>
-                <h3 data-view-screenshot-tool-page="">扩展能力，但不拖慢主流程</h3>
-                <p data-view-screenshot-tool-page="">滚动截图与多屏边界优化 / 轻量标注与历史记录 / OCR 可选动作 / 更多平台降级与权限引导</p>
-              </div>
-            </article>
-          </div>
-        </section>
         <section class="capture-rules" data-view-screenshot-tool-page="">
           <header data-view-screenshot-tool-page="">
             <span data-view-screenshot-tool-page="">SELECTION RULES</span>
-            <h2 data-view-screenshot-tool-page="">截图工具不该打断截图。</h2>
+            <h2 data-view-screenshot-tool-page="">多屏与权限处理</h2>
           </header>
           <ol data-view-screenshot-tool-page="">
             <li data-view-screenshot-tool-page=""><span data-view-screenshot-tool-page="">01</span><p data-view-screenshot-tool-page="">触发后直接进入遮罩选择，不先打开主窗口</p></li>
             <li data-view-screenshot-tool-page=""><span data-view-screenshot-tool-page="">02</span><p data-view-screenshot-tool-page="">正确处理 DPI、多显示器、负坐标与窗口阴影</p></li>
-            <li data-view-screenshot-tool-page=""><span data-view-screenshot-tool-page="">03</span><p data-view-screenshot-tool-page="">选区跟手且无明显延迟，保存和复制优先完成</p></li>
+            <li data-view-screenshot-tool-page=""><span data-view-screenshot-tool-page="">03</span><p data-view-screenshot-tool-page="">保存和复制优先完成，OCR 单独异步执行</p></li>
             <li data-view-screenshot-tool-page=""><span data-view-screenshot-tool-page="">04</span><p data-view-screenshot-tool-page="">Wayland、macOS 权限和受保护窗口均提供明确降级提示</p></li>
           </ol>
         </section>
@@ -258,7 +189,7 @@
     </article>
     <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
       <section class="related" data-view-project-navigation="">
-        <h2 data-view-project-navigation="">沿着这个想法，继续看看</h2>
+        <h2 data-view-project-navigation="">相关项目</h2>
         <div data-view-project-navigation="">
           <a href="../device-manager/" data-view-project-navigation="">Device Manager <span aria-hidden="true" data-view-project-navigation="">↗</span></a>
         </div>
@@ -272,7 +203,7 @@
   </main>
   <footer class="site-footer shell" data-view-app="">
     <span data-view-app="">© 2026 DEV / WORKS</span>
-    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <span class="footer-note" data-view-app="">游戏 · 网络 · 开发工具</span>
     <a href="#top" data-back-top="">回到顶部 ↑</a>
   </footer>
 </body>

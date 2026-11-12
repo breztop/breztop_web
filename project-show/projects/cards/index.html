@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="卡棋：基于 Godot 与 Go 的多玩法游戏平台，展示服务端规则裁决、房间并发、断线恢复、玩家专属快照、复杂规则算法与 Web 优化。">
+  <meta name="description" content="基于 Godot 与 Go 的多玩法游戏平台。服务器负责规则校验、回合推进和结果结算，客户端处理输入与画面，提供房间管理、断线恢复和按玩家生成的对局快照。">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#f8f6ee">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
@@ -22,7 +22,7 @@
     <span aria-hidden="true">PROJECT / 作品集</span>
   </div>
   <header class="site-header shell" data-view-app="">
-    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">游戏与开发工具</span></a>
     <nav aria-label="主导航" data-view-app="">
       <a href="../../" data-view-app="" data-nav="home">首页</a>
       <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
@@ -40,8 +40,8 @@
         <section class="opening" aria-labelledby="project-title">
           <div class="opening-copy">
             <p class="eyebrow">AUTHORITATIVE MULTIPLAYER</p>
-            <h1 id="project-title">卡棋<span>多种玩法，一张牌桌。</span></h1>
-            <p class="summary">从一枚棋子的落点，到一局牌的结算。用 Godot 构建交互，用 Go 校验规则，让房间、连接与游戏各司其职。</p>
+            <h1 id="project-title">卡棋<span>多玩法游戏平台</span></h1>
+            <p class="summary">基于 Godot 与 Go 的多玩法游戏平台。服务器负责规则校验、回合推进和结果结算，客户端处理输入与画面，提供房间管理、断线恢复和按玩家生成的对局快照。</p>
             <div class="project-byline" data-view-project-byline="">
               <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>全栈开发 / 服务端架构 / 客户端实现</p>
             </div>
@@ -57,7 +57,7 @@
           <figure class="cover-card">
             <div class="cover-corner" aria-hidden="true">A<br>♠</div>
             <img src="../../images/projects/cards-cover-1280.webp" srcset="../../images/projects/cards-cover-640.webp 640w, ../../images/projects/cards-cover-1280.webp 1280w" sizes="(max-width: 900px) 90vw, 45vw" alt="卡牌与棋子围绕中央服务器核心展开的桌面策略概念图" width="1280" height="853" loading="eager" fetchpriority="high" decoding="async">
-            <figcaption><span>THE SERVER DEALS. THE SERVER DECIDES.</span><span aria-hidden="true">♣ ♥ ♠ ♦</span></figcaption>
+            <figcaption><span>GODOT CLIENT / GO SERVER</span><span aria-hidden="true">♣ ♥ ♠ ♦</span></figcaption>
           </figure>
         </section>
         <nav class="case-index" aria-label="本页内容">
@@ -69,7 +69,7 @@
         <section class="architecture case-section" id="architecture" aria-labelledby="architecture-title">
           <header class="section-heading">
             <p class="eyebrow">01 / ARCHITECTURE</p>
-            <h2 id="architecture-title">规则独立，<br>公共能力复用。</h2>
+            <h2 id="architecture-title">客户端、房间与规则引擎</h2>
             <p>联网玩法共享房间和消息传输，具体游戏维护自己的规则与私有状态。本地数独、推箱子保留独立运行和存档路径。</p>
           </header>
           <ol class="architecture-flow" aria-label="联网游戏的操作与状态流转">
@@ -87,7 +87,7 @@
         <section class="mechanisms case-section" id="mechanisms" aria-labelledby="mechanisms-title">
           <header class="section-heading">
             <p class="eyebrow">02 / NETWORK &amp; CONSISTENCY</p>
-            <h2 id="mechanisms-title">每一步操作，<br>都有明确的归属。</h2>
+            <h2 id="mechanisms-title">操作校验、同步与断线恢复</h2>
             <p>围绕重复提交、断线、慢连接和隐藏信息，收紧输入与状态的边界。</p>
           </header>
           <div class="mechanism-grid">
@@ -105,14 +105,14 @@
           </div>
         </section>
         <section class="rules case-section" id="rules" aria-labelledby="rules-title">
-          <header class="section-heading"><p class="eyebrow">03 / RULES &amp; ALGORITHMS</p><h2 id="rules-title">把规则的细节，<br>落实到算法里。</h2><p>公共框架之外，保留每款游戏真正不同的部分。</p></header>
+          <header class="section-heading"><p class="eyebrow">03 / RULES &amp; ALGORITHMS</p><h2 id="rules-title">国际跳棋与数独算法</h2><p>国际跳棋处理连吃路线，数独提供提示与唯一解检查。</p></header>
           <div class="rule-grid">
             <article><span class="rule-symbol" aria-hidden="true">♟</span><p class="eyebrow">INTERNATIONAL DRAUGHTS</p><h3>国际跳棋：完整吃子路线搜索</h3><p>递归枚举连吃路径，筛选全局最多吃子路线。被吃棋子在整条路径结束后统一移除，搜索途中仍作为障碍；王棋远走、升变与和棋计数分别处理。</p><p>客户端读取服务端给出的合法路线，逐段选择落点并提交完整路径，避免仅凭起终点产生歧义。</p><ul class="rule-tags"><li>递归搜索</li><li>路径约束</li><li>局面重复检测</li></ul></article>
             <article><span class="rule-symbol" aria-hidden="true">9</span><p class="eyebrow">SUDOKU</p><h3>数独：提示与唯一解检查</h3><p>通过候选数分析提供显性唯一数、隐性唯一数提示，回溯搜索用于求解与唯一解检查，计数达到阈值时提前结束搜索。</p><p>原生端保留线程计算路径，Web 单线程版本使用顺序计算。页面协调、布局、数字键盘和棋盘绘制按职责拆分。</p><ul class="rule-tags"><li>候选数分析</li><li>回溯计数</li><li>平台计算分支</li></ul></article>
           </div>
         </section>
         <section class="platform case-section" id="platform" aria-labelledby="platform-title">
-          <header class="section-heading"><p class="eyebrow">04 / CROSS-PLATFORM ENGINEERING</p><h2 id="platform-title">从连接到屏幕，<br>照顾实际使用。</h2><p>将认证、输入、加载与验证作为同一套工程的一部分。</p></header>
+          <header class="section-heading"><p class="eyebrow">04 / CROSS-PLATFORM ENGINEERING</p><h2 id="platform-title">账号接入、手机输入与 Web 加载</h2><p>包括认证会话、屏幕适配、资源加载和分层验证。</p></header>
           <dl class="engineering-list">
             <div><dt><span>01</span>统一身份接入</dt><dd>接入 BreAccount。网页通过 HttpOnly Cookie、CSRF 和 Origin 校验维持会话；原生端使用仅驻留内存的游戏凭据。WebSocket 身份来自认证会话，连接存活期间持续校验。</dd></div>
             <div><dt><span>02</span>手机布局与输入</dt><dd>公共布局协调器统一处理窗口变化、安全区和显示缩放，棋盘保留逻辑坐标。横竖屏分别安排棋盘、手牌与输入区，并处理触摸产生的模拟鼠标重复事件和弹窗输入阻断。</dd></div>
@@ -121,7 +121,7 @@
           </dl>
           <details class="implementation-note"><summary>当前实现与验证边界</summary><div><p>部分玩法尚未开放或规则仍待补齐；公共 Match 的序号机制不代表全部旧游戏都使用相同协议。房间重连依赖进程内状态，尚不支持服务重启后恢复正在进行的对局。</p><p>战绩写入失败目前记录日志，尚无持久化重试队列。浏览器、实体手机、真实多客户端与数据库验证按具体版本和玩法分别进行；本页不提供未经测量的承载量或性能指标。</p></div></details>
         </section>
-        <section class="play-table" aria-labelledby="play-title"><div><p class="eyebrow">TAKE A SEAT</p><h2 id="play-title">技术落在每一次操作里。</h2><p>打开卡棋，看看规则如何成为可以参与的游戏。</p></div><a class="play-link" href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">进入卡棋 <span aria-hidden="true">↗</span><span class="visually-hidden">（新窗口打开）</span></a></section>
+        <section class="play-table" aria-labelledby="play-title"><div><p class="eyebrow">TAKE A SEAT</p><h2 id="play-title">在线试玩卡棋</h2><p>通过浏览器进入游戏大厅，选择玩法并开始游戏。</p></div><a class="play-link" href="https://cardchess.brez.top" target="_blank" rel="noopener noreferrer">进入卡棋 <span aria-hidden="true">↗</span><span class="visually-hidden">（新窗口打开）</span></a></section>
       </div>
     </article>
     <div class="project-navigation shell" data-view-project-detail-view="" data-view-project-navigation="">
@@ -134,7 +134,7 @@
   </main>
   <footer class="site-footer shell" data-view-app="">
     <span data-view-app="">© 2026 DEV / WORKS</span>
-    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <span class="footer-note" data-view-app="">游戏 · 网络 · 开发工具</span>
     <a href="#top" data-back-top="">回到顶部 ↑</a>
   </footer>
 </body>

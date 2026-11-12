@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="部落战是一款 2D 横版推进战斗游戏：双方从各自营地沿同一条战线推进，在持续生成、交战与技能对抗中争夺中央能量核心。战役地图负责把多营地、多关卡的推进关系串起来；单场战斗则专注于单位碰撞、投射物、异常状态与特效反馈，让玩家一眼读懂战线正在向哪一方倾斜。">
+  <meta name="description" content="双方从左右营地出兵，沿同一条横向战线交战，争夺中央能量核心。战役地图连接不同营地和关卡，单场战斗处理单位推进、碰撞、投射物与状态效果。">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#f8f6ee">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
@@ -22,7 +22,7 @@
     <span aria-hidden="true">PROJECT / 作品集</span>
   </div>
   <header class="site-header shell" data-view-app="">
-    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">游戏与开发工具</span></a>
     <nav aria-label="主导航" data-view-app="">
       <a href="../../" data-view-app="" data-nav="home">首页</a>
       <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
@@ -54,14 +54,13 @@
             <p data-view-tribal-war2-dpage="">SIDE-SCROLLING TRIBAL WARFARE</p>
             <h1 data-view-tribal-war2-dpage="">部落战<sup data-view-tribal-war2-dpage="">2D</sup></h1>
             <div class="project-byline" data-view-tribal-war2-dpage="" data-view-project-byline="">
-              <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>2D 战斗系统设计 / 战役架构 / 数据驱动内容 / 战斗表现</p>
               <ul aria-label="核心特点" data-view-project-byline="">
                 <li data-view-project-byline="">2D 横版</li>
-                <li data-view-project-byline="">Battlefield</li>
+                <li data-view-project-byline="">战场管理</li>
                 <li data-view-project-byline="">Campaign</li>
               </ul>
             </div>
-            <strong data-view-tribal-war2-dpage="">围绕能量核心争夺的 2D 横版推进战斗与战役系统</strong>
+            <strong data-view-tribal-war2-dpage="">从左右营地出兵、争夺核心的横版战斗游戏</strong>
           </div>
           <figure data-view-tribal-war2-dpage="">
             <img class="project-image" src="../../images/projects/tribal-war-2d-cover-1280.webp" srcset="../../images/projects/tribal-war-2d-cover-640.webp 640w, ../../images/projects/tribal-war-2d-cover-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 80vw" alt="部落战 2D 横版战场，双方部队从左右营地推进、投射物交火并争夺中央能量核心" width="1280" height="853" loading="eager" fetchpriority="high" decoding="async" data-view-tribal-war2-dpage="" data-view-project-image="">
@@ -91,13 +90,13 @@
         </section>
         <section class="mission-text" data-view-tribal-war2-dpage="">
           <span class="mission-label" data-view-tribal-war2-dpage="">MISSION STORY</span>
-          <p data-view-tribal-war2-dpage="">部落战是一款 2D 横版推进战斗游戏：双方从各自营地沿同一条战线推进，在持续生成、交战与技能对抗中争夺中央能量核心。战役地图负责把多营地、多关卡的推进关系串起来；单场战斗则专注于单位碰撞、投射物、异常状态与特效反馈，让玩家一眼读懂战线正在向哪一方倾斜。</p>
+          <p data-view-tribal-war2-dpage="">双方从左右营地出兵，沿同一条横向战线交战，争夺中央能量核心。战役地图连接不同营地和关卡，单场战斗处理单位推进、碰撞、投射物与状态效果。</p>
         </section>
         <section class="versus-section" data-view-tribal-war2-dpage="">
           <article class="enemy-side" data-view-tribal-war2-dpage="">
             <div class="side-tag" data-view-tribal-war2-dpage="">ENEMY LOGIC / 01</div>
-            <h2 data-view-tribal-war2-dpage="">屏幕越挤，<br data-view-tribal-war2-dpage="">规则越乱。</h2>
-            <p data-view-tribal-war2-dpage="">横版战场的难点不是把单位放到一条线上，而是让大量角色、弹道、状态和特效在有限屏幕宽度内保持可读：近战碰撞、远程投射物、出生与死亡、击退或减速等状态会同时发生；若规则都塞进单位脚本，新增兵种或技能时会很快失去控制。</p>
+            <h2 data-view-tribal-war2-dpage="">横版战场中的信息与镜头</h2>
+            <p data-view-tribal-war2-dpage="">近战碰撞、远程弹道、击退和减速可能同时发生。镜头需要突出当前交战位置，特效也需要让玩家看清单位在推进、僵持还是后退。</p>
             <div class="enemy-bar" data-view-tribal-war2-dpage="">
               <span data-view-tribal-war2-dpage="">COMPLEXITY</span>
               <i data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage=""></b></i>
@@ -106,36 +105,19 @@
           <div class="versus-mark" aria-hidden="true" data-view-tribal-war2-dpage="">VS</div>
           <article class="player-side" data-view-tribal-war2-dpage="">
             <div class="side-tag" data-view-tribal-war2-dpage="">PLAYER STRATEGY / 02</div>
-            <h2 data-view-tribal-war2-dpage="">分层战斗，<br data-view-tribal-war2-dpage="">锁定焦点。</h2>
-            <p data-view-tribal-war2-dpage="">以 battlefield 管理一条 2D 战线的出生、推进、交战与结算，以 camp / map 组织多阶段战役；单位通过 component 与 modifier 预设组合能力，投射物、命中、死亡、出生与状态反馈拆到独立模块。能量核心作为横版战场的可争夺目标，统一连接双方推进、阵地防守与胜负反馈；横向镜头只跟随战线焦点，保证关键信息始终在玩家视野内。</p>
+            <h2 data-view-tribal-war2-dpage="">横向镜头与战斗模块</h2>
+            <p data-view-tribal-war2-dpage="">横向镜头跟随交战位置，分层背景辅助区分前后景。battlefield 管理单位出生、推进和结算，component 与 modifier 组合单位能力，投射物、命中和状态效果由独立模块处理。</p>
             <div class="enemy-bar" data-view-tribal-war2-dpage="">
               <span data-view-tribal-war2-dpage="">READABILITY</span>
               <i data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage=""></b></i>
             </div>
           </article>
         </section>
-        <section class="achievement-list" data-view-tribal-war2-dpage="">
-          <header data-view-tribal-war2-dpage="">
-            <span data-view-tribal-war2-dpage="">03 / ACHIEVEMENTS</span>
-            <h2 data-view-tribal-war2-dpage="">解锁战场能力</h2>
-            <b data-view-tribal-war2-dpage="">8/8</b>
-          </header>
-          <ol data-view-tribal-war2-dpage="">
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 01</span><p data-view-tribal-war2-dpage="">2D 横版单战线推进，左右营地出兵并围绕中央目标持续交锋</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 02</span><p data-view-tribal-war2-dpage="">以能量核心作为可争夺的战场级目标，组织推进、防守与局势逆转</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 03</span><p data-view-tribal-war2-dpage="">战役营地与多关卡推进结构，连接地图层和实时战斗层</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 04</span><p data-view-tribal-war2-dpage="">单位、投射物、命中、死亡、出生与状态效果分层管理</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 05</span><p data-view-tribal-war2-dpage="">component + modifier presets 组合单位能力，降低新兵种和技能的实现耦合</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 06</span><p data-view-tribal-war2-dpage="">横向镜头与分层背景服务战线可读性，突出当前交战点与核心目标</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 07</span><p data-view-tribal-war2-dpage="">shader 与 effect 模块提供弹道、护盾、命中、涟漪、尾迹等即时反馈</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-            <li data-view-tribal-war2-dpage=""><i aria-hidden="true" data-view-tribal-war2-dpage="">★</i><span data-view-tribal-war2-dpage="">ACHIEVEMENT 08</span><p data-view-tribal-war2-dpage="">camp001 至 camp005 的战役目录为不同地图、阶段与挑战提供内容组织基础</p><b data-view-tribal-war2-dpage="">UNLOCKED</b></li>
-          </ol>
-        </section>
         <section class="inventory" data-view-tribal-war2-dpage="">
           <header data-view-tribal-war2-dpage="">
-            <span data-view-tribal-war2-dpage="">04 / LOADOUT</span>
-            <h2 data-view-tribal-war2-dpage="">模块背包</h2>
-            <p data-view-tribal-war2-dpage="">每个槽位只负责一种战场能力。</p>
+            <span data-view-tribal-war2-dpage="">02 / MODULES</span>
+            <h2 data-view-tribal-war2-dpage="">战役与战斗模块</h2>
+            <p data-view-tribal-war2-dpage="">地图管理关卡推进，战场管理单局，单位与效果分别处理。</p>
           </header>
           <div class="inventory-grid" data-view-tribal-war2-dpage="">
             <article data-view-tribal-war2-dpage="">
@@ -143,17 +125,17 @@
                 <span data-view-tribal-war2-dpage="">1</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 01</small>
-              <h3 data-view-tribal-war2-dpage="">Campaign / Camp</h3>
-              <p data-view-tribal-war2-dpage="">以营地和分关卡组织战役推进、挑战节奏与地图入口</p>
+              <small data-view-tribal-war2-dpage="">模块 01</small>
+              <h3 data-view-tribal-war2-dpage="">战役与营地</h3>
+              <p data-view-tribal-war2-dpage="">按营地组织关卡和地图入口，连接多场横版战斗</p>
             </article>
             <article data-view-tribal-war2-dpage="">
               <div class="item-icon" aria-hidden="true" data-view-tribal-war2-dpage="">
                 <span data-view-tribal-war2-dpage="">2</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 02</small>
-              <h3 data-view-tribal-war2-dpage="">2D Battlefield</h3>
+              <small data-view-tribal-war2-dpage="">模块 02</small>
+              <h3 data-view-tribal-war2-dpage="">横版战场</h3>
               <p data-view-tribal-war2-dpage="">管理横向战线中的单位出生、推进、交战、镜头焦点与胜负事件</p>
             </article>
             <article data-view-tribal-war2-dpage="">
@@ -161,26 +143,26 @@
                 <span data-view-tribal-war2-dpage="">3</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 03</small>
-              <h3 data-view-tribal-war2-dpage="">Energy Core</h3>
-              <p data-view-tribal-war2-dpage="">作为战线中央的争夺目标，连接双方推进节奏与局势反馈</p>
+              <small data-view-tribal-war2-dpage="">模块 03</small>
+              <h3 data-view-tribal-war2-dpage="">能量核心</h3>
+              <p data-view-tribal-war2-dpage="">管理战线中央能量核心的争夺与胜负判定</p>
             </article>
             <article data-view-tribal-war2-dpage="">
               <div class="item-icon" aria-hidden="true" data-view-tribal-war2-dpage="">
                 <span data-view-tribal-war2-dpage="">4</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 04</small>
-              <h3 data-view-tribal-war2-dpage="">Unit Composition</h3>
-              <p data-view-tribal-war2-dpage="">component 与 modifier 预设组合单位行为、属性和状态变化</p>
+              <small data-view-tribal-war2-dpage="">模块 04</small>
+              <h3 data-view-tribal-war2-dpage="">单位组件</h3>
+              <p data-view-tribal-war2-dpage="">通过 component 与 modifier 预设配置单位行为、属性和状态效果</p>
             </article>
             <article data-view-tribal-war2-dpage="">
               <div class="item-icon" aria-hidden="true" data-view-tribal-war2-dpage="">
                 <span data-view-tribal-war2-dpage="">5</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 05</small>
-              <h3 data-view-tribal-war2-dpage="">Projectile / Hit</h3>
+              <small data-view-tribal-war2-dpage="">模块 05</small>
+              <h3 data-view-tribal-war2-dpage="">投射物与命中</h3>
               <p data-view-tribal-war2-dpage="">投射物、命中、尾迹与伤害反馈独立于具体单位实现</p>
             </article>
             <article data-view-tribal-war2-dpage="">
@@ -188,66 +170,11 @@
                 <span data-view-tribal-war2-dpage="">6</span>
                 <i data-view-tribal-war2-dpage=""></i>
               </div>
-              <small data-view-tribal-war2-dpage="">SLOT 06</small>
-              <h3 data-view-tribal-war2-dpage="">Effect / Shader</h3>
-              <p data-view-tribal-war2-dpage="">出生、死亡、状态、涟漪与基础特效强化横版战场的阅读效率</p>
+              <small data-view-tribal-war2-dpage="">模块 06</small>
+              <h3 data-view-tribal-war2-dpage="">效果与着色器</h3>
+              <p data-view-tribal-war2-dpage="">分别处理出生、死亡、状态和涟漪等特效，让横向战线中的变化更容易辨认</p>
             </article>
           </div>
-        </section>
-        <section class="level-select" data-view-tribal-war2-dpage="">
-          <p class="roadmap-note" data-view-tribal-war2-dpage="">后续演进 · 以下为路线图，具体阶段以项目说明为准。</p>
-          <header data-view-tribal-war2-dpage="">
-            <span data-view-tribal-war2-dpage="">05 / CAMPAIGN</span>
-            <h2 data-view-tribal-war2-dpage="">选择下一张地图</h2>
-          </header>
-          <div class="levels" data-view-tribal-war2-dpage="">
-            <article data-view-tribal-war2-dpage="">
-              <div class="level-preview" data-view-tribal-war2-dpage="">
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <b data-view-tribal-war2-dpage="">1</b>
-              </div>
-              <span data-view-tribal-war2-dpage="">MVP / STAGE 1</span>
-              <h3 data-view-tribal-war2-dpage="">先让一条横版战线围绕核心目标完整运转</h3>
-              <ul data-view-tribal-war2-dpage="">
-                <li data-view-tribal-war2-dpage="">左右营地与基础出兵循环</li>
-                <li data-view-tribal-war2-dpage="">单位推进、碰撞、投射物与命中</li>
-                <li data-view-tribal-war2-dpage="">能量核心攻防与胜负结算</li>
-                <li data-view-tribal-war2-dpage="">基础出生、死亡和状态反馈</li>
-              </ul>
-            </article>
-            <article data-view-tribal-war2-dpage="">
-              <div class="level-preview" data-view-tribal-war2-dpage="">
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <i data-view-tribal-war2-dpage=""></i>
-                <b data-view-tribal-war2-dpage="">2</b>
-              </div>
-              <span data-view-tribal-war2-dpage="">V1 / STAGE 2</span>
-              <h3 data-view-tribal-war2-dpage="">让战役内容和战术组合持续生长</h3>
-              <ul data-view-tribal-war2-dpage="">
-                <li data-view-tribal-war2-dpage="">多营地、多地图与阶段化战役</li>
-                <li data-view-tribal-war2-dpage="">modifier 预设驱动的兵种与技能组合</li>
-                <li data-view-tribal-war2-dpage="">更丰富的状态、弹道与 shader 表现</li>
-                <li data-view-tribal-war2-dpage="">数据测试与横版战场平衡调优工具链</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-        <section class="rule-screen" data-view-tribal-war2-dpage="">
-          <p data-view-tribal-war2-dpage="">06 / GAME RULES</p>
-          <h2 data-view-tribal-war2-dpage="">胜利条件</h2>
-          <ol data-view-tribal-war2-dpage="">
-            <li data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage="">1P</b><span data-view-tribal-war2-dpage="">2D 横版镜头服务于战线阅读：玩家应随时看懂单位在推进、僵持还是反攻。</span></li>
-            <li data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage="">2P</b><span data-view-tribal-war2-dpage="">能量核心不是装饰物，而是把单位推进、营地防守和胜负目标统一起来的规则中心。</span></li>
-            <li data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage="">3P</b><span data-view-tribal-war2-dpage="">单位规则保持组件化，效果表现保持独立，避免一个兵种脚本承担战斗系统的全部复杂度。</span></li>
-            <li data-view-tribal-war2-dpage=""><b data-view-tribal-war2-dpage="">4P</b><span data-view-tribal-war2-dpage="">战役目录与数据配置是内容生产能力的一部分，关卡扩展不应依赖反复改动核心战斗代码。</span></li>
-          </ol>
         </section>
       </div>
     </article>
@@ -261,7 +188,7 @@
   </main>
   <footer class="site-footer shell" data-view-app="">
     <span data-view-app="">© 2026 DEV / WORKS</span>
-    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <span class="footer-note" data-view-app="">游戏 · 网络 · 开发工具</span>
     <a href="#top" data-back-top="">回到顶部 ↑</a>
   </footer>
 </body>

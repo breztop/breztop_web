@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="breinput 是独立的 C++23 静态输入库，将键盘、鼠标与触摸组织为统一事件，提供输入注入、监听、录制与按时间回放。它通过 Windows、macOS、Linux X11 与 Wayland 后端对接系统能力，以能力查询和结构化错误表达平台差异；应用可以用同一套接口组织输入流程，并通过 CMake 导出的 BreInput::BreInput 目标接入。">
+  <meta name="description" content="独立的 C++23 静态输入库，统一键盘、鼠标与触摸事件，提供注入、监听、录制和定时回放接口。覆盖 Windows、macOS、Linux X11 与 Wayland 后端，具体功能取决于平台和权限，可通过能力查询获取。">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#f8f6ee">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
@@ -22,7 +22,7 @@
     <span aria-hidden="true">PROJECT / 作品集</span>
   </div>
   <header class="site-header shell" data-view-app="">
-    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">游戏与开发工具</span></a>
     <nav aria-label="主导航" data-view-app="">
       <a href="../../" data-view-app="" data-nav="home">首页</a>
       <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
@@ -40,8 +40,8 @@
           <div data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">CROSS-PLATFORM INPUT</p>
             <h1 id="input-title" data-view-breinput-page="">breinput<span aria-hidden="true" data-view-breinput-page="">_</span></h1>
-            <h2 data-view-breinput-page="">一次按下，<br data-view-breinput-page="">也照顾好每一次释放。</h2>
-            <p class="subtitle" data-view-breinput-page="">统一键鼠与触摸事件，连接输入注入、监听和录制回放</p>
+            <h2 data-view-breinput-page="">C++23 跨平台输入库</h2>
+            <p class="subtitle" data-view-breinput-page="">支持键鼠注入、监听、录制和回放</p>
             <div class="project-byline" data-view-breinput-page="" data-view-project-byline="">
               <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>输入库架构 / 平台后端 / 事件与坐标映射 / 队列与生命周期 / SDK 接入</p>
               <ul aria-label="核心特点" data-view-project-byline="">
@@ -60,10 +60,10 @@
         <section class="overview" aria-labelledby="overview-title" data-view-breinput-page="">
           <div data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">01 / THE INPUT LAYER</p>
-            <h2 id="overview-title" data-view-breinput-page="">把系统差异，<br data-view-breinput-page="">收进输入层。</h2>
+            <h2 id="overview-title" data-view-breinput-page="">库的用途与接入范围</h2>
           </div>
           <div data-view-breinput-page="">
-            <p data-view-breinput-page="">breinput 是独立的 C++23 静态输入库，将键盘、鼠标与触摸组织为统一事件，提供输入注入、监听、录制与按时间回放。它通过 Windows、macOS、Linux X11 与 Wayland 后端对接系统能力，以能力查询和结构化错误表达平台差异；应用可以用同一套接口组织输入流程，并通过 CMake 导出的 BreInput::BreInput 目标接入。</p>
+            <p data-view-breinput-page="">独立的 C++23 静态输入库，统一键盘、鼠标与触摸事件，提供注入、监听、录制和定时回放接口。覆盖 Windows、macOS、Linux X11 与 Wayland 后端，具体功能取决于平台和权限，可通过能力查询获取。</p>
             <p class="scope-note" data-view-breinput-page="">独立静态库，不依赖 BreFlow、BreConn 或 FFmpeg。网络传输、远程授权和投屏协议由上层应用负责。</p>
           </div>
         </section>
@@ -71,7 +71,7 @@
           <header class="section-heading" data-view-breinput-page="">
             <div data-view-breinput-page="">
               <p class="label" data-view-breinput-page="">02 / FOUR BUILDING BLOCKS</p>
-              <h2 id="modules-title" data-view-breinput-page="">同一套事件，四块积木。</h2>
+              <h2 id="modules-title" data-view-breinput-page="">事件、注入、监听与回放模块</h2>
             </div>
             <span class="keycap" aria-hidden="true" data-view-breinput-page="">⌘</span>
           </header>
@@ -101,7 +101,7 @@
         <section class="lifecycle" aria-labelledby="lifecycle-title" data-view-breinput-page="">
           <header data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">03 / SESSION LIFECYCLE</p>
-            <h2 id="lifecycle-title" data-view-breinput-page="">输入有顺序，<br data-view-breinput-page="">会话有收尾。</h2>
+            <h2 id="lifecycle-title" data-view-breinput-page="">会话生命周期</h2>
             <p data-view-breinput-page="">Submit 成功表示验证并入队；实际注入失败通过错误回调交给应用处理。</p>
           </header>
           <ol class="sequence" data-view-breinput-page="">
@@ -114,12 +114,12 @@
         <section class="decisions" aria-label="设计问题与实现方式" data-view-breinput-page="">
           <article data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">THE CHALLENGE</p>
-            <h2 data-view-breinput-page="">事件顺序之外，<br data-view-breinput-page="">还有线程与权限。</h2>
+            <h2 data-view-breinput-page="">跨平台输入的顺序与权限问题</h2>
             <p data-view-breinput-page="">不同系统的键码、坐标、权限和捕获机制并不一致。异步注入还需要处理队列拥塞、按下与释放的顺序，以及停止会话时遗留的按键状态；如果在原生钩子里直接执行业务回调，耗时操作也会干扰捕获流程。</p>
           </article>
           <article data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">THE DESIGN</p>
-            <h2 data-view-breinput-page="">统一接口，<br data-view-breinput-page="">明确失败的边界。</h2>
+            <h2 data-view-breinput-page="">队列、回调与输入释放</h2>
             <p data-view-breinput-page="">以 USB HID 键码和统一事件模型隔离平台差异，Injector 在工作线程消费有界队列，Monitor 将事件交给独立线程执行回调。能力查询与结构化错误让调用方判断当前会话能做什么，ReleaseAll 和停止清理管理已按下的输入；Recorder 与 Playback 则在同一事件模型上完成时间记录和可取消回放。</p>
           </article>
         </section>
@@ -127,7 +127,7 @@
           <header class="section-heading" data-view-breinput-page="">
             <div data-view-breinput-page="">
               <p class="label" data-view-breinput-page="">04 / PLATFORM CAPABILITIES</p>
-              <h2 id="platform-title" data-view-breinput-page="">相同接口，尊重各自的系统。</h2>
+              <h2 id="platform-title" data-view-breinput-page="">平台支持与权限要求</h2>
             </div>
           </header>
           <div class="platform-grid" data-view-breinput-page="">
@@ -161,7 +161,7 @@
         <section class="details" aria-labelledby="details-title" data-view-breinput-page="">
           <div data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">05 / ENGINEERING DETAILS</p>
-            <h2 id="details-title" data-view-breinput-page="">让小动作，<br data-view-breinput-page="">有可靠的落点。</h2>
+            <h2 id="details-title" data-view-breinput-page="">坐标映射、队列与线程处理</h2>
           </div>
           <ul data-view-breinput-page="">
             <li data-view-breinput-page="">USB HID 键码统一键盘事件，支持有符号桌面坐标、相对位移与归一化画面坐标</li>
@@ -175,7 +175,7 @@
         <section class="integration" aria-labelledby="integration-title" data-view-breinput-page="">
           <div data-view-breinput-page="">
             <p class="label" data-view-breinput-page="">06 / READY TO INTEGRATE</p>
-            <h2 id="integration-title" data-view-breinput-page="">接入你的 C++ 应用。</h2>
+            <h2 id="integration-title" data-view-breinput-page="">CMake 接入示例</h2>
             <p data-view-breinput-page="">安装 SDK 后，设置 CMAKE_PREFIX_PATH 指向安装目录，通过导出目标链接静态库。平台依赖随目标传递。</p>
           </div>
           <div class="code-panel" data-view-breinput-page="">
@@ -206,7 +206,7 @@ target_link_libraries(your_app PRIVATE BreInput::BreInput)</code></pre>
   </main>
   <footer class="site-footer shell" data-view-app="">
     <span data-view-app="">© 2026 DEV / WORKS</span>
-    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <span class="footer-note" data-view-app="">游戏 · 网络 · 开发工具</span>
     <a href="#top" data-back-top="">回到顶部 ↑</a>
   </footer>
 </body>

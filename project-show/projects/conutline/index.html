@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="conutline 是一款面向开发者与 AI 编程工作流的代码库统计工具。它不仅汇总代码、注释与空白行，还能下钻到每个文件查看语言、大小和行数构成；扫描过程遵循 .gitignore，自动排除依赖、构建产物与无关文件，并可把统计结果整理成适合 AI Agent 使用的仓库概览提示，让 Agent 在开始任务前更快理解项目规模、结构与重点文件。">
+  <meta name="description" content="统计代码、注释、空白行、文件数和语言分布，支持按目录及文件查看明细。扫描遵循各级 .gitignore，还能把统计结果整理成供 AI Agent 阅读的仓库概览。">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#f8f6ee">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
@@ -22,7 +22,7 @@
     <span aria-hidden="true">PROJECT / 作品集</span>
   </div>
   <header class="site-header shell" data-view-app="">
-    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">想法的落脚点</span></a>
+    <a href="../../" class="site-brand" aria-label="创作空间首页" data-view-app=""><span class="brand-symbol" aria-hidden="true" data-view-app="">✳</span> DEV<span class="brand-slash" data-view-app="">/</span>WORKS<span class="brand-note" data-view-app="">游戏与开发工具</span></a>
     <nav aria-label="主导航" data-view-app="">
       <a href="../../" data-view-app="" data-nav="home">首页</a>
       <a href="../" class="active" data-view-app="" data-nav="projects">作品集 <span aria-hidden="true" data-view-app="">↗</span></a>
@@ -50,14 +50,13 @@
               <p data-view-conutline-page="">CODEBASE STATISTICS / 2026</p>
               <h1 data-view-conutline-page="">conutline</h1>
               <div class="project-byline" data-view-conutline-page="" data-view-project-byline="">
-                <p data-view-project-byline=""><span data-view-project-byline="">我的职责</span>产品设计 / 统计模型 / 忽略规则 / CLI 与报告体验 / AI Agent 上下文设计</p>
                 <ul aria-label="核心特点" data-view-project-byline="">
                   <li data-view-project-byline="">代码行数</li>
                   <li data-view-project-byline="">文件统计</li>
                   <li data-view-project-byline="">.gitignore</li>
                 </ul>
               </div>
-              <h2 data-view-conutline-page="">从代码行数、文件明细到 AI Agent 提示的一站式代码库统计工具</h2>
+              <h2 data-view-conutline-page="">统计代码行数和文件分布，生成 AI 仓库概览</h2>
             </div>
             <div class="ascii" aria-hidden="true" data-view-conutline-page="">
               <pre data-view-conutline-page="">  ┌────────────────────┐
@@ -75,7 +74,7 @@
             </figure>
             <div class="summary" data-view-conutline-page="">
               <span data-view-conutline-page="">README_SUMMARY.md</span>
-              <p data-view-conutline-page="">conutline 是一款面向开发者与 AI 编程工作流的代码库统计工具。它不仅汇总代码、注释与空白行，还能下钻到每个文件查看语言、大小和行数构成；扫描过程遵循 .gitignore，自动排除依赖、构建产物与无关文件，并可把统计结果整理成适合 AI Agent 使用的仓库概览提示，让 Agent 在开始任务前更快理解项目规模、结构与重点文件。</p>
+              <p data-view-conutline-page="">统计代码、注释、空白行、文件数和语言分布，支持按目录及文件查看明细。扫描遵循各级 .gitignore，还能把统计结果整理成供 AI Agent 阅读的仓库概览。</p>
             </div>
           </div>
         </section>
@@ -97,20 +96,20 @@
           <div class="diff-body" data-view-conutline-page="">
             <article class="removed" data-view-conutline-page="">
               <span data-view-conutline-page="">@@ challenge @@</span>
-              <h2 data-view-conutline-page="">总数不是答案。</h2>
-              <p data-view-conutline-page="">代码行数工具很容易停留在一个总数，但总数无法回答代码集中在哪些目录、哪些文件异常庞大、注释比例如何等实际问题。与此同时，扫描器必须正确处理嵌套 .gitignore、不同语言与生成文件；若直接把冗长的文件清单交给 AI Agent，又会浪费上下文并掩盖真正重要的信息。</p>
+              <h2 data-view-conutline-page="">总行数之外，还需要哪些信息？</h2>
+              <p data-view-conutline-page="">总行数无法说明代码集中在哪些目录、哪些文件过大、注释占多少。统计还需要遵循嵌套 .gitignore，避免把依赖和构建产物混入结果。</p>
             </article>
             <article class="added" data-view-conutline-page="">
               <span data-view-conutline-page="">@@ solution @@</span>
-              <h2 data-view-conutline-page="">把仓库压缩成上下文。</h2>
-              <p data-view-conutline-page="">扫描阶段以文件为最小统计单元，识别语言并分别计算代码、注释与空白行，再按目录和语言聚合；忽略层复用 Git 风格匹配语义，结合各级 .gitignore 决定是否进入目录或统计文件。报告同时提供总览与逐文件明细，并将规模、语言分布、关键目录、大文件和忽略范围压缩成结构化提示，供 AI Agent 在有限上下文中快速建立代码库认知。</p>
+              <h2 data-view-conutline-page="">按文件统计，再汇总与生成概览</h2>
+              <p data-view-conutline-page="">先识别每个文件的语言，分别统计代码、注释和空白行，再按目录与语言汇总。报告保留逐文件明细，也可生成包含项目规模、关键目录、大文件及忽略范围的 AI Agent 提示。</p>
             </article>
           </div>
         </section>
         <section class="file-table" data-view-conutline-page="">
           <header data-view-conutline-page="">
             <span data-view-conutline-page="">$ conutline list --sort=impact</span>
-            <h2 data-view-conutline-page="">CORE_IMPLEMENTATION.log</h2>
+            <h2 data-view-conutline-page="">统计与报告功能</h2>
           </header>
           <div class="table-head" data-view-conutline-page="">
             <span data-view-conutline-page="">MODE</span>
@@ -150,7 +149,7 @@
           </div>
           <div class="file-row" data-view-conutline-page="">
             <span data-view-conutline-page="">-rw-r--r--</span>
-            <p data-view-conutline-page=""><i data-view-conutline-page="">scanner/</i>生成精简、结构化的仓库概览提示，帮助 AI Agent 快速理解项目</p>
+            <p data-view-conutline-page=""><i data-view-conutline-page="">scanner/</i>生成精简、结构化的仓库概览提示，供 AI Agent 阅读</p>
             <span data-view-conutline-page="">OUTPUT</span>
             <b data-view-conutline-page="">06</b>
           </div>
@@ -207,7 +206,7 @@ status: ready_for_agent</code></pre>
   </main>
   <footer class="site-footer shell" data-view-app="">
     <span data-view-app="">© 2026 DEV / WORKS</span>
-    <span class="footer-note" data-view-app="">保持好奇，继续创造。</span>
+    <span class="footer-note" data-view-app="">游戏 · 网络 · 开发工具</span>
     <a href="#top" data-back-top="">回到顶部 ↑</a>
   </footer>
 </body>
