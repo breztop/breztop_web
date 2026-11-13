@@ -2,6 +2,8 @@ todo
 
 # Local previews, build output and private material never belong in this repository.
 dist/
+dist-toy/
+brez-toy.zip
 .preview/
 node_modules/
 /artwork/

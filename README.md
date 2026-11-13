@@ -16,6 +16,33 @@ python -m http.server 4173 --bind 127.0.0.1 --directory dist
 作品集从独立的 **Project / 风车塔** 进入 `project-show/`；Resume 继续指向原简历站。
 `scripts/public-files.mjs` 是发布文件白名单。构建只复制这些文件到 `dist/`
 
+## B 站 Toy 版本
+
+`b-toy` 分支在主站源码上增加独立构建，使用 Node.js 24 和 Python 3：
+
+```sh
+node scripts/build-toy.mjs
+```
+
+命令会先校验并构建主站，再生成 `dist-toy/` 和可直接上传的 `brez-toy.zip`。ZIP 根目录含 `index.html`，包内只包含发布白名单中的资源，不含仓库源码和本机资料。
+
+Toy 构建将所有本地页面链接补全为相对路径和 `index.html`，移除第三方统计，将博客、站外游戏、账号、GitHub 和邮箱等站外入口转换为不可跳转的文字；B 站个人主页和本地子页保持可访问。原有游乐园场景、导览、昼夜循环、作品介绍、简历语言切换和交友页心愿选择继续保留。机器人目的地也仅允许作者的 B 站主页，分享按钮根据当前 `/toy/<slug>/` 路径生成 B 站 Toy 链接。
+
+主站源码和 `node scripts/build-site.mjs` 的产物仍保留原有入口与 SEO。Toy 包保留指向主站的 canonical，但不带 `robots.txt` 和 sitemap，因为上传包无法设置 B 站域名根目录的抓取规则。
+
+本地检查：
+
+```sh
+node --test scripts/*.test.mjs
+geckodriver --host 127.0.0.1 --port 4459 --allow-system-access
+# 在另一个终端运行；测试会自行启动严格的 Toy 子路径预览服务。
+python3 scripts/test-toy.py
+```
+
+登录 [Toy 发布平台](https://www.bilibili.com/toy/publish)，上传 `brez-toy.zip`，填写名称、简介、图标与封面，先使用链接可见模式在网页和 B 站 App 中测试，再发布为所有人可见。本地浏览器检查不替代 App 内的 WebView、分享和安全区验收；实际发布仍需要账号的 Toy 权限和平台审核。
+
+适配依据：[官方 FAQ](https://www.bilibili.com/opus/1241171666570051585)、[官方仓库内容自检清单](https://github.com/bilibili/toy/blob/main/skills/toy/references/content-checklist.md)。
+
 ## 测试
 
 默认使用 Firefox/Chrome。浏览器脚本只依赖 Python 标准库；先构建并启动本机预览，再在另一个终端启动 geckodriver：
