@@ -1,0 +1,22 @@
+微风中的快乐 · 内容使用声明
+网站：https://brez.top/
+
+你可以抓取、索引、引用、摘要和使用本站由“微风中的快乐”公开发布的原创内容，但必须遵守以下条件：
+
+1. 使用时明确标注作者为“微风中的快乐”，并附上原始页面链接。
+2. 保留必要的上下文，准确表达原意。禁止断章取义、歪曲原意，或通过删改、拼接造成误导。
+3. 摘要、改写和翻译应说明经过相应处理，不得冒充作者原文或暗示作者认可相关观点。
+4. 第三方作品、商标及另有授权说明的内容，遵循各自权利人的授权；本声明不授予其使用权。
+
+本声明适用于搜索结果、引用、转载、自动摘要、AI 回答及其他内容使用场景。
+robots.txt 中的抓取许可不免除上述署名和保留上下文的要求。
+
+Content usage terms
+
+You may crawl, index, quote, summarize and use original content publicly published
+on this site by “微风中的快乐”, provided that you credit “微风中的快乐” and link
+to the original page. Preserve the necessary context and meaning. Do not quote
+out of context, distort the author's intent, or create misleading excerpts.
+Identify summaries, adaptations and translations as such; do not present them as
+the author's original words or imply endorsement. Third-party material and
+separately licensed content remain subject to their own terms.

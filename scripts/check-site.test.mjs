@@ -48,3 +48,24 @@ test('incorrect social image dimensions fail validation', async t => {
   await writeFile(file, image);
   assert.match(check(dir).stderr, /incorrect PNG format or dimensions/);
 });
+test('crawler blocks and homepage noindex fail publication checks', async t => {
+  const dir = await fixture(t);
+  await writeFile(path.join(dir, 'robots.txt'), 'User-agent: *\nDisallow: /\nSitemap: https://brez.top/sitemap.xml\n');
+  const file = path.join(dir, 'index.html');
+  await writeFile(file, (await readFile(file, 'utf8')).replace('index, follow, max-image-preview:large', 'noindex, follow'));
+  const result = check(dir);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /robots.txt must allow public crawling/);
+  assert.match(result.stderr, /Home page must be indexable/);
+});
+test('invalid structured data and duplicated HTML navigation fail publication checks', async t => {
+  const dir = await fixture(t);
+  const file = path.join(dir, 'index.html');
+  await writeFile(file, (await readFile(file, 'utf8'))
+    .replace('"@type": "WebSite"', '"@type": "WebSite", invalid')
+    .replace('</main>', '<nav aria-label="重复入口"><a href="./resume/">Resume</a></nav></main>'));
+  const result = check(dir);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /valid, linked WebSite, Person and WebPage/);
+  assert.match(result.stderr, /non-duplicated HTML navigation/);
+});

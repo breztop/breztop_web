@@ -6,7 +6,7 @@ import { initParkCamera } from './park-camera.js';
 (() => {
   'use strict';
 
-  // One source of truth for artwork, signs, the directory and navigation.
+  // Scene metadata also enhances the existing HTML directory without cloning its links.
   // Attractions without a destination stay as scenery.
   const rides = [
     { id: 'ferris', size: 1.2, base: 520, name: '摩天轮', title: 'Blog', subtitle: '博客 · 记录技术与生活', href: 'https://blog.brez.top', color: '#ab98cb', x: 572 },
@@ -538,12 +538,31 @@ import { initParkCamera } from './park-camera.js';
   const guideEntriesPanel = document.getElementById('guide-entries-panel');
   const guideMapPanel = document.getElementById('guide-map-panel');
   const entries = [bilibili, ...rides].sort((a, b) => a.x - b.x);
-  document.getElementById('guide-list').innerHTML = entries.filter(ride => ride.href || ride.closed).map(ride => `<li class="guide-row guide-ticket" style="--ride-color:${ride.color}">
-    <${ride.href ? 'a' : 'div'} class="guide-destination" ${ride.href ? destinationAttributes(ride) : ''}>
-      <span class="guide-number">${String(entries.indexOf(ride) + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.subtitle || ride.name}</small></span>${ride.href ? `<span class="guide-arrow" aria-hidden="true">${ride.local ? '→' : '↗'}</span>` : ''}
-    </${ride.href ? 'a' : 'div'}>
-    <button class="guide-skate" type="button" data-skate="${ride.id}" aria-label="滑着滑板前往${ride.title || ride.name}"><svg aria-hidden="true"><use href="#i-skate"/></svg><span>前往</span></button>
-  </li>`).join('');
+  const navigation = document.getElementById('page-navigation');
+  const guideList = document.getElementById('guide-list');
+  const entryRows = new Map([...guideList.children].map(row => [row.dataset.ride, row]));
+  entries.filter(ride => ride.href || ride.closed).forEach(ride => {
+    const row = entryRows.get(ride.id);
+    const destination = row.firstElementChild;
+    row.className = 'guide-row guide-ticket';
+    row.style.setProperty('--ride-color', ride.color);
+    destination.className = 'guide-destination';
+    if (ride.href) destination.setAttribute('aria-label', ride.local
+      ? `${ride.title}，${ride.subtitle}` : `在新标签页打开 ${ride.title || ride.name}`);
+    destination.innerHTML = `<span class="guide-number">${String(entries.indexOf(ride) + 1).padStart(2, '0')}</span><span><strong>${ride.title || ride.name}</strong><small>${ride.subtitle || ride.name}</small></span>${ride.href ? `<span class="guide-arrow" aria-hidden="true">${ride.local ? '→' : '↗'}</span>` : ''}`;
+    const skateButton = document.createElement('button');
+    skateButton.className = 'guide-skate';
+    skateButton.type = 'button';
+    skateButton.dataset.skate = ride.id;
+    skateButton.setAttribute('aria-label', `滑着滑板前往${ride.title || ride.name}`);
+    skateButton.innerHTML = '<svg aria-hidden="true"><use href="#i-skate"/></svg><span>前往</span>';
+    row.append(skateButton);
+  });
+  // Move the same crawlable HTML navigation into the dialog after enhancement.
+  // Without JavaScript, its links remain accessible in main.
+  guideEntriesPanel.append(navigation);
+  navigation.classList.remove('fallback-nav');
+  document.getElementById('navigation-intro').hidden = true;
 
   let currentStop = '';
   function updateCurrentStop() {

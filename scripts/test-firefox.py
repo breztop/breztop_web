@@ -70,6 +70,8 @@ try:
     req('/url', {'url': args.url})
     time.sleep(.3)
     assert js('return !!window.breezePark && !document.querySelector("dialog").open')
+    assert js('return document.querySelectorAll("nav").length===1 && document.querySelectorAll("#page-navigation a").length===8 && document.querySelector("#guide-entries-panel").contains(document.querySelector("#page-navigation"))')
+    assert js('return [...document.querySelectorAll("#page-navigation a")].every(link=>{const id=link.closest("li").dataset.ride;const selector=id==="bilibili"?"#bilibili-sign a":`#ride-${id} a`;return link.getAttribute("href")===document.querySelector(selector)?.getAttribute("href")})')
     assert js('return !document.querySelector("a[href*=download]") && !!document.querySelector("#ride-carousel a[href*=resume]")')
     for width, height in [(320, 740), (390, 844), (768, 900), (1024, 768), (1440, 900), (844, 390)]:
         size(width, height)
@@ -250,6 +252,15 @@ try:
     js('Object.defineProperty(document,"hidden",{configurable:true,value:true});document.dispatchEvent(new Event("visibilitychange"))')
     assert js('return getComputedStyle(document.querySelector(".boundary-cloud")).animationPlayState')=='paused'
     print('PASS minimal 404 copy, keyboard/drag camera following, background motion and reduced-motion pause')
+
+    chrome("Services.prefs.setBoolPref('javascript.enabled',false)")
+    req('/url', {'url': args.url})
+    for width, height in [(320, 740), (1440, 900)]:
+        size(width, height)
+        assert js('return document.querySelectorAll("nav").length===1 && document.querySelectorAll(".fallback-nav a").length===8 && !document.querySelector(".park-scene")')
+        assert js('const nav=document.querySelector(".fallback-nav");const last=nav.querySelector("li:last-child a");last.scrollIntoView({block:"nearest"});const r=last.getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight && last.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2))')
+    print('PASS one crawlable navigation, script-free fallback and reachable final link')
+    chrome("Services.prefs.setBoolPref('javascript.enabled',true)")
 
 finally:
     req('', method='DELETE')

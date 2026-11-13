@@ -14,7 +14,7 @@ for (const file of publicFiles) {
   try {
     if (!(await lstat(target)).isFile()) throw new Error('Not a regular file');
     // Raster assets are checked for presence, without interpreting binary bytes as personal data.
-    const text = /\.(?:html|css|js|svg|xml|json)$/.test(file) ? await readFile(target, 'utf8') : '';
+    const text = /\.(?:html|css|js|svg|xml|json|txt)$/.test(file) ? await readFile(target, 'utf8') : '';
     content.set(file, text);
     // Report the path only: a failing scan must never echo private values to CI logs.
     if (/(?<![\d.])(?:\+?86[ -]?)?1[3-9]\d{9}(?![\d.])/.test(text)) {
@@ -92,6 +92,50 @@ for (const [file, text] of content) {
 }
 
 // Verify crawler-facing resources against what is actually published.
+const home = content.get('index.html') || '';
+const head = home.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] || '';
+const brand = '微风中的快乐';
+const title = head.match(/<title>([^<]+)<\/title>/i)?.[1];
+const meta = attribute => head.match(new RegExp(`<meta\\b[^>]*(?:name|property)="${attribute}"[^>]*content="([^"]*)"`, 'i'))?.[1];
+if (!title?.startsWith(brand) || meta('author') !== brand || meta('og:site_name') !== brand) {
+  problems.push('Home page must consistently identify 微风中的快乐 as its brand');
+}
+if (meta('og:title') !== title || meta('twitter:title') !== title
+  || !meta('description')?.includes(brand) || meta('og:description') !== meta('description')
+  || meta('twitter:description') !== meta('description')) {
+  problems.push('Home page search and sharing metadata must stay consistent');
+}
+if (!/<link\b[^>]*rel="canonical"[^>]*href="https:\/\/brez\.top\/"/.test(head)
+  || !/\bindex\b/.test(meta('robots') || '') || /\b(?:noindex|nofollow|none)\b/.test(meta('robots') || '')) {
+  problems.push('Home page must be indexable at its canonical URL');
+}
+try {
+  const blocks = [...head.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
+  const nodes = blocks.flatMap(([, json]) => { const data = JSON.parse(json); return data['@graph'] || [data]; });
+  const sites = nodes.filter(node => node['@type'] === 'WebSite');
+  const person = nodes.find(node => node['@type'] === 'Person');
+  const webpage = nodes.find(node => node['@type'] === 'WebPage');
+  if (sites.length !== 1 || sites[0].name !== brand || sites[0].url !== 'https://brez.top/'
+    || person?.name !== brand || sites[0].publisher?.['@id'] !== person?.['@id']
+    || webpage?.isPartOf?.['@id'] !== sites[0]['@id'] || webpage?.author?.['@id'] !== person?.['@id']
+    || webpage?.name !== title || webpage?.description !== meta('description')
+    || webpage?.usageInfo !== 'https://brez.top/content-usage.txt') throw new Error();
+} catch { problems.push('Home page must have valid, linked WebSite, Person and WebPage structured data'); }
+const navigation = home.match(/<nav\b[^>]*id="page-navigation"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || '';
+const destinations = [...navigation.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(match => match[1]);
+if ((home.match(/<nav\b/g) || []).length !== 1 || destinations.length !== 8
+  || new Set(destinations).size !== destinations.length) {
+  problems.push('Home page must publish one complete, non-duplicated HTML navigation');
+}
+const robots = (content.get('robots.txt') || '').replace(/#.*$/gm, '');
+if (!/^User-agent:\s*\*\s*$/im.test(robots) || !/^Allow:\s*\/\s*$/im.test(robots)
+  || /^Disallow:\s*\S+/im.test(robots) || !/^Sitemap:\s*https:\/\/brez\.top\/sitemap\.xml\s*$/im.test(robots)) {
+  problems.push('robots.txt must allow public crawling and advertise the canonical sitemap');
+}
+if (!(content.get('content-usage.txt') || '').includes(brand)
+  || !(content.get('content-usage.txt') || '').includes('禁止断章取义')) {
+  problems.push('Content usage terms must require attribution and preserve context');
+}
 for (const [file, width, height] of [['og.png', 120, 63], ['apple-touch-icon.png', 180, 180]]) {
   try {
     const bytes = await readFile(path.join(directory, file));
@@ -128,5 +172,5 @@ if (problems.length) {
   for (const problem of problems) console.error(problem);
   process.exitCode = 1;
 } else {
-  console.log(`PASS: ${publicFiles.length} public files; links, image dimensions, sitemap and privacy rules verified.`);
+  console.log(`PASS: ${publicFiles.length} public files; links, SEO metadata, navigation, crawler resources, image dimensions, sitemap and privacy rules verified.`);
 }

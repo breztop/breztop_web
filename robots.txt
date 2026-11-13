@@ -1,0 +1,12 @@
+# 微风中的快乐 — https://brez.top/
+# 允许抓取、索引和使用本站公开的原创内容。
+# 使用时必须注明作者“微风中的快乐”并附原始页面链接；禁止断章取义、歪曲原意。
+# Public original content may be crawled, indexed and used with attribution to
+# “微风中的快乐” and a link to the original page. Do not quote out of context
+# or misrepresent the original meaning. Full terms: https://brez.top/content-usage.txt
+# These comments express usage terms; robots.txt directives control crawling only.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://brez.top/sitemap.xml

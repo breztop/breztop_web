@@ -5,6 +5,8 @@ export const publicFiles = Object.freeze([
   'index.html',
   '404.html',
   'sitemap.xml',
+  'robots.txt',
+  'content-usage.txt',
   'og.png',
   'apple-touch-icon.png',
   'css/index.css',
